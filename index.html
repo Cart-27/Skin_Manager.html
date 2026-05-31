@@ -6,81 +6,56 @@
 <title>SkinBox Manager</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
-:root{
-  --rust:#E8461A;--rust-dark:#b33614;--rust-glow:#e8461a44;
-  --bg:#111010;--surface:#1c1b1b;--surface2:#242323;--surface3:#2e2d2d;
-  --border:#333;--border2:#444;
-  --text:#f0ebe5;--text2:#a09890;--text3:#6a6260;
-  --green:#4caf7d;--green-bg:#1a2e22;
-  --blue:#4a9eda;--blue-bg:#192232;
-  --amber:#e8a21a;--amber-bg:#2e2510;
-  --red:#e85a4a;--red-bg:#2e1a18;
-  --radius:6px;
-}
+:root{--rust:#E8461A;--rust-dark:#b33614;--bg:#111010;--surface:#1c1b1b;--surface2:#242323;--surface3:#2e2d2d;--border:#333;--border2:#444;--text:#f0ebe5;--text2:#a09890;--text3:#6a6260;--green:#4caf7d;--green-bg:#1a2e22;--blue:#4a9eda;--blue-bg:#192232;--amber:#e8a21a;--amber-bg:#2e2510;--red:#e85a4a;--red-bg:#2e1a18;--radius:6px}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
-
-/* HEADER */
-header{background:var(--surface);border-bottom:2px solid var(--rust);padding:0 24px;display:flex;align-items:stretch;gap:0;position:sticky;top:0;z-index:100}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+header{background:var(--surface);border-bottom:2px solid var(--rust);padding:0 24px;display:flex;align-items:stretch;position:sticky;top:0;z-index:100}
 .logo{display:flex;align-items:center;gap:12px;padding:14px 20px 14px 0;border-right:1px solid var(--border)}
 .logo-icon{width:36px;height:36px;background:var(--rust);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:18px}
-.logo h1{font-size:18px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--text)}
+.logo h1{font-size:18px;font-weight:900;letter-spacing:2px;text-transform:uppercase}
 .logo span{font-size:11px;color:var(--text3);font-family:'Share Tech Mono',monospace;letter-spacing:1px}
-nav{display:flex;align-items:stretch;gap:0;margin-left:8px}
+nav{display:flex;align-items:stretch;margin-left:8px}
 .nav-btn{background:none;border:none;color:var(--text2);padding:0 18px;font-size:13px;font-weight:700;font-family:'Barlow',sans-serif;cursor:pointer;letter-spacing:1px;text-transform:uppercase;border-bottom:3px solid transparent;transition:all .15s}
 .nav-btn:hover{color:var(--text);background:var(--surface2)}
 .nav-btn.active{color:var(--rust);border-bottom-color:var(--rust)}
-.header-right{margin-left:auto;display:flex;align-items:center;gap:10px;padding-left:16px}
+.hdr-right{margin-left:auto;display:flex;align-items:center;gap:10px;padding-left:16px}
 .badge-count{background:var(--rust);color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;font-family:'Share Tech Mono',monospace}
-
-/* MAIN TABS */
-.tab{display:none;padding:20px 24px}
-.tab.active{display:block}
-
-/* STAT STRIP */
+.tab{display:none;padding:20px 24px}.tab.active{display:block}
 .stat-strip{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
 .stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 18px;min-width:120px}
 .stat-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
 .stat-val{font-size:24px;font-weight:900;color:var(--rust);font-family:'Share Tech Mono',monospace}
-.stat.green .stat-val{color:var(--green)}
-.stat.blue .stat-val{color:var(--blue)}
-.stat.amber .stat-val{color:var(--amber)}
-
-/* TOOLBAR */
+.stat.green .stat-val{color:var(--green)}.stat.blue .stat-val{color:var(--blue)}.stat.amber .stat-val{color:var(--amber)}
 .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
 .toolbar input,.toolbar select{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:var(--radius);font-size:13px;height:36px;font-family:'Barlow',sans-serif}
 .toolbar input{flex:1;min-width:180px}
 .toolbar input:focus,.toolbar select:focus{outline:none;border-color:var(--rust)}
-.btn{background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:8px 16px;border-radius:var(--radius);font-size:13px;font-weight:700;cursor:pointer;font-family:'Barlow',sans-serif;letter-spacing:.5px;transition:all .12s;height:36px;white-space:nowrap}
-.btn:hover{background:var(--surface3);border-color:var(--text3)}
+.btn{background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:8px 16px;border-radius:var(--radius);font-size:13px;font-weight:700;cursor:pointer;font-family:'Barlow',sans-serif;transition:all .12s;height:36px;white-space:nowrap}
+.btn:hover{background:var(--surface3)}
 .btn.primary{background:var(--rust);border-color:var(--rust);color:#fff}
 .btn.primary:hover{background:var(--rust-dark)}
 .btn.success{background:var(--green-bg);border-color:var(--green);color:var(--green)}
 .btn.danger{background:var(--red-bg);border-color:var(--red);color:var(--red)}
-
-/* SKIN TABLE */
+.btn.amber{background:var(--amber-bg);border-color:var(--amber);color:var(--amber)}
 .skin-table{width:100%;border-collapse:collapse;font-size:13px}
 .skin-table th{background:var(--surface2);color:var(--text2);padding:9px 12px;text-align:left;border-bottom:2px solid var(--rust);font-size:11px;text-transform:uppercase;letter-spacing:1px;font-weight:700;position:sticky;top:62px;z-index:5}
-.skin-table td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+.skin-table td{padding:7px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
 .skin-table tr:hover td{background:var(--surface2)}
 .skin-table img{width:40px;height:40px;object-fit:cover;border-radius:4px;background:var(--surface3)}
-.skin-table .img-ph{width:40px;height:40px;background:var(--surface3);border-radius:4px;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:16px}
+.img-ph{width:40px;height:40px;background:var(--surface3);border-radius:4px;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:16px}
 .skin-id{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text3)}
 .ws-link{color:var(--blue);text-decoration:none;font-size:11px}
 .ws-link:hover{text-decoration:underline}
 .perm-pills{display:flex;gap:4px;flex-wrap:wrap}
-.pill{font-size:10px;padding:2px 8px;border-radius:99px;font-weight:700;font-family:'Share Tech Mono',monospace;cursor:pointer;transition:opacity .12s;border:none}
-.pill:hover{opacity:.8}
-.pill-add{background:var(--surface3);color:var(--text3);border:1px dashed var(--border2)!important;cursor:pointer}
-.pill-add:hover{border-color:var(--rust)!important;color:var(--rust)}
+.pill{font-size:10px;padding:2px 8px;border-radius:99px;font-weight:700;font-family:'Share Tech Mono',monospace;cursor:pointer;border:none}
+.pill-add{background:var(--surface3);color:var(--text3);border:1px dashed var(--border2) !important;cursor:pointer}
+.pill-add:hover{border-color:var(--rust) !important;color:var(--rust)}
 .badge{font-size:10px;padding:2px 8px;border-radius:99px;font-weight:700}
 .b-approved{background:var(--green-bg);color:var(--green)}
 .b-workshop{background:var(--blue-bg);color:var(--blue)}
 .b-unavail{background:#2a2a2a;color:var(--text3)}
 .b-loading{background:#2a2710;color:#a09050;animation:pulse 1.4s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-
-/* ADD SKIN PANEL */
 .panel{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px;margin-bottom:20px}
 .panel h3{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border)}
 .form-row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:12px}
@@ -91,11 +66,8 @@ nav{display:flex;align-items:stretch;gap:0;margin-left:8px}
 .form-group textarea{min-height:70px;resize:vertical;font-size:12px;font-family:'Share Tech Mono',monospace}
 .preview-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:12px;display:flex;gap:12px;align-items:center;min-height:70px}
 .preview-img{width:60px;height:60px;object-fit:cover;border-radius:4px;background:var(--surface3);flex-shrink:0}
-.preview-info{flex:1;min-width:0}
-.preview-name{font-size:14px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.preview-name{font-size:14px;font-weight:700}
 .preview-sub{font-size:11px;color:var(--text3);margin-top:2px}
-
-/* PERM GROUP MANAGER */
 .perm-group-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:12px}
 .perm-group-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 .perm-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
@@ -104,63 +76,50 @@ nav{display:flex;align-items:stretch;gap:0;margin-left:8px}
 .perm-skins-list{display:flex;gap:6px;flex-wrap:wrap}
 .perm-skin-chip{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:3px 8px;font-size:11px;font-family:'Share Tech Mono',monospace;display:flex;align-items:center;gap:6px;color:var(--text2)}
 .perm-skin-chip button{background:none;border:none;color:var(--red);cursor:pointer;font-size:13px;line-height:1;padding:0}
-
-/* EXPORT TAB */
 .export-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text2);max-height:400px;overflow:auto;white-space:pre-wrap;word-break:break-all;line-height:1.6}
 .export-actions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
-
-/* PROGRESS */
 .progress-wrap{background:var(--surface3);border-radius:3px;height:3px;margin-bottom:16px;overflow:hidden}
 .progress-bar{height:100%;background:var(--rust);width:0%;transition:width .3s}
-
-/* CONTEXT MENU */
 .ctx-menu{position:fixed;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);padding:4px 0;z-index:999;min-width:160px;box-shadow:0 8px 24px #00000088;display:none}
 .ctx-item{padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;color:var(--text2);letter-spacing:.5px;text-transform:uppercase}
 .ctx-item:hover{background:var(--surface3);color:var(--text)}
 .ctx-item.danger{color:var(--red)}
 .ctx-sep{border-top:1px solid var(--border);margin:4px 0}
-
-/* TOAST */
 .toast{position:fixed;bottom:24px;right:24px;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);padding:12px 20px;font-size:13px;font-weight:700;z-index:9999;transform:translateY(80px);opacity:0;transition:all .25s;max-width:300px}
 .toast.show{transform:translateY(0);opacity:1}
 .toast.success{border-color:var(--green);color:var(--green)}
 .toast.error{border-color:var(--red);color:var(--red)}
-
-/* MODAL */
 .modal-overlay{position:fixed;inset:0;background:#000000aa;z-index:500;display:none;align-items:center;justify-content:center}
 .modal-overlay.show{display:flex}
 .modal{background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:24px;width:440px;max-width:95vw}
-.modal h3{font-size:16px;font-weight:700;margin-bottom:16px;color:var(--text)}
+.modal h3{font-size:16px;font-weight:700;margin-bottom:16px}
 .modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:20px}
+.warn-box{background:#2a1a10;border:1px solid #e8461a88;border-radius:6px;padding:14px 18px;font-size:13px;line-height:1.6;margin-bottom:16px}
 </style>
 </head>
 <body>
 
 <header>
   <div class="logo">
-    <div class="logo-icon">🦀</div>
-    <div>
-      <h1>SkinBox Manager</h1>
-      <span>v2.2.31 CONFIG EDITOR</span>
-    </div>
+    <div class="logo-icon">&#x1F980;</div>
+    <div><h1>SkinBox Manager</h1><span>v2.2.31 CONFIG EDITOR</span></div>
   </div>
   <nav>
     <button class="nav-btn active" onclick="showTab('skins')">Skins</button>
     <button class="nav-btn" onclick="showTab('perms')">Permission Groups</button>
-    <button class="nav-btn" onclick="showTab('export')">Export JSON</button>
+    <button class="nav-btn" onclick="showTab('export')">Export</button>
   </nav>
-  <div class="header-right">
-    <span id="load-status" style="font-size:12px;color:var(--text3)">Loading Steam data…</span>
-    <button id="steam-load-btn" class="btn" style="display:none;height:28px;padding:0 10px;font-size:11px" onclick="steamFetchRunning=false;fetchSteamData()">↺ Retry</button>
-    <span class="badge-count" id="hdr-count">540</span>
+  <div class="hdr-right">
+    <span id="load-status" style="font-size:12px;color:var(--text3)">Loading Steam data...</span>
+    <button id="steam-retry-btn" class="btn" style="display:none;height:28px;padding:0 10px;font-size:11px" onclick="retryFetch()">&#8634; Retry</button>
+    <span class="badge-count" id="hdr-count">0</span>
   </div>
 </header>
 
-<!-- ───── SKINS TAB ───── -->
+<!-- SKINS TAB -->
 <div class="tab active" id="tab-skins">
-
   <div class="panel">
-    <h3>➕ Add New Skin</h3>
+    <h3>&#x2795; Add New Skin</h3>
     <div class="form-row">
       <div class="form-group" style="flex:0 0 180px">
         <label>Steam Workshop ID</label>
@@ -168,145 +127,133 @@ nav{display:flex;align-items:stretch;gap:0;margin-left:8px}
       </div>
       <div class="form-group" style="flex:0 0 200px">
         <label>Item Shortname</label>
-        <select id="add-item">
-          <option value="">— select item —</option>
-        </select>
+        <select id="add-item"><option value="">&#x2014; select item &#x2014;</option></select>
       </div>
       <div class="form-group" style="flex:0 0 190px">
         <label>Permission Group (optional)</label>
-        <select id="add-perm">
-          <option value="">— none (all users) —</option>
-        </select>
+        <select id="add-perm"><option value="">&#x2014; none (all users) &#x2014;</option></select>
       </div>
       <button class="btn primary" onclick="addSkin()" style="flex:0 0 auto">Add Skin</button>
     </div>
     <div id="preview-wrap" style="display:none">
       <div class="preview-card">
         <img id="prev-img" class="preview-img" src="" alt="">
-        <div class="preview-info">
-          <div class="preview-name" id="prev-name">Loading…</div>
-          <div class="preview-sub" id="prev-sub"></div>
-        </div>
-        <span id="prev-badge" class="badge"></span>
+        <div><div class="preview-name" id="prev-name">Loading...</div><div class="preview-sub" id="prev-sub"></div></div>
+        <span id="prev-badge" class="badge" style="margin-left:auto"></span>
       </div>
     </div>
     <div style="margin-top:12px">
       <div class="form-group">
-        <label>Bulk Add — paste multiple skin IDs (one per line or comma-separated)</label>
-        <textarea id="bulk-ids" placeholder="3107825915&#10;3107825287&#10;802812621"></textarea>
+        <label>Bulk Add &#x2014; paste IDs (one per line or comma-separated)</label>
+        <textarea id="bulk-ids" placeholder="3107825915&#10;3107825287"></textarea>
       </div>
       <div class="form-row" style="margin-top:8px">
-        <div class="form-group" style="flex:0 0 200px">
-          <label>Item for bulk</label>
-          <select id="bulk-item"><option value="">— select item —</option></select>
-        </div>
-        <div class="form-group" style="flex:0 0 190px">
-          <label>Permission group for bulk</label>
-          <select id="bulk-perm"><option value="">— none —</option></select>
-        </div>
+        <div class="form-group" style="flex:0 0 200px"><label>Item for bulk</label><select id="bulk-item"><option value="">&#x2014; select item &#x2014;</option></select></div>
+        <div class="form-group" style="flex:0 0 190px"><label>Permission group for bulk</label><select id="bulk-perm"><option value="">&#x2014; none &#x2014;</option></select></div>
         <button class="btn" onclick="bulkAdd()">Bulk Add</button>
       </div>
     </div>
   </div>
 
-  <div class="progress-wrap"><div class="progress-bar" id="prog"></div></div>
-
-  <!-- CORS / file:// warning -->
-  <div id="cors-warning" style="display:none;margin:0 0 16px;background:#2a1a10;border:1px solid #e8461a88;border-radius:6px;padding:14px 18px;font-size:13px;line-height:1.6">
-    <strong style="color:var(--rust)">⚠ Steam data blocked by browser</strong><br>
-    <span style="color:var(--text2)">Your browser blocked the Steam API because this file is open from your local drive (<code style="font-family:'Share Tech Mono',monospace;font-size:11px">file://</code>). This is a browser security restriction, not a bug. Two easy fixes:</span>
-    <ol style="margin:10px 0 10px 20px;color:var(--text2);line-height:2">
-      <li><strong style="color:var(--text)">Chrome/Edge:</strong> Start with <code style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--amber)">--allow-file-access-from-files</code> flag, then reload this file and click Retry below.</li>
-      <li><strong style="color:var(--text)">Any browser:</strong> Serve the file locally — run <code style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--amber)">python3 -m http.server 8080</code> in the same folder, then open <code style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--amber)">http://localhost:8080/SkinBox_Manager.html</code></li>
-      <li><strong style="color:var(--text)">Quickest:</strong> Upload the file to any web host or drag it into a browser tab opened from a web context.</li>
-    </ol>
-    <span style="color:var(--text3);font-size:12px">The table still works fully — all 540 skins are listed with IDs and categories. Steam names and thumbnails just won't load until the API is accessible.</span><br><br>
-    <button class="btn primary" onclick="steamFetchRunning=false;fetchSteamData()">↺ Retry Steam fetch</button>
+  <div id="cors-warning" style="display:none" class="warn-box">
+    <strong style="color:var(--rust)">&#x26A0; Steam data blocked by browser</strong><br>
+    <span style="color:var(--text2)">Open via a web server or GitHub Pages for Steam names and images to load. The skin list still works fully.</span><br>
+    <span id="cors-error-detail" style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--red);display:block;margin:6px 0"></span>
+    <button class="btn primary" style="margin-top:8px" onclick="retryFetch()">&#8634; Retry</button>
   </div>
+
+  <div class="progress-wrap"><div class="progress-bar" id="prog"></div></div>
 
   <div class="stat-strip">
     <div class="stat"><div class="stat-label">Total Skins</div><div class="stat-val" id="s-total">0</div></div>
     <div class="stat green"><div class="stat-label">Approved</div><div class="stat-val" id="s-approved">0</div></div>
     <div class="stat blue"><div class="stat-label">Workshop</div><div class="stat-val" id="s-workshop">0</div></div>
-    <div class="stat amber"><div class="stat-label">Permission-Gated</div><div class="stat-val" id="s-gated">0</div></div>
+    <div class="stat amber"><div class="stat-label">Perm-Gated</div><div class="stat-val" id="s-gated">0</div></div>
   </div>
 
   <div class="toolbar">
-    <input type="text" id="search" placeholder="Search name, ID, item…" oninput="renderTable()">
-    <select id="f-group" onchange="renderTable()"><option value="">All groups</option><option>Weapons</option><option>Attire</option><option>Doors</option><option>Storage</option><option>Furniture</option><option>Tools</option></select>
+    <input type="text" id="f-search" placeholder="Search name, ID, item..." oninput="renderTable()">
+    <select id="f-group" onchange="renderTable()">
+      <option value="">All groups</option>
+      <option>Weapons</option><option>Attire</option><option>Doors</option>
+      <option>Storage</option><option>Furniture</option><option>Tools</option>
+    </select>
     <select id="f-item" onchange="renderTable()"><option value="">All items</option></select>
-    <select id="f-perm" onchange="renderTable()"><option value="">All permissions</option><option value="__none__">No restriction (all users)</option><option value="__use_exclusive__">skinbox.use only (no higher perms)</option></select>
-    <select id="f-status" onchange="renderTable()"><option value="">All statuses</option><option value="Approved">Approved</option><option value="Workshop">Workshop</option><option value="Unavailable">Unavailable</option><option value="loading">Loading</option></select>
-    <button class="btn" onclick="exportCSV()">⬇ CSV</button>
+    <select id="f-perm" onchange="renderTable()">
+      <option value="">All permissions</option>
+      <option value="__none__">No restriction (all users)</option>
+      <option value="__use_exclusive__">skinbox.use only (excludes higher perms)</option>
+    </select>
+    <select id="f-status" onchange="renderTable()">
+      <option value="">All statuses</option>
+      <option value="Approved">Approved</option>
+      <option value="Workshop">Workshop</option>
+      <option value="Unavailable">Unavailable</option>
+    </select>
+    <button class="btn" onclick="exportCSV()">&#x2B07; CSV</button>
   </div>
 
   <div style="overflow-x:auto">
-  <table class="skin-table" id="skin-table">
-    <thead><tr>
-      <th style="width:50px">Preview</th>
-      <th>Skin Name</th>
-      <th>Item</th>
-      <th>Skin ID</th>
-      <th>Status</th>
-      <th>Permission Groups</th>
-      <th style="width:50px"></th>
-    </tr></thead>
-    <tbody id="tbody"></tbody>
-  </table>
+    <table class="skin-table">
+      <thead><tr>
+        <th style="width:50px">Img</th>
+        <th>Skin Name</th><th>Item</th><th>Skin ID</th><th>Status</th><th>Permissions</th><th style="width:50px"></th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
   </div>
   <div id="pager" style="text-align:center;padding:14px;font-size:12px;color:var(--text3)"></div>
-  <button class="btn" id="load-more-btn" onclick="loadMore()" style="display:none;margin:0 auto 24px;display:none">Load more</button>
+  <button class="btn" id="load-more-btn" onclick="loadMore()" style="display:none;margin:0 auto 24px">Load more</button>
 </div>
 
-<!-- ───── PERMS TAB ───── -->
+<!-- PERMS TAB -->
 <div class="tab" id="tab-perms">
   <div class="panel">
     <h3>Create New Permission Group</h3>
     <div class="form-row">
       <div class="form-group">
-        <label>Permission name</label>
-        <input type="text" id="new-perm-name" placeholder="skinbox.vip" oninput="this.value=this.value.replace(/[^a-z0-9_.]/g,'')">
+        <label>Permission name (must start with skinbox.)</label>
+        <input type="text" id="new-perm-name" placeholder="skinbox.vip">
       </div>
       <button class="btn primary" onclick="createPermGroup()">Create Group</button>
     </div>
-    <p style="font-size:12px;color:var(--text3);margin-top:8px">Grant this permission in your Rust server with: <code style="font-family:'Share Tech Mono',monospace;color:var(--amber)">o.grant group &lt;group&gt; &lt;permission&gt;</code></p>
+    <p style="font-size:12px;color:var(--text3);margin-top:8px">Grant on server: <code style="font-family:'Share Tech Mono',monospace;color:var(--amber)">o.grant group &lt;group&gt; &lt;permission&gt;</code></p>
   </div>
   <div id="perm-cards"></div>
 </div>
 
-<!-- ───── EXPORT TAB ───── -->
+<!-- EXPORT TAB -->
 <div class="tab" id="tab-export">
   <div class="panel">
-    <h3>Export SkinBox Config</h3>
-    <p style="font-size:13px;color:var(--text2);margin-bottom:16px">Generates a complete <code style="font-family:'Share Tech Mono',monospace;color:var(--rust)">SkinBox.json</code> ready to drop into your Rust server's oxide/config folder. All your edits, new skins, and permission groups are included.</p>
+    <h3>Export SkinBox.json</h3>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:16px">Generates a complete config ready for <code style="font-family:'Share Tech Mono',monospace;color:var(--rust)">oxide/config/SkinBox.json</code></p>
     <button class="btn primary" onclick="generateExport()" style="margin-bottom:16px">Generate Config JSON</button>
-    <div class="export-box" id="export-box">Click "Generate Config JSON" to preview…</div>
+    <div class="export-box" id="export-box">Click "Generate Config JSON" to preview...</div>
     <div class="export-actions">
-      <button class="btn success" onclick="downloadJSON()">⬇ Download SkinBox.json</button>
-      <button class="btn" onclick="copyJSON()">⎘ Copy to Clipboard</button>
-      <button class="btn" onclick="exportCSV()">⬇ Export CSV (skins only)</button>
+      <button class="btn success" onclick="downloadJSON()">&#x2B07; Download SkinBox.json</button>
+      <button class="btn" onclick="copyJSON()">&#x2398; Copy to Clipboard</button>
+      <button class="btn" onclick="exportCSV()">&#x2B07; Export CSV</button>
     </div>
   </div>
-
   <div class="panel">
-    <h3>👁 Export View-Only Chart</h3>
-    <p style="font-size:13px;color:var(--text2);margin-bottom:16px">Generates a shareable read-only HTML file. Choose which permission group's skin list to export — the file will only show skins belonging to that group.</p>
+    <h3>&#x1F441; Export View-Only Chart</h3>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:16px">Share a read-only skin list. Choose which permission group to export.</p>
     <div class="form-row" style="align-items:flex-end">
       <div class="form-group">
-        <label>Permission group to export</label>
-        <select id="view-export-perm" onchange="updateViewExportInfo()">
-          <option value="__use__">skinbox.use — Imported Workshop Skins (all users)</option>
+        <label>Permission group</label>
+        <select id="view-export-perm" onchange="updateViewInfo()">
+          <option value="__use__">skinbox.use (all users)</option>
         </select>
       </div>
-      <div class="form-group" style="flex:0 0 auto">
-        <label>Include skins from</label>
-        <select id="view-export-scope" onchange="updateViewExportInfo()">
+      <div class="form-group" style="flex:0 0 240px">
+        <label>Scope</label>
+        <select id="view-export-scope" onchange="updateViewInfo()">
           <option value="own">All skins in selected group</option>
-          <option value="exclusive">Exclude skins from other perm groups</option>
+          <option value="exclusive">Exclude skins in other perm groups</option>
           <option value="all">All groups combined</option>
         </select>
       </div>
-      <button class="btn" style="border-color:var(--amber);color:var(--amber);flex:0 0 auto" onclick="exportViewChart()">👁 Download View-Only Chart</button>
+      <button class="btn amber" onclick="exportViewChart()">&#x1F441; Download View-Only Chart</button>
     </div>
     <div id="view-export-info" style="margin-top:10px;font-size:12px;color:var(--text3)"></div>
   </div>
@@ -314,564 +261,659 @@ nav{display:flex;align-items:stretch;gap:0;margin-left:8px}
 
 <!-- Context Menu -->
 <div class="ctx-menu" id="ctx-menu">
-  <div class="ctx-item" onclick="ctxOpenWorkshop()">Open on Steam Workshop</div>
-  <div class="ctx-item" onclick="ctxCopyId()">Copy Skin ID</div>
+  <div class="ctx-item" onclick="ctxWorkshop()">Open Steam Workshop</div>
+  <div class="ctx-item" onclick="ctxCopy()">Copy Skin ID</div>
   <div class="ctx-sep"></div>
-  <div class="ctx-item" id="ctx-perm-section" style="color:var(--text3);font-size:10px;padding:4px 16px">PERMISSION GROUPS</div>
+  <div class="ctx-item" style="color:var(--text3);font-size:10px;padding:4px 16px">TOGGLE PERMISSION</div>
   <div id="ctx-perm-items"></div>
   <div class="ctx-sep"></div>
   <div class="ctx-item danger" onclick="ctxRemove()">Remove Skin</div>
 </div>
 
-<!-- Modal: assign perm -->
+<!-- Perm Modal -->
 <div class="modal-overlay" id="perm-modal">
   <div class="modal">
     <h3>Assign Permission Group</h3>
-    <p style="font-size:13px;color:var(--text2);margin-bottom:16px">Select which permission group can see this skin. Skins not assigned to any group are visible to all users with <code style="font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--rust)">skinbox.use</code>.</p>
-    <div class="form-group">
-      <label>Permission Group</label>
-      <select id="modal-perm-select"><option value="">— none (all users) —</option></select>
-    </div>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:16px">Skins with no group are visible to everyone with <code style="font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--rust)">skinbox.use</code>.</p>
+    <div class="form-group"><label>Permission Group</label><select id="modal-perm-select"><option value="">&#x2014; none (all users) &#x2014;</option></select></div>
     <div class="modal-footer">
       <button class="btn" onclick="closeModal()">Cancel</button>
-      <button class="btn primary" onclick="applyPermModal()">Apply</button>
+      <button class="btn primary" onclick="applyPerm()">Apply</button>
     </div>
   </div>
 </div>
 
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ── BASE CONFIG (from your SkinBox.json) ────────────────────────────────────
-const BASE_CONFIG = {"Skin Options":{"Maximum number of approved skins allowed for each item (-1 is unlimited)":-1,"Maximum number of pages viewable":6,"Include approved skins (WARNING! Allowing users to use paid content they don't own is against Rusts TOS)":false,"Only show approved skins that the player owns":true,"Remove approved skin ID's from config workshop skin list":true,"Include redirected skins (WARNING! Allowing users to use paid content they don't own is against Rusts TOS)":false,"Only use approved skins for these item shortnames (only used when 'Include approved skins' is disabled)":[],"Approved skin timeout (seconds)":180,"Include manually imported workshop skins":true,"Show skin ID's in the name for admins":true,"Skin list order (Config, ConfigReversed, Alphabetical)":"Config","Steam API key for workshop skins (https://steamcommunity.com/dev/apikey)":"7BBAA6C4F61C8ABDC4F6AAA4843DA893"},"Cooldown Options":{"Enable cooldowns":false,"Cooldown time start's when a item is removed from the box":true,"Length of cooldown time (seconds)":0},"Command Options":{"Commands to open the SkinBox":["skinbox","sb"],"Commands to open the deployed item SkinBox":["skindeployed","sd"],"Commands to open the skin set box":["skinset","ss"],"Allow skinning via Skinbox spray can":false,"Commands to request a skin":["skinrequest"]},"Permission Options":{"Permission required to use SkinBox":"skinbox.use","Permission required to reskin deployed items":"skinbox.use","Permission required to use admin functions":"skinbox.admin","Permission that bypasses usage costs":"skinbox.ignorecost","Permission that bypasses usage cooldown":"skinbox.ignorecooldown","Permission that bypasses DLC checks":"skinbox.ignoredlccheck","Permission required to skin weapons":"skinbox.use","Permission required to skin deployables":"skinbox.use","Permission required to skin attire":"skinbox.use","Permission required to view approved skins":"skinbox.use","Permission required to use skin sets":"skinbox.use","Permission required to use the request skin command":"skinbox.use","Custom permissions per skin":{"skinbox.moderator":[2657768804,2367359297,2891471916,1605574469,1974252534,2593972552,1397801899,2764955948,2448189526,2933068526,2563327535,2040286809,2575456552,2172078031,3141140471,2839756581,1411073464,889479991,801622102,1403885411,2835736365,3010775069,2566480912,816600190,3303652830,3312593417,3303653646,3318426834,3318425833,3312592708,3307990655,3323535395,1187639508,2368583775,2368585506,2966057188,3355824388,3436155834,3449521233,833914324,838828104,2052378272,2497239256,2529277044,2766762596,2766803410,2966509367,3309770326,2957853483,2957851194,2957774272,1656595937,1125809328,3449435411,3449439014,2143175116,3449436059,2602738572],"skinbox.example2":[9993,9994,9995],"skinbox.example3":[9996,9997,9998],"skinbox.cart":[9993,9994,9995,3216540470,3145395239,3145393223,3164526497,3190808930,3190807158,3406716750,3436155834]}},"Usage Cost Options":{"Enable usage costs":false,"Currency used for usage costs (Scrap, Economics, ServerRewards)":"Scrap","Cost to open the SkinBox":0,"Cost to skin deployables":0,"Cost to skin attire":0,"Cost to skin weapons":0},"Other Options":{"Allow stacked items":false,"Auth-level required to view blacklisted skins":2,"Spray can max uses":10,"Only allow skinning of items in areas where the player has building privilege":false,"Apply skin workshop name to item if available (false keeps the name of the input item)":true},"Favourites Options":{"Enable favourites system":true,"Enable purging of favourites data":true,"Purge user favourites that haven't been online for x amount of days":7},"Set Options":{"Enable set system":true,"Number of skin sets allowed":3},"Skin Requests":{"Allow skin requests":true,"Discord webhook for incoming skin requests":"https://discord.com/api/webhooks/1365521310251483226/jVkF-w2Mh_dpY9Hr7YyaGhLkvHRBybMAK6E7S8R6xlZ5b8nDm6Z4YXP7jWS08cT2YEjr","Days to wait before a user can request a already requested skin":7},"Imported Workshop Skins":{"box.wooden":[2900739039,2900740996,3107845724,3107842355,3107841603,3107843046,2900742580,3107844369,2900741909,3107845128,2900741253,2900741452,3107846463,3420714009,2856457408,3628458446,3446773889],"box.wooden.large":[3239479751,2485098571,810687173,2084011098,2166075403,3107848260,3107849849,2928679523,2932178914,2935600471,2935601066,2939124047,2939124462,2942506397,2945794032,2949032168,2952657640,2959826747,2963031504,2966049501,2975697982,2978635255,2981653905,2984712521,2987737589,2762325891,2762326871,2762327948,2762330233,2762331774,2762328689,2706016224,2774133267,2774134157,2774136298,2774135668,2774137482,2774137839,2774159982,2774137139,2774141950,2774139958,2774138706,2774139228,2774139642,2774138384,2774140273,2774140954,2774141383,2774141712,2774138144,2774142342,2774143793,2774142674,2774142993,2774143255,2774144082,2774144831,2774145272,2774148027,2774143520,2774145687,2774144430,2774146185,2774151142,2774149317,2774149682,2774154472,2774165059,2774156220,2774152914,2774154814,2774153253,2774153752,2774155156,2774152079,2774156516,2774158669,2774151651,2774158916,2774159189,2774159499,2774157657,2774158057,2774159713,2774158390,2775973375,2775972748,2775974643,2775974424,2775973611,2930776114,2930794335,2930806162,2930822919,2930837323,2930860679,2930864439,2930872580,2930897627,2971300908,2971304492,2971307069,3007218682,3009198642,3009336410,3015373796,3015395739,3017633313,3242428753,3242981777,2778493336,2795950055,2928475473,2898024143,2856025383,2856019669,2856015053,2836019842,2836018963,2836014303,2836016189,2836017666,3046914258,3046914106,3628456991,3628463886],"crossbow":[3580022911,3579998047,3579948969],"wall.frame.garagedoor":[2148536279,3241301985,2752910317,3283489840,1557260733,2168738710,2133431737,2991377335,2586326322,2979257711,1440334955,3048999576,2255192387,3141140471,3094272575,2876344958,3113978276,2172078031,3235541842,1372388838,3023903283,3265157016,2682601648,2457757024,2166192161,2937281575,3380040513,3371733013,1187639508,3408677529,3217100330,3270167035,3295054992,3419522448,3449521233,2052378272,3309770326,3580031968,3580004708,3579959113,3628534712],"rug.bear":[2613799472,2923460588,2164583269,3322215598],"door.double.hinged.toptier":[2871518390,2769243268,3090203622,2575456552,3580031428,3580004247,3579948076,2266832298],"mask.bandana":[2746436535,1574722565,816600190,3107855187,3107868495,3107860992,3107867379],"rifle.lr300":[2193641084,2409312173,2543418627,3368296076,3372202750,2365819846,2557430180],"hammer":[2138223730,3628449782],"shoes.boots":[911186114,2050038638,3107851592,3107834762,3107855936,3107869228,2922914793,2730618384,2766762596,3550940003,3580015331,3579988944,3579962933,2957774272],"attire.hide.poncho":[3245755661],"attire.hide.vest":[],"attire.hide.pants":[],"hat.boonie":[],"attire.hide.boots":[],"metal.facemask":[1605901930,800933810,3145395239,3107830924,2922920700,839564493,803801187,3323125148,2730597455,2766803410,2642930784,3550728166,3580013011,3579986127,3579944282,1656595937,3031141268],"metal.plate.torso":[3145393223,816098063,2171315003,3107834077,2922921675,3327424533,2730615351,2966057188,2642929746,3549897184,3580012525,3579987098,3579945548,2143175116,2602738572,3031140981],"deer.skull.mask":[3164526497,843823942,3580019665,3579994916,3579959737],"burlap.shirt":[3190808930,795185645,912032354,3134855013],"burlap.trousers":[3190807158,3134855981,2822379233],"rifle.ak":[2552738708,3216540470,3222604129,3107875465,3312588906,3375817028,3387930818,1164351519,2428514763,3548070285,3580010348,3579983247,3579889524,1125809328],"table":[2661728724,2899558372,2924941290,2856461724],"knife.bone":[3107825915,3107825287,802812621],"rug":[2927177739,889479991,2901631931,2901628452,2901633833,2901634041,2901629585,2966509367,3627813238,3627850308],"pants":[1502614911,910808140,2050030527,3107854745,3107839220,3107860221,3107870614,2922911684,2347193193,2368585506,2529277044,2562666817,3550157771,3580017018,3579988534,3579954528,2957853483],"tshirt":[1502559216,3580021079,3579996455,3579943625],"burlap.gloves":[911169463,2050037289,2454377972,3107852333,3107856647,3107861723,3580020235,3579995319,3579956678],"door.hinged.metal":[2620604819,1403885411,2839756581,2593972552,2553152569,2124665555,2481946288,3406716750,3275019165,3275019435,3436155834,833914324,3628455528],"smg.thompson":[3154184498,3107872546,3107884263,3580024201,3579998959,3579890447],"fridge":[2835736365,3010775069,3342924381,2900720108,2928505577,2856438961,2986997486],"door.hinged.toptier":[801622102,838828104,3580031026,3580003777,3579946715,2506963265],"lmg.m249":[1711588659,3107871697,2360592677,2738353314,2991534509,3556599811,3580030460,3579992843,3579892994],"mask.balaclava":[785380124],"door.hinged.wood":[1411073464,2596403452,2876334234,2936296793],"chair":[2566480912,2899483928,2899483627,2856465722],"shirt.collared":[1307910990,3628459732],"hoodie":[2050036062,3107854157,3107838479,3107859609,3107828402,3107866519,2922906722,2513051057,3390375537,2347191017,2368583775,2497239256,2562665334,3550187755,3580016466,3579988100,3579946178,2957851194],"coffeecan.helmet":[2953705043,3580019277,3579993431,3579960784],"roadsign.jacket":[2953704420,3580014541,3579990568,3579951483],"roadsign.kilt":[2953703791,3107840424,2922923888,2730616924,3323535395,2942983525,3551521578,3580014003,3579990010,3579952706,3449435411],"locker":[3107819958,1269592064,3223496378],"roadsign.gloves":[2922991093,3553101787,3580013586,3579989398,3579953216,3449436059],"jacket":[2496913595,2988267679,3580021508,3579997055,3579963489],"rifle.l96":[2849409508,3317577696,2870395185,3355824388,2796406383,2636718978,3580029599,3579991784,3579957722],"jacket.snow":[2870862403],"largebackpack":[3376100226,3390287843,3390223946,3551462527,3580022092,3579997534,3579957254,3449439014],"hat.beenie":[3107853211,3107858328,3107869906],"target.reactive":[2899431809,2899431919,2899431451,2899432079],"barricade.concrete":[2899525656,2899430496],"vending.machine":[3107817764],"rifle.semiauto":[3107874233,3107883028,3580025610,3580000392,3579950168],"door.double.hinged.wood":[2899449529,2899489317],"smg.2":[3107876545,3580026338,3580000941,3579960198],"shotgun.double":[3107878609],"smg.mp5":[3107879565,3340497055,3267154181,1974038221,3390007173,3580023584,3579998531,3579955425],"pistol.semiauto":[3107881078,1289093379,3628646338],"sleepingbag":[816623663,3269832336,3560711964,3628452378],"rifle.bolt":[1695259300,2823570500,3145161332,2617744110,3580028983,3579991083,3579962018],"pistol.python":[2808947481,3580026913,3580001696,3579953829],"grenade.f1":[2973784242],"furnace":[3178801812,2503679174,3628454345,3628462373],"rocket.launcher":[2946817967,2806026557,2575218001,3580024823,3579999480,3579964061],"door.double.hinged.metal":[2982528595,2926549607,1882567303,3265564447],"pistol.revolver":[2744352732],"shotgun.pump":[],"icepick.salvaged":[3549960048],"water.purifier":[2811249978],"bucket.helmet":[3580018756,3579994374,3579961616],"bow.hunting":[3580027578,3580002554,3579958472],"jackhammer":[3580028265,3580003184,3579958113],"tshirt.long":[3580020654,3579995957,3579956182],"bed":[3579891115,3580038203,3580040128],"pants.shorts":[3628460989],"component.box.wood.large":[2900739039,2900740996,3107845724,3107842355,3107841603,3107843046,2900742580,3107844369,2900741909,3107845128,2900741253,2900741452,3107846463,3420714009,2856457408,3628458446,3446773889]},"Blacklisted Skin ID's":[],"Prevent items with the following Skin ID's from being re-skinned":[],"Prevent these items from being re-skinned (shortname)":[],"Version":{"Major":2,"Minor":2,"Patch":31}};
+// ── DATA ─────────────────────────────────────────────────────────────────────
+const BASE_CONFIG = {"Skin Options": {"Maximum number of approved skins allowed for each item (-1 is unlimited)": -1, "Maximum number of pages viewable": 6, "Include approved skins (WARNING! Allowing users to use paid content they don't own is against Rusts TOS)": false, "Only show approved skins that the player owns": true, "Remove approved skin ID's from config workshop skin list": true, "Include redirected skins (WARNING! Allowing users to use paid content they don't own is against Rusts TOS)": false, "Only use approved skins for these item shortnames (only used when 'Include approved skins' is disabled)": [], "Approved skin timeout (seconds)": 180, "Include manually imported workshop skins": true, "Show skin ID's in the name for admins": true, "Skin list order (Config, ConfigReversed, Alphabetical)": "Config", "Steam API key for workshop skins (https://steamcommunity.com/dev/apikey)": "7BBAA6C4F61C8ABDC4F6AAA4843DA893"}, "Cooldown Options": {"Enable cooldowns": false, "Cooldown time start's when a item is removed from the box": true, "Length of cooldown time (seconds)": 0}, "Command Options": {"Commands to open the SkinBox": ["skinbox", "sb"], "Commands to open the deployed item SkinBox": ["skindeployed", "sd"], "Commands to open the skin set box": ["skinset", "ss"], "Allow skinning via Skinbox spray can": false, "Commands to request a skin": ["skinrequest"]}, "Permission Options": {"Permission required to use SkinBox": "skinbox.use", "Permission required to reskin deployed items": "skinbox.use", "Permission required to use admin functions": "skinbox.admin", "Permission that bypasses usage costs": "skinbox.ignorecost", "Permission that bypasses usage cooldown": "skinbox.ignorecooldown", "Permission that bypasses DLC checks": "skinbox.ignoredlccheck", "Permission required to skin weapons": "skinbox.use", "Permission required to skin deployables": "skinbox.use", "Permission required to skin attire": "skinbox.use", "Permission required to view approved skins": "skinbox.use", "Permission required to use skin sets": "skinbox.use", "Permission required to use the request skin command": "skinbox.use", "Custom permissions per skin": {"skinbox.moderator": [2657768804, 2367359297, 2891471916, 1605574469, 1974252534, 2593972552, 1397801899, 2764955948, 2448189526, 2933068526, 2563327535, 2040286809, 2575456552, 2172078031, 3141140471, 2839756581, 1411073464, 889479991, 801622102, 1403885411, 2835736365, 3010775069, 2566480912, 816600190, 3303652830, 3312593417, 3303653646, 3318426834, 3318425833, 3312592708, 3307990655, 3323535395, 1187639508, 2368583775, 2368585506, 2966057188, 3355824388, 3436155834, 3449521233, 833914324, 838828104, 2052378272, 2497239256, 2529277044, 2766762596, 2766803410, 2966509367, 3309770326, 2957853483, 2957851194, 2957774272, 1656595937, 1125809328, 3449435411, 3449439014, 2143175116, 3449436059, 2602738572], "skinbox.example2": [9993, 9994, 9995], "skinbox.example3": [9996, 9997, 9998], "skinbox.cart": [9993, 9994, 9995, 3216540470, 3145395239, 3145393223, 3164526497, 3190808930, 3190807158, 3406716750, 3436155834]}}, "Usage Cost Options": {"Enable usage costs": false, "Currency used for usage costs (Scrap, Economics, ServerRewards)": "Scrap", "Cost to open the SkinBox": 0, "Cost to skin deployables": 0, "Cost to skin attire": 0, "Cost to skin weapons": 0}, "Other Options": {"Allow stacked items": false, "Auth-level required to view blacklisted skins": 2, "Spray can max uses": 10, "Only allow skinning of items in areas where the player has building privilege": false, "Apply skin workshop name to item if available (false keeps the name of the input item)": true}, "Favourites Options": {"Enable favourites system": true, "Enable purging of favourites data": true, "Purge user favourites that haven't been online for x amount of days": 7}, "Set Options": {"Enable set system": true, "Number of skin sets allowed": 3}, "Skin Requests": {"Allow skin requests": true, "Discord webhook for incoming skin requests": "https://discord.com/api/webhooks/1365521310251483226/jVkF-w2Mh_dpY9Hr7YyaGhLkvHRBybMAK6E7S8R6xlZ5b8nDm6Z4YXP7jWS08cT2YEjr", "Days to wait before a user can request a already requested skin": 7}, "Imported Workshop Skins": {"box.wooden": [2900739039, 2900740996, 3107845724, 3107842355, 3107841603, 3107843046, 2900742580, 3107844369, 2900741909, 3107845128, 2900741253, 2900741452, 3107846463, 3420714009, 2856457408, 3628458446, 3446773889], "box.wooden.large": [3239479751, 2485098571, 810687173, 2084011098, 2166075403, 3107848260, 3107849849, 2928679523, 2932178914, 2935600471, 2935601066, 2939124047, 2939124462, 2942506397, 2945794032, 2949032168, 2952657640, 2959826747, 2963031504, 2966049501, 2975697982, 2978635255, 2981653905, 2984712521, 2987737589, 2762325891, 2762326871, 2762327948, 2762330233, 2762331774, 2762328689, 2706016224, 2774133267, 2774134157, 2774136298, 2774135668, 2774137482, 2774137839, 2774159982, 2774137139, 2774141950, 2774139958, 2774138706, 2774139228, 2774139642, 2774138384, 2774140273, 2774140954, 2774141383, 2774141712, 2774138144, 2774142342, 2774143793, 2774142674, 2774142993, 2774143255, 2774144082, 2774144831, 2774145272, 2774148027, 2774143520, 2774145687, 2774144430, 2774146185, 2774151142, 2774149317, 2774149682, 2774154472, 2774165059, 2774156220, 2774152914, 2774154814, 2774153253, 2774153752, 2774155156, 2774152079, 2774156516, 2774158669, 2774151651, 2774158916, 2774159189, 2774159499, 2774157657, 2774158057, 2774159713, 2774158390, 2775973375, 2775972748, 2775974643, 2775974424, 2775973611, 2930776114, 2930794335, 2930806162, 2930822919, 2930837323, 2930860679, 2930864439, 2930872580, 2930897627, 2971300908, 2971304492, 2971307069, 3007218682, 3009198642, 3009336410, 3015373796, 3015395739, 3017633313, 3242428753, 3242981777, 2778493336, 2795950055, 2928475473, 2898024143, 2856025383, 2856019669, 2856015053, 2836019842, 2836018963, 2836014303, 2836016189, 2836017666, 3046914258, 3046914106, 3628456991, 3628463886], "crossbow": [3580022911, 3579998047, 3579948969], "wall.frame.garagedoor": [2148536279, 3241301985, 2752910317, 3283489840, 1557260733, 2168738710, 2133431737, 2991377335, 2586326322, 2979257711, 1440334955, 3048999576, 2255192387, 3141140471, 3094272575, 2876344958, 3113978276, 2172078031, 3235541842, 1372388838, 3023903283, 3265157016, 2682601648, 2457757024, 2166192161, 2937281575, 3380040513, 3371733013, 1187639508, 3408677529, 3217100330, 3270167035, 3295054992, 3419522448, 3449521233, 2052378272, 3309770326, 3580031968, 3580004708, 3579959113, 3628534712], "rug.bear": [2613799472, 2923460588, 2164583269, 3322215598], "door.double.hinged.toptier": [2871518390, 2769243268, 3090203622, 2575456552, 3580031428, 3580004247, 3579948076, 2266832298], "mask.bandana": [2746436535, 1574722565, 816600190, 3107855187, 3107868495, 3107860992, 3107867379], "rifle.lr300": [2193641084, 2409312173, 2543418627, 3368296076, 3372202750, 2365819846, 2557430180], "hammer": [2138223730, 3628449782], "shoes.boots": [911186114, 2050038638, 3107851592, 3107834762, 3107855936, 3107869228, 2922914793, 2730618384, 2766762596, 3550940003, 3580015331, 3579988944, 3579962933, 2957774272], "attire.hide.poncho": [3245755661], "attire.hide.vest": [], "attire.hide.pants": [], "hat.boonie": [], "attire.hide.boots": [], "metal.facemask": [1605901930, 800933810, 3145395239, 3107830924, 2922920700, 839564493, 803801187, 3323125148, 2730597455, 2766803410, 2642930784, 3550728166, 3580013011, 3579986127, 3579944282, 1656595937, 3031141268], "metal.plate.torso": [3145393223, 816098063, 2171315003, 3107834077, 2922921675, 3327424533, 2730615351, 2966057188, 2642929746, 3549897184, 3580012525, 3579987098, 3579945548, 2143175116, 2602738572, 3031140981], "deer.skull.mask": [3164526497, 843823942, 3580019665, 3579994916, 3579959737], "burlap.shirt": [3190808930, 795185645, 912032354, 3134855013], "burlap.trousers": [3190807158, 3134855981, 2822379233], "rifle.ak": [2552738708, 3216540470, 3222604129, 3107875465, 3312588906, 3375817028, 3387930818, 1164351519, 2428514763, 3548070285, 3580010348, 3579983247, 3579889524, 1125809328], "table": [2661728724, 2899558372, 2924941290, 2856461724], "knife.bone": [3107825915, 3107825287, 802812621], "rug": [2927177739, 889479991, 2901631931, 2901628452, 2901633833, 2901634041, 2901629585, 2966509367, 3627813238, 3627850308], "pants": [1502614911, 910808140, 2050030527, 3107854745, 3107839220, 3107860221, 3107870614, 2922911684, 2347193193, 2368585506, 2529277044, 2562666817, 3550157771, 3580017018, 3579988534, 3579954528, 2957853483], "tshirt": [1502559216, 3580021079, 3579996455, 3579943625], "burlap.gloves": [911169463, 2050037289, 2454377972, 3107852333, 3107856647, 3107861723, 3580020235, 3579995319, 3579956678], "door.hinged.metal": [2620604819, 1403885411, 2839756581, 2593972552, 2553152569, 2124665555, 2481946288, 3406716750, 3275019165, 3275019435, 3436155834, 833914324, 3628455528], "smg.thompson": [3154184498, 3107872546, 3107884263, 3580024201, 3579998959, 3579890447], "fridge": [2835736365, 3010775069, 3342924381, 2900720108, 2928505577, 2856438961, 2986997486], "door.hinged.toptier": [801622102, 838828104, 3580031026, 3580003777, 3579946715, 2506963265], "lmg.m249": [1711588659, 3107871697, 2360592677, 2738353314, 2991534509, 3556599811, 3580030460, 3579992843, 3579892994], "mask.balaclava": [785380124], "door.hinged.wood": [1411073464, 2596403452, 2876334234, 2936296793], "chair": [2566480912, 2899483928, 2899483627, 2856465722], "shirt.collared": [1307910990, 3628459732], "hoodie": [2050036062, 3107854157, 3107838479, 3107859609, 3107828402, 3107866519, 2922906722, 2513051057, 3390375537, 2347191017, 2368583775, 2497239256, 2562665334, 3550187755, 3580016466, 3579988100, 3579946178, 2957851194], "coffeecan.helmet": [2953705043, 3580019277, 3579993431, 3579960784], "roadsign.jacket": [2953704420, 3580014541, 3579990568, 3579951483], "roadsign.kilt": [2953703791, 3107840424, 2922923888, 2730616924, 3323535395, 2942983525, 3551521578, 3580014003, 3579990010, 3579952706, 3449435411], "locker": [3107819958, 1269592064, 3223496378], "roadsign.gloves": [2922991093, 3553101787, 3580013586, 3579989398, 3579953216, 3449436059], "jacket": [2496913595, 2988267679, 3580021508, 3579997055, 3579963489], "rifle.l96": [2849409508, 3317577696, 2870395185, 3355824388, 2796406383, 2636718978, 3580029599, 3579991784, 3579957722], "jacket.snow": [2870862403], "largebackpack": [3376100226, 3390287843, 3390223946, 3551462527, 3580022092, 3579997534, 3579957254, 3449439014], "hat.beenie": [3107853211, 3107858328, 3107869906], "target.reactive": [2899431809, 2899431919, 2899431451, 2899432079], "barricade.concrete": [2899525656, 2899430496], "vending.machine": [3107817764], "rifle.semiauto": [3107874233, 3107883028, 3580025610, 3580000392, 3579950168], "door.double.hinged.wood": [2899449529, 2899489317], "smg.2": [3107876545, 3580026338, 3580000941, 3579960198], "shotgun.double": [3107878609], "smg.mp5": [3107879565, 3340497055, 3267154181, 1974038221, 3390007173, 3580023584, 3579998531, 3579955425], "pistol.semiauto": [3107881078, 1289093379, 3628646338], "sleepingbag": [816623663, 3269832336, 3560711964, 3628452378], "rifle.bolt": [1695259300, 2823570500, 3145161332, 2617744110, 3580028983, 3579991083, 3579962018], "pistol.python": [2808947481, 3580026913, 3580001696, 3579953829], "grenade.f1": [2973784242], "furnace": [3178801812, 2503679174, 3628454345, 3628462373], "rocket.launcher": [2946817967, 2806026557, 2575218001, 3580024823, 3579999480, 3579964061], "door.double.hinged.metal": [2982528595, 2926549607, 1882567303, 3265564447], "pistol.revolver": [2744352732], "shotgun.pump": [], "icepick.salvaged": [3549960048], "water.purifier": [2811249978], "bucket.helmet": [3580018756, 3579994374, 3579961616], "bow.hunting": [3580027578, 3580002554, 3579958472], "jackhammer": [3580028265, 3580003184, 3579958113], "tshirt.long": [3580020654, 3579995957, 3579956182], "bed": [3579891115, 3580038203, 3580040128], "pants.shorts": [3628460989], "component.box.wood.large": [2900739039, 2900740996, 3107845724, 3107842355, 3107841603, 3107843046, 2900742580, 3107844369, 2900741909, 3107845128, 2900741253, 2900741452, 3107846463, 3420714009, 2856457408, 3628458446, 3446773889]}, "Blacklisted Skin ID's": [], "Prevent items with the following Skin ID's from being re-skinned": [], "Prevent these items from being re-skinned (shortname)": [], "Version": {"Major": 2, "Minor": 2, "Patch": 31}};
+const CAT_LABELS  = {"box.wooden": "Wooden Box", "box.wooden.large": "Large Wood Box", "crossbow": "Crossbow", "wall.frame.garagedoor": "Garage Door", "rug.bear": "Bear Rug", "door.double.hinged.toptier": "Armored Double Door", "mask.bandana": "Bandana Mask", "rifle.lr300": "LR-300", "hammer": "Hammer", "shoes.boots": "Boots", "attire.hide.poncho": "Hide Poncho", "attire.hide.vest": "Hide Vest", "attire.hide.pants": "Hide Pants", "hat.boonie": "Boonie Hat", "attire.hide.boots": "Hide Boots", "metal.facemask": "Metal Facemask", "metal.plate.torso": "Metal Chest Plate", "deer.skull.mask": "Deer Skull Mask", "burlap.shirt": "Burlap Shirt", "burlap.trousers": "Burlap Trousers", "rifle.ak": "AK-47", "table": "Table", "knife.bone": "Bone Knife", "rug": "Rug", "pants": "Pants", "tshirt": "T-Shirt", "burlap.gloves": "Burlap Gloves", "door.hinged.metal": "Metal Door", "smg.thompson": "Thompson SMG", "fridge": "Fridge", "door.hinged.toptier": "Armored Door", "lmg.m249": "M249", "mask.balaclava": "Balaclava", "door.hinged.wood": "Wooden Door", "chair": "Chair", "shirt.collared": "Collared Shirt", "hoodie": "Hoodie", "coffeecan.helmet": "Coffee Can Helmet", "roadsign.jacket": "Road Sign Jacket", "roadsign.kilt": "Road Sign Kilt", "locker": "Locker", "roadsign.gloves": "Road Sign Gloves", "jacket": "Jacket", "rifle.l96": "L96 Rifle", "jacket.snow": "Snow Jacket", "largebackpack": "Large Backpack", "hat.beenie": "Beenie Hat", "target.reactive": "Reactive Target", "barricade.concrete": "Concrete Barricade", "vending.machine": "Vending Machine", "rifle.semiauto": "Semi-Auto Rifle", "door.double.hinged.wood": "Wooden Double Door", "smg.2": "Custom SMG", "shotgun.double": "Double Barrel", "smg.mp5": "MP5", "pistol.semiauto": "Semi-Auto Pistol", "sleepingbag": "Sleeping Bag", "rifle.bolt": "Bolt Action", "pistol.python": "Python Revolver", "grenade.f1": "F1 Grenade", "furnace": "Furnace", "rocket.launcher": "Rocket Launcher", "door.double.hinged.metal": "Metal Double Door", "pistol.revolver": "Revolver", "shotgun.pump": "Pump Shotgun", "icepick.salvaged": "Salvaged Icepick", "water.purifier": "Water Purifier", "bucket.helmet": "Bucket Helmet", "bow.hunting": "Hunting Bow", "jackhammer": "Jackhammer", "tshirt.long": "Long T-Shirt", "bed": "Bed", "pants.shorts": "Shorts", "component.box.wood.large": "Wood Box (component)"};
+const CAT_GROUPS  = {"box.wooden": "Storage", "box.wooden.large": "Storage", "fridge": "Storage", "locker": "Storage", "component.box.wood.large": "Storage", "door.hinged.wood": "Doors", "door.hinged.metal": "Doors", "door.hinged.toptier": "Doors", "door.double.hinged.wood": "Doors", "door.double.hinged.metal": "Doors", "door.double.hinged.toptier": "Doors", "wall.frame.garagedoor": "Doors", "rifle.ak": "Weapons", "rifle.lr300": "Weapons", "rifle.l96": "Weapons", "rifle.bolt": "Weapons", "rifle.semiauto": "Weapons", "lmg.m249": "Weapons", "smg.thompson": "Weapons", "smg.mp5": "Weapons", "smg.2": "Weapons", "pistol.semiauto": "Weapons", "pistol.python": "Weapons", "pistol.revolver": "Weapons", "shotgun.pump": "Weapons", "shotgun.double": "Weapons", "rocket.launcher": "Weapons", "crossbow": "Weapons", "bow.hunting": "Weapons", "grenade.f1": "Weapons", "knife.bone": "Weapons", "metal.facemask": "Attire", "metal.plate.torso": "Attire", "coffeecan.helmet": "Attire", "bucket.helmet": "Attire", "deer.skull.mask": "Attire", "mask.bandana": "Attire", "mask.balaclava": "Attire", "roadsign.jacket": "Attire", "roadsign.kilt": "Attire", "roadsign.gloves": "Attire", "hoodie": "Attire", "jacket": "Attire", "jacket.snow": "Attire", "shirt.collared": "Attire", "tshirt": "Attire", "tshirt.long": "Attire", "burlap.shirt": "Attire", "burlap.trousers": "Attire", "burlap.gloves": "Attire", "pants": "Attire", "pants.shorts": "Attire", "shoes.boots": "Attire", "hat.beenie": "Attire", "hat.boonie": "Attire", "largebackpack": "Attire", "attire.hide.poncho": "Attire", "attire.hide.vest": "Attire", "attire.hide.pants": "Attire", "attire.hide.boots": "Attire", "table": "Furniture", "chair": "Furniture", "bed": "Furniture", "rug": "Furniture", "rug.bear": "Furniture", "hammer": "Tools", "jackhammer": "Tools", "icepick.salvaged": "Tools", "water.purifier": "Tools", "furnace": "Tools", "vending.machine": "Tools", "target.reactive": "Tools", "barricade.concrete": "Tools", "sleepingbag": "Tools"};
+const PERM_COLORS = ["#E8461A", "#4caf7d", "#4a9eda", "#e8a21a", "#a64ae8", "#e84a8a", "#4ae8d8", "#e8d84a"];
+const STEAM_API   = 'https://api.steampowered.com/ISteamRemoteStorage/GetPublishedFileDetails/v1/';
 
-const CAT_LABELS={"box.wooden":"Wooden Box","box.wooden.large":"Large Wood Box","crossbow":"Crossbow","wall.frame.garagedoor":"Garage Door","rug.bear":"Bear Rug","door.double.hinged.toptier":"Armored Double Door","mask.bandana":"Bandana Mask","rifle.lr300":"LR-300","hammer":"Hammer","shoes.boots":"Boots","attire.hide.poncho":"Hide Poncho","attire.hide.vest":"Hide Vest","attire.hide.pants":"Hide Pants","hat.boonie":"Boonie Hat","attire.hide.boots":"Hide Boots","metal.facemask":"Metal Facemask","metal.plate.torso":"Metal Chest Plate","deer.skull.mask":"Deer Skull Mask","burlap.shirt":"Burlap Shirt","burlap.trousers":"Burlap Trousers","rifle.ak":"AK-47","table":"Table","knife.bone":"Bone Knife","rug":"Rug","pants":"Pants","tshirt":"T-Shirt","burlap.gloves":"Burlap Gloves","door.hinged.metal":"Metal Door","smg.thompson":"Thompson SMG","fridge":"Fridge","door.hinged.toptier":"Armored Door","lmg.m249":"M249","mask.balaclava":"Balaclava","door.hinged.wood":"Wooden Door","chair":"Chair","shirt.collared":"Collared Shirt","hoodie":"Hoodie","coffeecan.helmet":"Coffee Can Helmet","roadsign.jacket":"Road Sign Jacket","roadsign.kilt":"Road Sign Kilt","locker":"Locker","roadsign.gloves":"Road Sign Gloves","jacket":"Jacket","rifle.l96":"L96 Rifle","jacket.snow":"Snow Jacket","largebackpack":"Large Backpack","hat.beenie":"Beenie Hat","target.reactive":"Reactive Target","barricade.concrete":"Concrete Barricade","vending.machine":"Vending Machine","rifle.semiauto":"Semi-Auto Rifle","door.double.hinged.wood":"Wooden Double Door","smg.2":"Custom SMG","shotgun.double":"Double Barrel","smg.mp5":"MP5","pistol.semiauto":"Semi-Auto Pistol","sleepingbag":"Sleeping Bag","rifle.bolt":"Bolt Action","pistol.python":"Python Revolver","grenade.f1":"F1 Grenade","furnace":"Furnace","rocket.launcher":"Rocket Launcher","door.double.hinged.metal":"Metal Double Door","pistol.revolver":"Revolver","shotgun.pump":"Pump Shotgun","icepick.salvaged":"Salvaged Icepick","water.purifier":"Water Purifier","bucket.helmet":"Bucket Helmet","bow.hunting":"Hunting Bow","jackhammer":"Jackhammer","tshirt.long":"Long T-Shirt","bed":"Bed","pants.shorts":"Shorts","component.box.wood.large":"Wood Box (component)"};
-const CAT_GROUPS={"box.wooden":"Storage","box.wooden.large":"Storage","fridge":"Storage","locker":"Storage","component.box.wood.large":"Storage","door.hinged.wood":"Doors","door.hinged.metal":"Doors","door.hinged.toptier":"Doors","door.double.hinged.wood":"Doors","door.double.hinged.metal":"Doors","door.double.hinged.toptier":"Doors","wall.frame.garagedoor":"Doors","rifle.ak":"Weapons","rifle.lr300":"Weapons","rifle.l96":"Weapons","rifle.bolt":"Weapons","rifle.semiauto":"Weapons","lmg.m249":"Weapons","smg.thompson":"Weapons","smg.mp5":"Weapons","smg.2":"Weapons","pistol.semiauto":"Weapons","pistol.python":"Weapons","pistol.revolver":"Weapons","shotgun.pump":"Weapons","shotgun.double":"Weapons","rocket.launcher":"Weapons","crossbow":"Weapons","bow.hunting":"Weapons","grenade.f1":"Weapons","knife.bone":"Weapons","metal.facemask":"Attire","metal.plate.torso":"Attire","coffeecan.helmet":"Attire","bucket.helmet":"Attire","deer.skull.mask":"Attire","mask.bandana":"Attire","mask.balaclava":"Attire","roadsign.jacket":"Attire","roadsign.kilt":"Attire","roadsign.gloves":"Attire","hoodie":"Attire","jacket":"Attire","jacket.snow":"Attire","shirt.collared":"Attire","tshirt":"Attire","tshirt.long":"Attire","burlap.shirt":"Attire","burlap.trousers":"Attire","burlap.gloves":"Attire","pants":"Attire","pants.shorts":"Attire","shoes.boots":"Attire","hat.beenie":"Attire","hat.boonie":"Attire","largebackpack":"Attire","attire.hide.poncho":"Attire","attire.hide.vest":"Attire","attire.hide.pants":"Attire","attire.hide.boots":"Attire","table":"Furniture","chair":"Furniture","bed":"Furniture","rug":"Furniture","rug.bear":"Furniture","hammer":"Tools","jackhammer":"Tools","icepick.salvaged":"Tools","water.purifier":"Tools","furnace":"Tools","vending.machine":"Tools","target.reactive":"Tools","barricade.concrete":"Tools","sleepingbag":"Tools"};
-const PERM_COLORS=['#E8461A','#4caf7d','#4a9eda','#e8a21a','#a64ae8','#e84a8a','#4ae8d8','#e8d84a'];
+function proxyImg(url) {
+  if (!url) return null;
+  const s = url.replace(/^https?:\/\//, '');
+  return 'https://images.weserv.nl/?url=' + encodeURIComponent(s) + '&w=200&h=200&fit=cover&output=webp';
+}
 
 // ── STATE ────────────────────────────────────────────────────────────────────
-let skins=[];       // {id, cat, catLabel, group}
-let skinData={};    // id -> {name,img,status,loading}
-let permGroups={};  // permName -> Set of id strings
-let PAGE=80, visible=PAGE;
-let ctxSkinId=null, modalSkinId=null;
+let skins = [];       // [{id, cat, catLabel, group}]
+let skinData = {};    // id -> {name, img, status}
+let permGroups = {};  // permName -> Set of id strings
+let visible = 80;
+let ctxSkinId = null, modalSkinId = null;
+let steamRunning = false;
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
-(function init(){
-  const seen=new Set();
-  for(const [cat,ids] of Object.entries(BASE_CONFIG['Imported Workshop Skins'])){
-    for(const id of ids){
-      const k=String(id);
-      if(!seen.has(k)){seen.add(k);skins.push({id:k,cat,catLabel:CAT_LABELS[cat]||cat,group:CAT_GROUPS[cat]||'Other'});}
-      if(!skinData[k])skinData[k]={name:null,img:null,status:'loading'};
+(function init() {
+  const seen = new Set();
+  for (const [cat, ids] of Object.entries(BASE_CONFIG['Imported Workshop Skins'])) {
+    for (const id of ids) {
+      const k = String(id);
+      if (!seen.has(k)) {
+        seen.add(k);
+        skins.push({ id: k, cat, catLabel: CAT_LABELS[cat] || cat, group: CAT_GROUPS[cat] || 'Other' });
+      }
+      if (!skinData[k]) skinData[k] = { name: null, img: null, status: 'loading' };
     }
   }
-  const cp=BASE_CONFIG['Permission Options']['Custom permissions per skin']||{};
-  for(const [p,ids] of Object.entries(cp)) permGroups[p]=new Set(ids.map(String));
+  const cp = BASE_CONFIG['Permission Options']['Custom permissions per skin'] || {};
+  for (const [p, ids] of Object.entries(cp)) permGroups[p] = new Set(ids.map(String));
 
-  populateSelects();
+  populateItemSelects();
+  refreshPermSelects();
   renderTable();
   renderPermCards();
-  updateViewExportInfo();
+  updateViewInfo();
+  document.getElementById('hdr-count').textContent = skins.length;
   fetchSteamData();
 })();
 
-function populateSelects(){
-  const allCats=[...new Set(skins.map(s=>s.cat))].sort();
-  ['add-item','bulk-item','f-item'].forEach(id=>{
-    const el=document.getElementById(id);
-    allCats.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=CAT_LABELS[c]||c;el.appendChild(o);});
+function populateItemSelects() {
+  const cats = [...new Set(skins.map(s => s.cat))].sort();
+  ['add-item', 'bulk-item', 'f-item'].forEach(id => {
+    const el = document.getElementById(id);
+    cats.forEach(c => {
+      const o = document.createElement('option');
+      o.value = c; o.textContent = CAT_LABELS[c] || c;
+      el.appendChild(o);
+    });
   });
-  refreshPermSelects();
 }
-function refreshPermSelects(){
-  const groups=Object.keys(permGroups).sort();
-  ['add-perm','bulk-perm','f-perm','modal-perm-select'].forEach(id=>{
-    const el=document.getElementById(id); if(!el)return;
-    const cur=el.value;
-    while(el.options.length>1)el.remove(1);
-    groups.forEach(g=>{const o=document.createElement('option');o.value=g;o.textContent=g;el.appendChild(o);});
-    if(id==='f-perm'){
-      const o1=document.createElement('option');o1.value='__none__';o1.textContent='No permission (public)';el.insertBefore(o1,el.options[1]);
-      const o2=document.createElement('option');o2.value='__use_exclusive__';o2.textContent='skinbox.use only (no higher perms)';el.insertBefore(o2,el.options[2]);
-    }
-    el.value=cur||'';
+
+function refreshPermSelects() {
+  const groups = Object.keys(permGroups).sort();
+  // Simple perm selects (add/bulk/modal)
+  ['add-perm', 'bulk-perm', 'modal-perm-select'].forEach(id => {
+    const el = document.getElementById(id); if (!el) return;
+    const cur = el.value;
+    while (el.options.length > 1) el.remove(1);
+    groups.forEach(g => { const o = document.createElement('option'); o.value = g; o.textContent = g; el.appendChild(o); });
+    el.value = cur || '';
   });
-  // view-only export perm picker — always has skinbox.use first, then custom groups
-  const vep=document.getElementById('view-export-perm');
-  if(vep){
-    const cur=vep.value;
-    while(vep.options.length>1)vep.remove(1);
-    groups.forEach(g=>{const o=document.createElement('option');o.value=g;o.textContent=g+' (custom perm)';vep.appendChild(o);});
-    vep.value=cur&&(cur==='__use__'||groups.includes(cur))?cur:'__use__';
-  }
-  updateViewExportInfo();
+  // Filter perm select — keep static options, append groups
+  const fp = document.getElementById('f-perm');
+  const fcur = fp.value;
+  while (fp.options.length > 3) fp.remove(3); // keep All / No restriction / skinbox.use exclusive
+  groups.forEach(g => { const o = document.createElement('option'); o.value = g; o.textContent = g; fp.appendChild(o); });
+  fp.value = fcur || '';
+  // View export perm
+  const vep = document.getElementById('view-export-perm');
+  const vcur = vep.value;
+  while (vep.options.length > 1) vep.remove(1);
+  groups.forEach(g => { const o = document.createElement('option'); o.value = g; o.textContent = g + ' (custom)'; vep.appendChild(o); });
+  vep.value = (vcur && (vcur === '__use__' || groups.includes(vcur))) ? vcur : '__use__';
+  updateViewInfo();
 }
 
-// ── IMAGE PROXY ───────────────────────────────────────────────────────────────
-// Steam CDN blocks hotlinking. Route through images.weserv.nl (scheme must be stripped).
-function proxyImg(url){
-  if(!url)return null;
-  const stripped=url.replace(/^https?:\/\//,'');
-  return 'https://images.weserv.nl/?url='+encodeURIComponent(stripped)+'&w=200&h=200&fit=cover&output=webp';
-}
+// ── STEAM FETCH ───────────────────────────────────────────────────────────────
+async function fetchSteamData() {
+  if (steamRunning) return;
+  steamRunning = true;
+  document.getElementById('load-status').textContent = 'Fetching Steam data...';
+  document.getElementById('steam-retry-btn').style.display = 'none';
+  document.getElementById('cors-warning').style.display = 'none';
 
-// Steam API endpoint — routed through corsproxy.io to bypass CORS on GitHub Pages
-const STEAM_API='https://corsproxy.io/?'+encodeURIComponent('https://api.steampowered.com/ISteamRemoteStorage/GetPublishedFileDetails/v1/');
+  const ids = skins.map(s => s.id);
+  const CHUNK = 100; let done = 0; let anySuccess = false;
 
-// ── STEAM API ─────────────────────────────────────────────────────────────────
-let steamFetchRunning=false;
-
-async function fetchSteamData(){
-  if(steamFetchRunning)return;
-  steamFetchRunning=true;
-  document.getElementById('load-status').textContent='Fetching Steam data…';
-  document.getElementById('steam-load-btn').style.display='none';
-
-  const ids=skins.map(s=>s.id);
-  const CHUNK=100;let done=0;let anySuccess=false;
-
-  for(let i=0;i<ids.length;i+=CHUNK){
-    const chunk=ids.slice(i,i+CHUNK);
-    try{
-      const p=new URLSearchParams();p.append('itemcount',chunk.length);
-      chunk.forEach((id,j)=>p.append(`publishedfileids[${j}]`,id));
-      const r=await fetch(STEAM_API,{
-        method:'POST',
-        headers:{'Content-Type':'application/x-www-form-urlencoded'},
-        body:p.toString()
-      });
-      const json=await r.json();
-      for(const f of(json?.response?.publishedfiledetails||[])){
-        const k=String(f.publishedfileid);
-        if(!skinData[k])skinData[k]={};
-        const tags=(f.tags||[]).map(t=>(t.tag||'').toLowerCase());
-        skinData[k].name=f.title||'Unnamed';
-        skinData[k].img=proxyImg(f.preview_url||null);
-        skinData[k].status=f.result===1?(tags.includes('featured')||tags.includes('approved')?'Approved':'Workshop'):'Unavailable';
+  for (let i = 0; i < ids.length; i += CHUNK) {
+    const chunk = ids.slice(i, i + CHUNK);
+    try {
+      const p = new URLSearchParams();
+      p.append('itemcount', chunk.length);
+      chunk.forEach((id, j) => p.append('publishedfileids[' + j + ']', id));
+      const r = await fetch(STEAM_API, { method: 'POST', body: p.toString() });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const json = await r.json();
+      for (const f of (json?.response?.publishedfiledetails || [])) {
+        const k = String(f.publishedfileid);
+        if (!skinData[k]) skinData[k] = {};
+        const tags = (f.tags || []).map(t => (t.tag || '').toLowerCase());
+        skinData[k].name   = f.title || 'Unnamed';
+        skinData[k].img    = proxyImg(f.preview_url || null);
+        skinData[k].status = f.result === 1 ? (tags.includes('featured') || tags.includes('approved') ? 'Approved' : 'Workshop') : 'Unavailable';
       }
-      anySuccess=true;
-    }catch(e){
-      if(!anySuccess){
-        // First chunk failed — likely CORS from file:// — stop and show message
-        steamFetchRunning=false;
-        document.getElementById('load-status').textContent='⚠ Steam blocked (see below)';
-        document.getElementById('steam-load-btn').style.display='inline-block';
-        document.getElementById('prog').style.display='none';
-        document.getElementById('cors-warning').style.display='block';
+      anySuccess = true;
+    } catch (e) {
+      if (!anySuccess) {
+        steamRunning = false;
+        document.getElementById('load-status').textContent = '⚠ Steam blocked';
+        document.getElementById('steam-retry-btn').style.display = 'inline-block';
+        document.getElementById('cors-warning').style.display = 'block';
+        document.getElementById('cors-error-detail').textContent = 'Error: ' + (e.message || e);
         renderTable();
         return;
       }
-      // Mid-run failure — skip chunk and continue
     }
-    done+=chunk.length;
-    document.getElementById('prog').style.width=(done/ids.length*100)+'%';
+    done += chunk.length;
+    document.getElementById('prog').style.width = (done / ids.length * 100) + '%';
     renderTable();
-    await new Promise(r=>setTimeout(r,300));
+    await new Promise(r => setTimeout(r, 300));
   }
 
-  document.getElementById('prog').style.width='100%';
-  setTimeout(()=>document.getElementById('prog').style.display='none',600);
-  const loaded=skins.filter(s=>skinData[s.id]?.status&&skinData[s.id].status!=='loading').length;
-  document.getElementById('load-status').textContent='✓ '+loaded+' / '+skins.length+' skins loaded';
-  document.getElementById('cors-warning').style.display='none';
-  steamFetchRunning=false;
+  document.getElementById('prog').style.width = '100%';
+  setTimeout(() => document.getElementById('prog').style.display = 'none', 600);
+  const loaded = skins.filter(s => skinData[s.id]?.status && skinData[s.id].status !== 'loading').length;
+  document.getElementById('load-status').textContent = '✓ ' + loaded + ' / ' + skins.length + ' loaded';
+  steamRunning = false;
   renderTable();
 }
 
-async function fetchOneSkin(id){
-  try{
-    const p=new URLSearchParams();p.append('itemcount',1);p.append('publishedfileids[0]',id);
-    const r=await fetch(STEAM_API,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:p.toString()});
-    const files=(await r.json())?.response?.publishedfiledetails||[];
-    if(files.length){
-      const f=files[0];
-      const tags=(f.tags||[]).map(t=>(t.tag||'').toLowerCase());
-      return {name:f.title||'Unnamed',img:proxyImg(f.preview_url||null),status:f.result===1?(tags.includes('featured')||tags.includes('approved')?'Approved':'Workshop'):'Unavailable'};
+async function fetchOneSkin(id) {
+  try {
+    const p = new URLSearchParams();
+    p.append('itemcount', 1);
+    p.append('publishedfileids[0]', id);
+    const r = await fetch(STEAM_API, { method: 'POST', body: p.toString() });
+    const files = (await r.json())?.response?.publishedfiledetails || [];
+    if (files.length) {
+      const f = files[0];
+      const tags = (f.tags || []).map(t => (t.tag || '').toLowerCase());
+      return { name: f.title || 'Unnamed', img: proxyImg(f.preview_url || null), status: f.result === 1 ? (tags.includes('featured') || tags.includes('approved') ? 'Approved' : 'Workshop') : 'Unavailable' };
     }
-  }catch(e){}
-  return {name:'Unknown',img:null,status:'Unavailable'};
+  } catch (e) {}
+  return { name: 'Unknown', img: null, status: 'Unavailable' };
 }
 
-// ── ADD SKIN ──────────────────────────────────────────────────────────────────
-let previewTimer=null;
-function previewSkin(){
-  const id=document.getElementById('add-id').value.trim();
+function retryFetch() { steamRunning = false; fetchSteamData(); }
+
+// ── ADD / REMOVE ──────────────────────────────────────────────────────────────
+let previewTimer = null;
+function previewSkin() {
+  const id = document.getElementById('add-id').value.trim();
   clearTimeout(previewTimer);
-  if(!/^\d{6,12}$/.test(id)){document.getElementById('preview-wrap').style.display='none';return;}
-  document.getElementById('preview-wrap').style.display='block';
-  document.getElementById('prev-name').textContent='Loading…';
-  document.getElementById('prev-img').src='';
-  document.getElementById('prev-sub').textContent='#'+id;
-  document.getElementById('prev-badge').textContent='';
-  previewTimer=setTimeout(async()=>{
-    const d=skinData[id]?.name?skinData[id]:await fetchOneSkin(id);
-    document.getElementById('prev-name').textContent=d.name||'Unknown';
-    if(d.img)document.getElementById('prev-img').src=d.img;
-    document.getElementById('prev-badge').textContent=d.status||'';
-    document.getElementById('prev-badge').className='badge '+(d.status==='Approved'?'b-approved':d.status==='Workshop'?'b-workshop':'b-unavail');
-    if(!skinData[id])skinData[id]=d;
-  },400);
+  if (!/^\d{6,12}$/.test(id)) { document.getElementById('preview-wrap').style.display = 'none'; return; }
+  document.getElementById('preview-wrap').style.display = 'block';
+  document.getElementById('prev-name').textContent = 'Loading...';
+  document.getElementById('prev-sub').textContent = '#' + id;
+  document.getElementById('prev-img').src = '';
+  previewTimer = setTimeout(async () => {
+    const d = skinData[id]?.name ? skinData[id] : await fetchOneSkin(id);
+    document.getElementById('prev-name').textContent = d.name || 'Unknown';
+    if (d.img) document.getElementById('prev-img').src = d.img;
+    document.getElementById('prev-sub').textContent = '#' + id;
+    document.getElementById('prev-badge').textContent = d.status || '';
+    document.getElementById('prev-badge').className = 'badge ' + (d.status === 'Approved' ? 'b-approved' : d.status === 'Workshop' ? 'b-workshop' : 'b-unavail');
+    if (!skinData[id]) skinData[id] = d;
+  }, 500);
 }
 
-function addSkin(){
-  const id=document.getElementById('add-id').value.trim();
-  const cat=document.getElementById('add-item').value;
-  const perm=document.getElementById('add-perm').value;
-  if(!id||!/^\d+$/.test(id)){toast('Enter a valid numeric skin ID','error');return;}
-  if(!cat){toast('Select an item shortname','error');return;}
-  if(skins.find(s=>s.id===id)){toast('Skin ID already in list','error');return;}
-  skins.push({id,cat,catLabel:CAT_LABELS[cat]||cat,group:CAT_GROUPS[cat]||'Other'});
-  if(!skinData[id])skinData[id]={name:null,img:null,status:'loading'};
-  if(perm&&permGroups[perm]){permGroups[perm].add(id);renderPermCards();}
-  document.getElementById('add-id').value='';
-  document.getElementById('preview-wrap').style.display='none';
-  document.getElementById('hdr-count').textContent=skins.length;
-  renderTable();
-  toast('Skin '+id+' added ✓','success');
-  fetchOneSkin(id).then(d=>{skinData[id]=d;renderTable();});
+function addSkin() {
+  const id = document.getElementById('add-id').value.trim();
+  const cat = document.getElementById('add-item').value;
+  const perm = document.getElementById('add-perm').value;
+  if (!id || !/^\d+$/.test(id)) { toast('Enter a valid numeric skin ID', 'error'); return; }
+  if (!cat) { toast('Select an item shortname', 'error'); return; }
+  if (skins.find(s => s.id === id)) { toast('Skin ID already in list', 'error'); return; }
+  skins.push({ id, cat, catLabel: CAT_LABELS[cat] || cat, group: CAT_GROUPS[cat] || 'Other' });
+  if (!skinData[id]) skinData[id] = { name: null, img: null, status: 'loading' };
+  if (perm && permGroups[perm]) permGroups[perm].add(id);
+  document.getElementById('add-id').value = '';
+  document.getElementById('preview-wrap').style.display = 'none';
+  document.getElementById('hdr-count').textContent = skins.length;
+  renderTable(); renderPermCards();
+  toast('Skin ' + id + ' added', 'success');
+  fetchOneSkin(id).then(d => { skinData[id] = d; renderTable(); });
 }
 
-function bulkAdd(){
-  const raw=document.getElementById('bulk-ids').value;
-  const cat=document.getElementById('bulk-item').value;
-  const perm=document.getElementById('bulk-perm').value;
-  if(!cat){toast('Select an item shortname for bulk add','error');return;}
-  const ids=[...new Set(raw.split(/[\n,\s]+/).map(s=>s.trim()).filter(s=>/^\d{6,12}$/.test(s)))];
-  if(!ids.length){toast('No valid IDs found','error');return;}
-  let added=0,dupe=0;
-  for(const id of ids){
-    if(skins.find(s=>s.id===id)){dupe++;continue;}
-    skins.push({id,cat,catLabel:CAT_LABELS[cat]||cat,group:CAT_GROUPS[cat]||'Other'});
-    if(!skinData[id])skinData[id]={name:null,img:null,status:'loading'};
-    if(perm&&permGroups[perm])permGroups[perm].add(id);
+function bulkAdd() {
+  const raw = document.getElementById('bulk-ids').value;
+  const cat = document.getElementById('bulk-item').value;
+  const perm = document.getElementById('bulk-perm').value;
+  if (!cat) { toast('Select an item shortname', 'error'); return; }
+  const ids = [...new Set(raw.split(/[\n,\s]+/).map(s => s.trim()).filter(s => /^\d{6,12}$/.test(s)))];
+  if (!ids.length) { toast('No valid IDs found', 'error'); return; }
+  let added = 0, dupe = 0;
+  for (const id of ids) {
+    if (skins.find(s => s.id === id)) { dupe++; continue; }
+    skins.push({ id, cat, catLabel: CAT_LABELS[cat] || cat, group: CAT_GROUPS[cat] || 'Other' });
+    if (!skinData[id]) skinData[id] = { name: null, img: null, status: 'loading' };
+    if (perm && permGroups[perm]) permGroups[perm].add(id);
     added++;
   }
-  document.getElementById('bulk-ids').value='';
-  document.getElementById('hdr-count').textContent=skins.length;
-  renderTable();renderPermCards();
-  toast(`Added ${added} skins${dupe?' ('+dupe+' dupes skipped)':''}`,'success');
-  ids.slice(0,added).forEach(id=>fetchOneSkin(id).then(d=>{skinData[id]=d;renderTable();}));
+  document.getElementById('bulk-ids').value = '';
+  document.getElementById('hdr-count').textContent = skins.length;
+  renderTable(); renderPermCards();
+  toast('Added ' + added + ' skins' + (dupe ? ' (' + dupe + ' dupes skipped)' : ''), 'success');
 }
 
-// ── REMOVE SKIN ───────────────────────────────────────────────────────────────
-function removeSkin(id){
-  skins=skins.filter(s=>s.id!==id);
-  for(const g of Object.values(permGroups))g.delete(id);
-  document.getElementById('hdr-count').textContent=skins.length;
-  renderTable();renderPermCards();
-  toast('Skin removed','success');
+function removeSkin(id) {
+  skins = skins.filter(s => s.id !== id);
+  for (const g of Object.values(permGroups)) g.delete(id);
+  document.getElementById('hdr-count').textContent = skins.length;
+  renderTable(); renderPermCards();
+  toast('Skin removed', 'success');
 }
 
 // ── PERM GROUPS ───────────────────────────────────────────────────────────────
-function createPermGroup(){
-  const name=document.getElementById('new-perm-name').value.trim();
-  if(!name){toast('Enter a permission name','error');return;}
-  if(!name.startsWith('skinbox.')){toast('Permission must start with skinbox.','error');return;}
-  if(permGroups[name]!==undefined){toast('Group already exists','error');return;}
-  permGroups[name]=new Set();
-  document.getElementById('new-perm-name').value='';
-  refreshPermSelects();renderPermCards();
-  toast('Created '+name,'success');
+function getSkinPerms(id) { return Object.keys(permGroups).filter(p => permGroups[p].has(id)); }
+
+function createPermGroup() {
+  const name = document.getElementById('new-perm-name').value.trim();
+  if (!name) { toast('Enter a permission name', 'error'); return; }
+  if (!name.startsWith('skinbox.')) { toast('Must start with skinbox.', 'error'); return; }
+  if (permGroups[name] !== undefined) { toast('Group already exists', 'error'); return; }
+  permGroups[name] = new Set();
+  document.getElementById('new-perm-name').value = '';
+  refreshPermSelects(); renderPermCards();
+  toast('Created ' + name, 'success');
 }
 
-function removePermGroup(name){
+function removePermGroup(name) {
   delete permGroups[name];
-  refreshPermSelects();renderPermCards();renderTable();
-  toast('Removed '+name,'success');
+  refreshPermSelects(); renderPermCards(); renderTable();
+  toast('Removed ' + name, 'success');
 }
 
-function removeSkinFromPerm(perm,id){
-  permGroups[perm]?.delete(id);
-  renderPermCards();renderTable();
-}
+function removeSkinFromPerm(perm, id) { permGroups[perm]?.delete(id); renderPermCards(); renderTable(); }
 
-function getSkinPerms(id){return Object.keys(permGroups).filter(p=>permGroups[p].has(id));}
-
-function renderPermCards(){
-  const container=document.getElementById('perm-cards');
-  container.innerHTML='';
-  const keys=Object.keys(permGroups).sort();
-  if(!keys.length){container.innerHTML='<p style="color:var(--text3);font-size:13px;padding:16px">No permission groups defined. Create one above.</p>';return;}
-  keys.forEach((perm,i)=>{
-    const color=PERM_COLORS[i%PERM_COLORS.length];
-    const ids=[...permGroups[perm]];
-    const div=document.createElement('div');div.className='perm-group-card';
-    div.innerHTML=`<div class="perm-group-header">
-      <div class="perm-dot" style="background:${color}"></div>
-      <span class="perm-name" style="color:${color}">${perm}</span>
-      <span class="perm-count">${ids.length} skin${ids.length!==1?'s':''}</span>
-      <button class="btn danger" style="height:28px;padding:0 10px;font-size:11px;margin-left:8px" onclick="removePermGroup('${perm}')">Delete</button>
-    </div>
-    <div class="perm-skins-list" id="psl-${perm.replace(/\./g,'_')}"></div>`;
-    container.appendChild(div);
-    const list=div.querySelector('.perm-skins-list');
-    if(!ids.length){list.innerHTML='<span style="font-size:12px;color:var(--text3)">No skins assigned</span>';return;}
-    ids.forEach(id=>{
-      const d=skinData[id];
-      const chip=document.createElement('div');chip.className='perm-skin-chip';
-      chip.innerHTML=`<span>${d?.name||id}</span><span class="skin-id">#${id}</span><button onclick="removeSkinFromPerm('${perm}','${id}')" title="Remove">×</button>`;
+function renderPermCards() {
+  const c = document.getElementById('perm-cards');
+  c.innerHTML = '';
+  const keys = Object.keys(permGroups).sort();
+  if (!keys.length) { c.innerHTML = '<p style="color:var(--text3);font-size:13px;padding:16px">No permission groups. Create one above.</p>'; return; }
+  keys.forEach((perm, i) => {
+    const color = PERM_COLORS[i % PERM_COLORS.length];
+    const ids = [...permGroups[perm]];
+    const div = document.createElement('div'); div.className = 'perm-group-card';
+    div.innerHTML = '<div class="perm-group-header"><div class="perm-dot" style="background:' + color + '"></div><span class="perm-name" style="color:' + color + '">' + perm + '</span><span class="perm-count">' + ids.length + ' skin' + (ids.length !== 1 ? 's' : '') + '</span><button class="btn danger" style="height:28px;padding:0 10px;font-size:11px;margin-left:8px" onclick="removePermGroup(\'' + perm + '\')">Delete</button></div><div class="perm-skins-list" id="psl-' + perm.replace(/\./g, '_') + '"></div>';
+    c.appendChild(div);
+    const list = div.querySelector('.perm-skins-list');
+    if (!ids.length) { list.innerHTML = '<span style="font-size:12px;color:var(--text3)">No skins assigned</span>'; return; }
+    ids.forEach(id => {
+      const d = skinData[id];
+      const chip = document.createElement('div'); chip.className = 'perm-skin-chip';
+      chip.innerHTML = '<span>' + (d?.name || id) + '</span><span class="skin-id">#' + id + '</span><button onclick="removeSkinFromPerm(\'' + perm + '\',\'' + id + '\')" title="Remove">&times;</button>';
       list.appendChild(chip);
     });
   });
 }
 
-// ── TABLE RENDER ──────────────────────────────────────────────────────────────
-function filtered(){
-  const q=document.getElementById('search').value.trim().toLowerCase();
-  const grp=document.getElementById('f-group').value;
-  const cat=document.getElementById('f-item').value;
-  const perm=document.getElementById('f-perm').value;
-  const st=document.getElementById('f-status').value;
-  return skins.filter(s=>{
-    if(grp&&s.group!==grp)return false;
-    if(cat&&s.cat!==cat)return false;
-    if(st&&skinData[s.id]?.status!==st)return false;
-    if(perm==='__none__'){if(getSkinPerms(s.id).length)return false;}
-    else if(perm==='__use_exclusive__'){
-      // Show only skins that have NO custom perm assignment at all
-      if(getSkinPerms(s.id).length)return false;
-    }
-    else if(perm){if(!permGroups[perm]?.has(s.id))return false;}
-    if(q){const n=(skinData[s.id]?.name||'').toLowerCase();if(!n.includes(q)&&!s.id.includes(q)&&!s.catLabel.toLowerCase().includes(q))return false;}
+// ── TABLE ─────────────────────────────────────────────────────────────────────
+function filtered() {
+  const q = document.getElementById('f-search').value.trim().toLowerCase();
+  const grp = document.getElementById('f-group').value;
+  const cat = document.getElementById('f-item').value;
+  const perm = document.getElementById('f-perm').value;
+  const st = document.getElementById('f-status').value;
+  const allCustomIds = new Set(Object.values(permGroups).flatMap(s => [...s]));
+  return skins.filter(s => {
+    if (grp && s.group !== grp) return false;
+    if (cat && s.cat !== cat) return false;
+    if (st && skinData[s.id]?.status !== st) return false;
+    if (perm === '__none__') { if (getSkinPerms(s.id).length) return false; }
+    else if (perm === '__use_exclusive__') { if (allCustomIds.has(s.id)) return false; }
+    else if (perm) { if (!permGroups[perm]?.has(s.id)) return false; }
+    if (q) { const n = (skinData[s.id]?.name || '').toLowerCase(); if (!n.includes(q) && !s.id.includes(q) && !s.catLabel.toLowerCase().includes(q)) return false; }
     return true;
   });
 }
 
-function renderTable(){
-  const list=filtered();
-  const showing=list.slice(0,visible);
-  const tbody=document.getElementById('tbody');
-  tbody.innerHTML='';
-  const permKeys=Object.keys(permGroups);
-  for(const s of showing){
-    const d=skinData[s.id]||{};
-    const perms=getSkinPerms(s.id);
-    const tr=document.createElement('tr');
-    const imgCell=d.img?`<img src="${d.img}" alt="" loading="lazy" onerror="this.style.display='none'">`:`<div class="img-ph">🖼</div>`;
-    let statusBadge='<span class="badge b-loading">…</span>';
-    if(d.status==='Approved')statusBadge='<span class="badge b-approved">✓ Approved</span>';
-    else if(d.status==='Workshop')statusBadge='<span class="badge b-workshop">Workshop</span>';
-    else if(d.status==='Unavailable')statusBadge='<span class="badge b-unavail">Unavailable</span>';
-    const pillsHtml=perms.map((p,i)=>{
-      const color=PERM_COLORS[permKeys.indexOf(p)%PERM_COLORS.length];
-      return `<span class="pill" style="background:${color}22;color:${color};border:1px solid ${color}55" onclick="openPermModal('${s.id}')" title="Click to change">${p.replace('skinbox.','')}</span>`;
+function badgeHtml(status) {
+  if (status === 'Approved') return '<span class="badge b-approved">&#x2713; Approved</span>';
+  if (status === 'Workshop') return '<span class="badge b-workshop">Workshop</span>';
+  if (status === 'Unavailable') return '<span class="badge b-unavail">Unavailable</span>';
+  return '<span class="badge b-loading">...</span>';
+}
+
+function renderTable() {
+  const list = filtered();
+  const showing = list.slice(0, visible);
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML = '';
+  const permKeys = Object.keys(permGroups);
+  for (const s of showing) {
+    const d = skinData[s.id] || {};
+    const perms = getSkinPerms(s.id);
+    const tr = document.createElement('tr');
+    const imgCell = d.img ? '<img src="' + d.img + '" width="40" height="40" style="object-fit:cover;border-radius:4px" loading="lazy" alt="">' : '<div class="img-ph">&#x1F5BC;</div>';
+    const pillsHtml = perms.map(p => {
+      const color = PERM_COLORS[permKeys.indexOf(p) % PERM_COLORS.length];
+      return '<span class="pill" style="background:' + color + '22;color:' + color + ';border:1px solid ' + color + '55" onclick="openPermModal(\'' + s.id + '\')">' + p.replace('skinbox.', '') + '</span>';
     }).join('');
-    const addPill=`<span class="pill pill-add" onclick="openPermModal('${s.id}')">+ perm</span>`;
-    tr.innerHTML=`<td>${imgCell}</td>
-      <td><div style="font-weight:700;font-size:13px">${d.name||'Loading…'}</div><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=${s.id}" target="_blank" class="ws-link">#${s.id} ↗</a></td>
-      <td><div style="font-size:13px">${s.catLabel}</div><div style="font-size:11px;color:var(--text3)">${s.group}</div></td>
-      <td class="skin-id">${s.id}</td>
-      <td>${statusBadge}</td>
-      <td><div class="perm-pills">${pillsHtml}${addPill}</div></td>
-      <td><button class="btn danger" style="height:26px;padding:0 8px;font-size:11px" onclick="removeSkin('${s.id}')">✕</button></td>`;
-    tr.addEventListener('contextmenu',e=>{e.preventDefault();showCtxMenu(e,s.id);});
+    tr.innerHTML = '<td>' + imgCell + '</td>' +
+      '<td><div style="font-weight:700">' + (d.name || 'Loading...') + '</div><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=' + s.id + '" target="_blank" class="ws-link">#' + s.id + ' &#x2197;</a></td>' +
+      '<td><div>' + s.catLabel + '</div><div style="font-size:11px;color:var(--text3)">' + s.group + '</div></td>' +
+      '<td class="skin-id">' + s.id + '</td>' +
+      '<td>' + badgeHtml(d.status) + '</td>' +
+      '<td><div class="perm-pills">' + pillsHtml + '<span class="pill pill-add" onclick="openPermModal(\'' + s.id + '\')">+ perm</span></div></td>' +
+      '<td><button class="btn danger" style="height:26px;padding:0 8px;font-size:11px" onclick="removeSkin(\'' + s.id + '\')">&#x2715;</button></td>';
+    tr.addEventListener('contextmenu', e => { e.preventDefault(); showCtx(e, s.id); });
     tbody.appendChild(tr);
   }
-  const loaded=skins.filter(s=>skinData[s.id]?.status&&skinData[s.id].status!=='loading').length;
-  const approved=skins.filter(s=>skinData[s.id]?.status==='Approved').length;
-  const workshop=skins.filter(s=>skinData[s.id]?.status==='Workshop').length;
-  const gated=skins.filter(s=>getSkinPerms(s.id).length>0).length;
-  document.getElementById('s-total').textContent=skins.length;
-  document.getElementById('s-approved').textContent=approved;
-  document.getElementById('s-workshop').textContent=workshop;
-  document.getElementById('s-gated').textContent=gated;
-  document.getElementById('hdr-count').textContent=skins.length;
-  document.getElementById('pager').textContent=`Showing ${showing.length} of ${list.length} skins`;
-  const btn=document.getElementById('load-more-btn');
-  if(list.length>visible){btn.style.display='block';btn.textContent=`Load ${Math.min(PAGE,list.length-visible)} more`;}
-  else btn.style.display='none';
+  const approved = skins.filter(s => skinData[s.id]?.status === 'Approved').length;
+  const workshop = skins.filter(s => skinData[s.id]?.status === 'Workshop').length;
+  const gated = skins.filter(s => getSkinPerms(s.id).length > 0).length;
+  document.getElementById('s-total').textContent = skins.length;
+  document.getElementById('s-approved').textContent = approved;
+  document.getElementById('s-workshop').textContent = workshop;
+  document.getElementById('s-gated').textContent = gated;
+  document.getElementById('pager').textContent = 'Showing ' + showing.length + ' of ' + list.length + ' skins';
+  const btn = document.getElementById('load-more-btn');
+  if (list.length > visible) { btn.style.display = 'block'; btn.textContent = 'Load ' + Math.min(80, list.length - visible) + ' more'; }
+  else btn.style.display = 'none';
 }
 
-function loadMore(){visible+=PAGE;renderTable();}
+function loadMore() { visible += 80; renderTable(); }
 
 // ── CONTEXT MENU ──────────────────────────────────────────────────────────────
-function showCtxMenu(e,id){
-  ctxSkinId=id;
-  const menu=document.getElementById('ctx-menu');
-  const items=document.getElementById('ctx-perm-items');
-  items.innerHTML='';
-  const perms=getSkinPerms(id);
-  Object.keys(permGroups).sort().forEach(p=>{
-    const has=perms.includes(p);
-    const d=document.createElement('div');d.className='ctx-item';
-    d.textContent=(has?'✓ ':'')+p;
-    d.onclick=()=>{if(has)removeSkinFromPerm(p,id);else{permGroups[p].add(id);renderPermCards();renderTable();}closeCtx();};
+function showCtx(e, id) {
+  ctxSkinId = id;
+  const items = document.getElementById('ctx-perm-items');
+  items.innerHTML = '';
+  const perms = getSkinPerms(id);
+  Object.keys(permGroups).sort().forEach(p => {
+    const has = perms.includes(p);
+    const d = document.createElement('div'); d.className = 'ctx-item';
+    d.textContent = (has ? '✓ ' : '') + p;
+    d.onclick = () => { if (has) removeSkinFromPerm(p, id); else { permGroups[p].add(id); renderPermCards(); renderTable(); } closeCtx(); };
     items.appendChild(d);
   });
-  if(!Object.keys(permGroups).length){const d=document.createElement('div');d.className='ctx-item';d.style.color='var(--text3)';d.textContent='No groups — create one first';items.appendChild(d);}
-  menu.style.display='block';
-  menu.style.left=Math.min(e.clientX,window.innerWidth-170)+'px';
-  menu.style.top=Math.min(e.clientY,window.innerHeight-200)+'px';
+  if (!Object.keys(permGroups).length) { items.innerHTML = '<div class="ctx-item" style="color:var(--text3)">No groups yet</div>'; }
+  const m = document.getElementById('ctx-menu');
+  m.style.display = 'block';
+  m.style.left = Math.min(e.clientX, window.innerWidth - 170) + 'px';
+  m.style.top = Math.min(e.clientY, window.innerHeight - 200) + 'px';
 }
-function closeCtx(){document.getElementById('ctx-menu').style.display='none';}
-function ctxOpenWorkshop(){if(ctxSkinId)window.open('https://steamcommunity.com/sharedfiles/filedetails/?id='+ctxSkinId,'_blank');closeCtx();}
-function ctxCopyId(){if(ctxSkinId){navigator.clipboard.writeText(ctxSkinId);toast('Copied ID '+ctxSkinId,'success');}closeCtx();}
-function ctxRemove(){if(ctxSkinId)removeSkin(ctxSkinId);closeCtx();}
-document.addEventListener('click',e=>{if(!e.target.closest('#ctx-menu'))closeCtx();});
+function closeCtx() { document.getElementById('ctx-menu').style.display = 'none'; }
+function ctxWorkshop() { if (ctxSkinId) window.open('https://steamcommunity.com/sharedfiles/filedetails/?id=' + ctxSkinId, '_blank'); closeCtx(); }
+function ctxCopy() { if (ctxSkinId) { navigator.clipboard.writeText(ctxSkinId); toast('Copied ' + ctxSkinId, 'success'); } closeCtx(); }
+function ctxRemove() { if (ctxSkinId) removeSkin(ctxSkinId); closeCtx(); }
+document.addEventListener('click', e => { if (!e.target.closest('#ctx-menu')) closeCtx(); });
 
 // ── PERM MODAL ────────────────────────────────────────────────────────────────
-function openPermModal(id){
-  modalSkinId=id;
-  const cur=getSkinPerms(id);
-  const sel=document.getElementById('modal-perm-select');
+function openPermModal(id) {
+  modalSkinId = id;
+  const cur = getSkinPerms(id);
   refreshPermSelects();
-  sel.value=cur[0]||'';
+  document.getElementById('modal-perm-select').value = cur[0] || '';
   document.getElementById('perm-modal').classList.add('show');
 }
-function closeModal(){document.getElementById('perm-modal').classList.remove('show');modalSkinId=null;}
-function applyPermModal(){
-  if(!modalSkinId)return;
-  const newPerm=document.getElementById('modal-perm-select').value;
-  for(const g of Object.values(permGroups))g.delete(modalSkinId);
-  if(newPerm&&permGroups[newPerm])permGroups[newPerm].add(modalSkinId);
-  closeModal();renderPermCards();renderTable();
-  toast('Permission updated','success');
+function closeModal() { document.getElementById('perm-modal').classList.remove('show'); modalSkinId = null; }
+function applyPerm() {
+  if (!modalSkinId) return;
+  const newPerm = document.getElementById('modal-perm-select').value;
+  for (const g of Object.values(permGroups)) g.delete(modalSkinId);
+  if (newPerm && permGroups[newPerm]) permGroups[newPerm].add(modalSkinId);
+  closeModal(); renderPermCards(); renderTable();
+  toast('Permission updated', 'success');
 }
-document.getElementById('perm-modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal();});
+document.getElementById('perm-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
 
 // ── EXPORT ────────────────────────────────────────────────────────────────────
-function buildConfig(){
-  const cfg=JSON.parse(JSON.stringify(BASE_CONFIG));
-  const ws={};
-  for(const s of skins){
-    if(!ws[s.cat])ws[s.cat]=[];
-    ws[s.cat].push(parseInt(s.id));
-  }
-  cfg['Imported Workshop Skins']=ws;
-  const cp={};
-  for(const [p,ids] of Object.entries(permGroups)){
-    if(ids.size)cp[p]=[...ids].map(Number);
-  }
-  cfg['Permission Options']['Custom permissions per skin']=cp;
+function buildConfig() {
+  const cfg = JSON.parse(JSON.stringify(BASE_CONFIG));
+  const ws = {};
+  for (const s of skins) { if (!ws[s.cat]) ws[s.cat] = []; ws[s.cat].push(parseInt(s.id)); }
+  cfg['Imported Workshop Skins'] = ws;
+  const cp = {};
+  for (const [p, ids] of Object.entries(permGroups)) { if (ids.size) cp[p] = [...ids].map(Number); }
+  cfg['Permission Options']['Custom permissions per skin'] = cp;
   return cfg;
 }
 
-let lastJSON='';
-function generateExport(){
-  const cfg=buildConfig();
-  lastJSON=JSON.stringify(cfg,null,2);
-  document.getElementById('export-box').textContent=lastJSON;
-  toast('Config generated','success');
-}
-function downloadJSON(){
-  if(!lastJSON)generateExport();
-  const blob=new Blob([lastJSON],{type:'application/json'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='SkinBox.json';a.click();
-  toast('Downloaded SkinBox.json','success');
-}
-function copyJSON(){
-  if(!lastJSON)generateExport();
-  navigator.clipboard.writeText(lastJSON);
-  toast('Copied to clipboard','success');
-}
-function exportCSV(){
-  const cols=['Skin ID','Item Shortname','Item Name','Category Group','Skin Name','Steam Status','Permission Groups','Workshop URL'];
-  const rows=[cols.join(',')];
-  for(const s of skins){
-    const d=skinData[s.id]||{};
-    const perms=getSkinPerms(s.id).join('|');
-    const esc=v=>'"'+String(v||'').replace(/"/g,'""')+'"';
-    rows.push([s.id,s.cat,s.catLabel,s.group,esc(d.name||''),d.status||'',esc(perms),'https://steamcommunity.com/sharedfiles/filedetails/?id='+s.id].join(','));
+let lastJSON = '';
+function generateExport() { lastJSON = JSON.stringify(buildConfig(), null, 2); document.getElementById('export-box').textContent = lastJSON; toast('Config generated', 'success'); }
+function downloadJSON() { if (!lastJSON) generateExport(); dl(lastJSON, 'SkinBox.json', 'application/json'); toast('Downloaded SkinBox.json', 'success'); }
+function copyJSON() { if (!lastJSON) generateExport(); navigator.clipboard.writeText(lastJSON); toast('Copied to clipboard', 'success'); }
+function exportCSV() {
+  const cols = ['Skin ID', 'Item Shortname', 'Item Name', 'Category Group', 'Skin Name', 'Steam Status', 'Permission Groups', 'Workshop URL'];
+  const rows = [cols.join(',')];
+  for (const s of skins) {
+    const d = skinData[s.id] || {};
+    const perms = getSkinPerms(s.id).join('|');
+    const esc = v => '"' + String(v || '').replace(/"/g, '""') + '"';
+    rows.push([s.id, s.cat, s.catLabel, s.group, esc(d.name || ''), d.status || '', esc(perms), 'https://steamcommunity.com/sharedfiles/filedetails/?id=' + s.id].join(','));
   }
-  const blob=new Blob([rows.join('\n')],{type:'text/csv'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='SkinBox_Export.csv';a.click();
+  dl(rows.join('\n'), 'SkinBox_Export.csv', 'text/csv');
+}
+function dl(content, filename, type) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([content], { type }));
+  a.download = filename; a.click();
 }
 
-// ── VIEW-ONLY CHART EXPORT ────────────────────────────────────────────────────
-function getViewExportSkins(){
-  const perm=document.getElementById('view-export-perm')?.value||'__use__';
-  const scope=document.getElementById('view-export-scope')?.value||'own';
-
-  if(scope==='all') return skins;
-
-  // All IDs that belong to ANY custom perm group
-  const allCustomIds=new Set(Object.values(permGroups).flatMap(s=>[...s]));
-
-  if(perm==='__use__'){
-    if(scope==='exclusive'){
-      // skinbox.use but strip out anything in a custom perm group
-      return skins.filter(s=>!allCustomIds.has(s.id));
-    }
-    return skins; // own = full imported workshop list
+// ── VIEW-ONLY EXPORT ──────────────────────────────────────────────────────────
+function getViewSkins() {
+  const perm = document.getElementById('view-export-perm').value;
+  const scope = document.getElementById('view-export-scope').value;
+  if (scope === 'all') return skins;
+  const allCustomIds = new Set(Object.values(permGroups).flatMap(s => [...s]));
+  if (perm === '__use__') {
+    return scope === 'exclusive' ? skins.filter(s => !allCustomIds.has(s.id)) : skins;
   }
-
-  // Custom perm group selected
-  const ids=permGroups[perm]||new Set();
-  if(scope==='exclusive'){
-    // Only skins in THIS group that aren't in any OTHER custom group
-    const otherIds=new Set(
-      Object.entries(permGroups)
-        .filter(([p])=>p!==perm)
-        .flatMap(([,s])=>[...s])
-    );
-    return skins.filter(s=>ids.has(s.id)&&!otherIds.has(s.id));
+  const ids = permGroups[perm] || new Set();
+  if (scope === 'exclusive') {
+    const otherIds = new Set(Object.entries(permGroups).filter(([p]) => p !== perm).flatMap(([, s]) => [...s]));
+    return skins.filter(s => ids.has(s.id) && !otherIds.has(s.id));
   }
-  return skins.filter(s=>ids.has(s.id));
+  return skins.filter(s => ids.has(s.id));
 }
 
-function updateViewExportInfo(){
-  const el=document.getElementById('view-export-info');
-  if(!el)return;
-  const perm=document.getElementById('view-export-perm')?.value||'__use__';
-  const scope=document.getElementById('view-export-scope')?.value||'own';
-  const subset=getViewExportSkins();
-  const label=perm==='__use__'?'skinbox.use':perm;
-  const allCustomIds=new Set(Object.values(permGroups).flatMap(s=>[...s]));
-  const excluded=perm==='__use__'&&scope==='exclusive'
-    ?skins.filter(s=>allCustomIds.has(s.id)).length
-    :0;
-  let note=`Will export <strong>${subset.length} skin${subset.length!==1?'s':''}</strong> for <strong>${label}</strong>`;
-  if(scope==='exclusive'&&perm==='__use__') note+=` — <span style="color:var(--amber)">${excluded} higher-perm skins hidden</span>`;
-  else if(scope==='exclusive') note+=` — exclusive to this group only`;
-  else if(scope==='all') note+=` — all groups merged`;
-  el.innerHTML=note;
+function updateViewInfo() {
+  const el = document.getElementById('view-export-info');
+  if (!el) return;
+  const perm = document.getElementById('view-export-perm').value;
+  const scope = document.getElementById('view-export-scope').value;
+  const subset = getViewSkins();
+  const label = perm === '__use__' ? 'skinbox.use' : perm;
+  const allCustomIds = new Set(Object.values(permGroups).flatMap(s => [...s]));
+  const hidden = perm === '__use__' && scope === 'exclusive' ? skins.filter(s => allCustomIds.has(s.id)).length : 0;
+  let txt = 'Will export <strong>' + subset.length + ' skin' + (subset.length !== 1 ? 's' : '') + '</strong> for <strong>' + label + '</strong>';
+  if (hidden) txt += ' &mdash; <span style="color:var(--amber)">' + hidden + ' higher-perm skins excluded</span>';
+  el.innerHTML = txt;
 }
 
-function exportViewChart(){
-  const perm=document.getElementById('view-export-perm')?.value||'__use__';
-  const scope=document.getElementById('view-export-scope')?.value||'own';
-  const subset=getViewExportSkins();
-  const permLabel=perm==='__use__'?'skinbox.use':perm;
+function exportViewChart() {
+  const perm = document.getElementById('view-export-perm').value;
+  const scope = document.getElementById('view-export-scope').value;
+  const subset = getViewSkins();
+  const permLabel = perm === '__use__' ? 'skinbox.use' : perm;
+  const filename = 'SkinBox_' + permLabel.replace(/[^a-z0-9]/gi, '_') + '.html';
+  const ts = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
-  const rows=subset.map(s=>{
-    const d=skinData[s.id]||{};
-    const perms=getSkinPerms(s.id);
-    return {id:s.id,cat:s.cat,catLabel:s.catLabel,group:s.group,name:d.name||null,img:d.img||null,status:d.status||'loading',perms};
+  // Build data for the view-only file
+  const permKeys = Object.keys(permGroups).sort();
+  const permColorsMap = {};
+  permKeys.forEach((p, i) => permColorsMap[p] = PERM_COLORS[i % PERM_COLORS.length]);
+
+  const rows = subset.map(s => {
+    const d = skinData[s.id] || {};
+    return { id: s.id, cat: s.cat, catLabel: s.catLabel, group: s.group, name: d.name || null, img: d.img || null, status: d.status || 'loading', perms: getSkinPerms(s.id) };
   });
-  const permKeys=Object.keys(permGroups).sort();
-  const permColorsMap={};
-  permKeys.forEach((p,i)=>permColorsMap[p]=PERM_COLORS[i%PERM_COLORS.length]);
-  const dataJSON=JSON.stringify(rows);
-  const permColorsJSON=JSON.stringify(permColorsMap);
-  const ts=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
-  const catLabelsUsed=Object.fromEntries(rows.map(r=>[r.cat,r.catLabel]));
-  const filename='SkinBox_'+permLabel.replace(/[^a-z0-9]/gi,'_')+'.html';
 
-  const html='<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width,initial-scale=1">\n<title>SkinBox \u2014 '+permLabel+'<\/title>\n<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">\n<style>\n:root{--rust:#E8461A;--bg:#111010;--surface:#1c1b1b;--surface2:#242323;--surface3:#2e2d2d;--border:#333;--text:#f0ebe5;--text2:#a09890;--text3:#6a6260;--green:#4caf7d;--green-bg:#1a2e22;--blue:#4a9eda;--blue-bg:#192232;--amber:#e8a21a;--radius:6px}\n*{box-sizing:border-box;margin:0;padding:0}\nbody{font-family:"Barlow",sans-serif;background:var(--bg);color:var(--text);min-height:100vh}\nheader{background:var(--surface);border-bottom:2px solid var(--rust);padding:14px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;position:sticky;top:0;z-index:50}\n.logo{display:flex;align-items:center;gap:10px}\n.logo-icon{width:32px;height:32px;background:var(--rust);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:16px}\nheader h1{font-size:17px;font-weight:900;letter-spacing:2px;text-transform:uppercase}\n.perm-tag{background:#1a1020;border:1px solid #a64ae855;color:#c47ae8;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;font-family:"Share Tech Mono",monospace;letter-spacing:1px}\n.ro-badge{background:#1a2210;border:1px solid #4caf7d55;color:var(--green);font-size:10px;font-weight:700;padding:3px 10px;border-radius:99px;font-family:"Share Tech Mono",monospace;letter-spacing:1px}\nheader .ts{font-size:11px;color:var(--text3);font-family:"Share Tech Mono",monospace;margin-left:auto}\n.stats{display:flex;gap:8px;padding:12px 24px;background:#161515;flex-wrap:wrap;border-bottom:1px solid var(--border)}\n.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:9px 16px;min-width:100px}\n.stat-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:2px}\n.stat-val{font-size:20px;font-weight:900;color:var(--rust);font-family:"Share Tech Mono",monospace}\n.stat.g .stat-val{color:var(--green)}.stat.b .stat-val{color:var(--blue)}.stat.a .stat-val{color:var(--amber)}\n.toolbar{display:flex;gap:8px;padding:12px 24px;flex-wrap:wrap;align-items:center;background:var(--surface);border-bottom:1px solid var(--border)}\n.toolbar input,.toolbar select{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:7px 12px;border-radius:var(--radius);font-size:13px;height:34px;font-family:"Barlow",sans-serif}\n.toolbar input{flex:1;min-width:160px}\n.toolbar input:focus,.toolbar select:focus{outline:none;border-color:var(--rust)}\n.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;padding:20px 24px}\n.card{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:border-color .12s,transform .1s;cursor:pointer}\n.card:hover{border-color:var(--rust);transform:translateY(-2px)}\n.card-img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--surface2);display:block}\n.card-ph{width:100%;aspect-ratio:1;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--text3)}\n.card-body{padding:9px 10px}\n.card-name{font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px}\n.card-item{font-size:11px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}\n.card-id{font-size:10px;color:var(--text3);font-family:"Share Tech Mono",monospace;margin-bottom:6px}\n.card-footer{display:flex;flex-wrap:wrap;gap:3px}\n.badge{font-size:10px;padding:2px 7px;border-radius:99px;font-weight:700}\n.b-ap{background:var(--green-bg);color:var(--green)}.b-ws{background:var(--blue-bg);color:var(--blue)}.b-un{background:#2a2a2a;color:var(--text3)}.b-ld{background:#2a2710;color:#a09050;animation:pulse 1.4s infinite}\n@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}\n.pill{font-size:10px;padding:2px 7px;border-radius:99px;font-weight:700;font-family:"Share Tech Mono",monospace}\n.vb{background:var(--surface2);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:var(--radius);font-size:12px;font-weight:700;cursor:pointer;font-family:"Barlow",sans-serif}\n.vb.active{background:var(--rust);border-color:var(--rust);color:#fff}\n.tbl-wrap{padding:0 24px 24px;overflow-x:auto}\n.tbl{width:100%;border-collapse:collapse;font-size:13px}\n.tbl th{background:var(--surface2);color:var(--text2);padding:9px 12px;text-align:left;border-bottom:2px solid var(--rust);font-size:11px;text-transform:uppercase;letter-spacing:1px;font-weight:700;position:sticky;top:58px}\n.tbl td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:middle}\n.tbl tr:hover td{background:var(--surface2)}\n.tbl img{width:38px;height:38px;object-fit:cover;border-radius:4px;background:var(--surface2)}\n.tbl .img-ph{width:38px;height:38px;background:var(--surface2);border-radius:4px;display:flex;align-items:center;justify-content:center;color:var(--text3)}\n.tbl a{color:var(--blue);text-decoration:none;font-size:11px;font-family:"Share Tech Mono",monospace}\n.tbl a:hover{text-decoration:underline}\n.pager{text-align:center;padding:12px 24px;font-size:12px;color:var(--text3)}\n.load-btn{display:block;margin:0 auto 24px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);padding:8px 24px;border-radius:var(--radius);font-size:13px;font-weight:700;cursor:pointer;font-family:"Barlow",sans-serif}\n.load-btn:hover{background:var(--surface3)}\nfooter{text-align:center;padding:16px;color:var(--text3);font-size:11px;border-top:1px solid var(--border);font-family:"Share Tech Mono",monospace}\n<\/style>\n<\/head>\n<body>\n<header>\n  <div class="logo"><div class="logo-icon">&#129408;<\/div><h1>SkinBox Skin List<\/h1><\/div>\n  <span class="perm-tag">'+permLabel+'<\/span>\n  <span class="ro-badge">VIEW ONLY<\/span>\n  <span class="ts">Generated '+ts+'<\/span>\n<\/header>\n<div class="stats">\n  <div class="stat"><div class="stat-label">Skins<\/div><div class="stat-val">'+rows.length+'<\/div><\/div>\n  <div class="stat g"><div class="stat-label">Approved<\/div><div class="stat-val">'+rows.filter(r=>r.status==='Approved').length+'<\/div><\/div>\n  <div class="stat b"><div class="stat-label">Workshop<\/div><div class="stat-val">'+rows.filter(r=>r.status==='Workshop').length+'<\/div><\/div>\n  <div class="stat a"><div class="stat-label">Perm-Gated<\/div><div class="stat-val">'+rows.filter(r=>r.perms.length>0).length+'<\/div><\/div>\n<\/div>\n<div class="toolbar">\n  <input type="text" id="search" placeholder="Search name, ID, item\u2026" oninput="render()">\n  <select id="f-grp" onchange="render()"><option value="">All groups<\/option><option>Weapons<\/option><option>Attire<\/option><option>Doors<\/option><option>Storage<\/option><option>Furniture<\/option><option>Tools<\/option><\/select>\n  <select id="f-cat" onchange="render()"><option value="">All items<\/option><\/select>\n  <select id="f-st" onchange="render()"><option value="">All statuses<\/option><option value="Approved">Approved<\/option><option value="Workshop">Workshop<\/option><option value="Unavailable">Unavailable<\/option><\/select>\n  <div style="display:flex;gap:6px"><button class="vb active" id="vg" onclick="setView(\'grid\')">&#8862; Grid<\/button><button class="vb" id="vt" onclick="setView(\'table\')">&#9776; Table<\/button><\/div>\n<\/div>\n<div id="grid-view"><div class="grid" id="grid"><\/div><p class="pager" id="pager"><\/p><button class="load-btn" id="lbtn" onclick="loadMore()" style="display:none">Load more<\/button><\/div>\n<div id="tbl-view" style="display:none"><div class="tbl-wrap"><table class="tbl"><thead><tr><th style="width:46px"><\/th><th>Skin Name<\/th><th>Item<\/th><th>Group<\/th><th>Skin ID<\/th><th>Status<\/th><th>Also in<\/th><\/tr><\/thead><tbody id="tbody"><\/tbody><\/table><\/div><\/div>\n<footer>SkinBox \u2014 '+permLabel+' \u00b7 '+rows.length+' skins \u00b7 Generated '+ts+' \u00b7 Read-only<\/footer>\n<script>\nconst DATA='+dataJSON+';\nconst PCOLS='+permColorsJSON+';\nconst CATLABELS='+JSON.stringify(catLabelsUsed)+';\nlet PAGE=80,vis=PAGE,view="grid";\nfunction proxyImg(u){if(!u)return null;const s=u.replace(/^https?:\\/\\//,'');return 'https://images.weserv.nl/?url='+encodeURIComponent(s)+'&w=200&h=200&fit=cover&output=webp';}\n(function(){\n  const cats=[...new Set(DATA.map(r=>r.cat))].sort();\n  const sel=document.getElementById("f-cat");\n  cats.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=CATLABELS[c]||c;sel.appendChild(o);});\n  render();\n})();\nfunction filtered(){\n  const q=document.getElementById("search").value.trim().toLowerCase();\n  const grp=document.getElementById("f-grp").value;\n  const cat=document.getElementById("f-cat").value;\n  const st=document.getElementById("f-st").value;\n  return DATA.filter(r=>{\n    if(grp&&r.group!==grp)return false;\n    if(cat&&r.cat!==cat)return false;\n    if(st&&r.status!==st)return false;\n    if(q){const n=(r.name||"").toLowerCase();if(!n.includes(q)&&!r.id.includes(q)&&!(r.catLabel||"").toLowerCase().includes(q))return false;}\n    return true;\n  });\n}\nfunction statusBadge(s){\n  if(s==="Approved")return \'<span class="badge b-ap">\\u2713 Approved<\/span>\';\n  if(s==="Workshop")return \'<span class="badge b-ws">Workshop<\/span>\';\n  if(s==="Unavailable")return \'<span class="badge b-un">Unavailable<\/span>\';\n  return \'<span class="badge b-ld">\\u2026<\/span>\';\n}\nfunction permPills(perms){\n  return perms.map(p=>{const c=PCOLS[p]||"#888";return \'<span class="pill" style="background:\'+c+\'22;color:\'+c+\';border:1px solid \'+c+\'44">\'+p.replace("skinbox.","")+\'<\/span>\';}).join("");\n}\nfunction render(){\n  const list=filtered();\n  const show=list.slice(0,vis);\n  if(view==="grid"){\n    const grid=document.getElementById("grid");grid.innerHTML="";\n    show.forEach(r=>{\n      const d=document.createElement("div");d.className="card";\n      d.onclick=()=>window.open("https://steamcommunity.com/sharedfiles/filedetails/?id="+r.id,"_blank");\n      d.innerHTML=(r.img?\'<img class="card-img" src="\'+r.img+\'" alt="" loading="lazy" onerror="this.style.display=\\\'none\\\';this.nextSibling.style.display=\\\'flex\\\'">\':"")+\'<div class="card-ph" style="\'+(r.img?"display:none":"")+\'">\\uD83D\\uDDBC<\/div><div class="card-body"><div class="card-name" title="\'+(r.name||"")+">"+(r.name||"Loading\u2026")+"<\/div><div class=\\"card-item\\">"+r.group+" \u203a "+r.catLabel+"<\/div><div class=\\"card-id\\">#"+r.id+"<\/div><div class=\\"card-footer\\">"+statusBadge(r.status)+permPills(r.perms)+"<\/div><\/div>";\n      grid.appendChild(d);\n    });\n  }else{\n    const tb=document.getElementById("tbody");tb.innerHTML="";\n    show.forEach(r=>{\n      const tr=document.createElement("tr");\n      tr.innerHTML="<td>"+(r.img?\'<img src="\'+r.img+\'" alt="" loading="lazy">\':"<div class=\\"img-ph\\">\\uD83D\\uDDBC<\/div>")+"<\/td><td><div style=\\"font-weight:700\\">"+(r.name||"\u2014")+"<\/div><\/td><td>"+r.catLabel+"<\/td><td>"+r.group+"<\/td><td><a href=\\"https://steamcommunity.com/sharedfiles/filedetails/?id="+r.id+"\\" target=\\"_blank\\">#"+r.id+" \u2197<\/a><\/td><td>"+statusBadge(r.status)+"<\/td><td>"+permPills(r.perms)+"<\/td>";\n      tb.appendChild(tr);\n    });\n  }\n  document.getElementById("pager").textContent="Showing "+show.length+" of "+list.length+" skins";\n  const btn=document.getElementById("lbtn");\n  if(list.length>vis){btn.style.display="block";btn.textContent="Load "+Math.min(PAGE,list.length-vis)+" more";}\n  else btn.style.display="none";\n}\nfunction loadMore(){vis+=PAGE;render();}\nfunction setView(v){\n  view=v;vis=PAGE;\n  document.getElementById("grid-view").style.display=v==="grid"?"block":"none";\n  document.getElementById("tbl-view").style.display=v==="table"?"block":"none";\n  document.getElementById("vg").className="vb"+(v==="grid"?" active":"");\n  document.getElementById("vt").className="vb"+(v==="table"?" active":"");\n  render();\n}\n<\/script>\n<\/body><\/html>';
+  // Embed data safely using JSON — no string escaping nightmares
+  const dataScript = 'const DATA=' + JSON.stringify(rows) + ';const PCOLS=' + JSON.stringify(permColorsMap) + ';const CL=' + JSON.stringify(Object.fromEntries(subset.map(s => [s.cat, s.catLabel]))) + ';';
 
-  const blob=new Blob([html],{type:'text/html'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;a.click();
-  toast('Exported '+filename+' ('+rows.length+' skins) ✓','success');
+  const viewHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SkinBox &mdash; ${permLabel}</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--rust:#E8461A;--bg:#111010;--surface:#1c1b1b;--surface2:#242323;--border:#333;--text:#f0ebe5;--text2:#a09890;--text3:#6a6260;--green:#4caf7d;--green-bg:#1a2e22;--blue:#4a9eda;--blue-bg:#192232;--amber:#e8a21a;--radius:6px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+header{background:var(--surface);border-bottom:2px solid var(--rust);padding:14px 24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:50}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:32px;height:32px;background:var(--rust);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:16px}
+h1{font-size:17px;font-weight:900;letter-spacing:2px;text-transform:uppercase}
+.perm-tag{background:#1a1020;border:1px solid #a64ae855;color:#c47ae8;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;font-family:'Share Tech Mono',monospace}
+.ro{background:#1a2210;border:1px solid #4caf7d55;color:#4caf7d;font-size:10px;font-weight:700;padding:3px 10px;border-radius:99px;font-family:'Share Tech Mono',monospace}
+.ts{font-size:11px;color:var(--text3);font-family:'Share Tech Mono',monospace;margin-left:auto}
+.stats{display:flex;gap:8px;padding:12px 24px;background:#161515;flex-wrap:wrap;border-bottom:1px solid var(--border)}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:9px 16px;min-width:100px}
+.sl{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:2px}
+.sv{font-size:20px;font-weight:900;color:var(--rust);font-family:'Share Tech Mono',monospace}
+.sv.g{color:var(--green)}.sv.b{color:var(--blue)}.sv.a{color:var(--amber)}
+.tb{display:flex;gap:8px;padding:12px 24px;flex-wrap:wrap;align-items:center;background:var(--surface);border-bottom:1px solid var(--border)}
+.tb input,.tb select{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:7px 12px;border-radius:var(--radius);font-size:13px;height:34px;font-family:'Barlow',sans-serif}
+.tb input{flex:1;min-width:160px}
+.tb input:focus,.tb select:focus{outline:none;border-color:var(--rust)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;padding:20px 24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:border-color .12s,transform .1s}
+.card:hover{border-color:var(--rust);transform:translateY(-2px)}
+.card img{width:100%;aspect-ratio:1;object-fit:cover;display:block;background:var(--surface2)}
+.card-ph{width:100%;aspect-ratio:1;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--text3)}
+.cb{padding:9px 10px}
+.cn{font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px}
+.ci{font-size:11px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}
+.cid{font-size:10px;color:var(--text3);font-family:'Share Tech Mono',monospace;margin-bottom:6px}
+.cf{display:flex;flex-wrap:wrap;gap:3px}
+.badge{font-size:10px;padding:2px 7px;border-radius:99px;font-weight:700}
+.bap{background:var(--green-bg);color:var(--green)}.bws{background:var(--blue-bg);color:var(--blue)}.bun{background:#2a2a2a;color:var(--text3)}.bld{background:#2a2710;color:#a09050}
+.pill{font-size:10px;padding:2px 7px;border-radius:99px;font-weight:700;font-family:'Share Tech Mono',monospace}
+.vb{background:var(--surface2);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:var(--radius);font-size:12px;font-weight:700;cursor:pointer;font-family:'Barlow',sans-serif}
+.vb.on{background:var(--rust);border-color:var(--rust);color:#fff}
+.tw{padding:0 24px 24px;overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{background:var(--surface2);color:var(--text2);padding:9px 12px;text-align:left;border-bottom:2px solid var(--rust);font-size:11px;text-transform:uppercase;letter-spacing:1px;font-weight:700;position:sticky;top:58px}
+.tbl td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+.tbl tr:hover td{background:var(--surface2)}
+.tbl img{width:38px;height:38px;object-fit:cover;border-radius:4px}
+.tbl a{color:var(--blue);text-decoration:none;font-size:11px;font-family:'Share Tech Mono',monospace}
+.tbl a:hover{text-decoration:underline}
+.pgr{text-align:center;padding:12px 24px;font-size:12px;color:var(--text3)}
+.lbtn{display:none;margin:0 auto 24px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);padding:8px 24px;border-radius:var(--radius);font-size:13px;font-weight:700;cursor:pointer;font-family:'Barlow',sans-serif}
+footer{text-align:center;padding:16px;color:var(--text3);font-size:11px;border-top:1px solid var(--border);font-family:'Share Tech Mono',monospace}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo"><div class="logo-icon">&#x1F980;</div><h1>SkinBox Skin List</h1></div>
+  <span class="perm-tag">${permLabel}</span>
+  <span class="ro">VIEW ONLY</span>
+  <span class="ts">Generated ${ts}</span>
+</header>
+<div class="stats">
+  <div class="stat"><div class="sl">Skins</div><div class="sv" id="st">${rows.length}</div></div>
+  <div class="stat"><div class="sl">Approved</div><div class="sv g" id="sa">${rows.filter(r=>r.status==='Approved').length}</div></div>
+  <div class="stat"><div class="sl">Workshop</div><div class="sv b" id="sw">${rows.filter(r=>r.status==='Workshop').length}</div></div>
+  <div class="stat"><div class="sl">Perm-Gated</div><div class="sv a" id="sg">${rows.filter(r=>r.perms.length>0).length}</div></div>
+</div>
+<div class="tb">
+  <input type="text" id="search" placeholder="Search name, ID, item..." oninput="render()">
+  <select id="fg" onchange="render()"><option value="">All groups</option><option>Weapons</option><option>Attire</option><option>Doors</option><option>Storage</option><option>Furniture</option><option>Tools</option></select>
+  <select id="fc" onchange="render()"><option value="">All items</option></select>
+  <select id="fs" onchange="render()"><option value="">All statuses</option><option value="Approved">Approved</option><option value="Workshop">Workshop</option><option value="Unavailable">Unavailable</option></select>
+  <div style="display:flex;gap:6px">
+    <button class="vb on" id="vg" onclick="setView('grid')">&#x229E; Grid</button>
+    <button class="vb" id="vt" onclick="setView('table')">&#x2630; Table</button>
+  </div>
+</div>
+<div id="gv"><div class="grid" id="grid"></div><p class="pgr" id="pgr"></p><button class="lbtn" id="lb" onclick="more()">Load more</button></div>
+<div id="tv" style="display:none"><div class="tw"><table class="tbl"><thead><tr><th style="width:46px"></th><th>Skin Name</th><th>Item</th><th>Group</th><th>Skin ID</th><th>Status</th><th>Permission</th></tr></thead><tbody id="tbody"></tbody></table></div></div>
+<footer>SkinBox &mdash; ${permLabel} &middot; ${rows.length} skins &middot; Generated ${ts} &middot; Read-only</footer>
+<script>
+${dataScript}
+let PAGE=80,vis=PAGE,view='grid';
+(function(){
+  const cats=[...new Set(DATA.map(r=>r.cat))].sort();
+  const sel=document.getElementById('fc');
+  cats.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=CL[c]||c;sel.appendChild(o);});
+  render();
+})();
+function fil(){
+  const q=document.getElementById('search').value.trim().toLowerCase();
+  const g=document.getElementById('fg').value;
+  const c=document.getElementById('fc').value;
+  const s=document.getElementById('fs').value;
+  return DATA.filter(r=>{
+    if(g&&r.group!==g)return false;
+    if(c&&r.cat!==c)return false;
+    if(s&&r.status!==s)return false;
+    if(q){const n=(r.name||'').toLowerCase();if(!n.includes(q)&&!r.id.includes(q)&&!(r.catLabel||'').toLowerCase().includes(q))return false;}
+    return true;
+  });
+}
+function sb(s){
+  if(s==='Approved')return '<span class="badge bap">&#x2713; Approved</span>';
+  if(s==='Workshop')return '<span class="badge bws">Workshop</span>';
+  if(s==='Unavailable')return '<span class="badge bun">Unavailable</span>';
+  return '<span class="badge bld">...</span>';
+}
+function pp(perms){return perms.map(p=>{const c=PCOLS[p]||'#888';return '<span class="pill" style="background:'+c+'22;color:'+c+';border:1px solid '+c+'44">'+p.replace('skinbox.','')+' </span>';}).join('');}
+function render(){
+  const list=fil();const show=list.slice(0,vis);
+  if(view==='grid'){
+    const grid=document.getElementById('grid');grid.innerHTML='';
+    show.forEach(r=>{
+      const d=document.createElement('div');d.className='card';
+      d.onclick=()=>window.open('https://steamcommunity.com/sharedfiles/filedetails/?id='+r.id,'_blank');
+      const img=r.img?'<img src="'+r.img+'" alt="" loading="lazy" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'">':'';
+      const ph='<div class="card-ph" style="'+(r.img?'display:none':'')+'">&#x1F5BC;</div>';
+      d.innerHTML=img+ph+'<div class="cb"><div class="cn" title="'+(r.name||'')+'">'+(r.name||'Loading...')+'</div><div class="ci">'+r.group+' &rsaquo; '+r.catLabel+'</div><div class="cid">#'+r.id+'</div><div class="cf">'+sb(r.status)+pp(r.perms)+'</div></div>';
+      grid.appendChild(d);
+    });
+  } else {
+    const tb=document.getElementById('tbody');tb.innerHTML='';
+    show.forEach(r=>{
+      const tr=document.createElement('tr');
+      const img=r.img?'<img src="'+r.img+'" width="38" height="38" style="object-fit:cover;border-radius:4px" alt="" loading="lazy">':'<div style="width:38px;height:38px;background:var(--surface2);border-radius:4px"></div>';
+      tr.innerHTML='<td>'+img+'</td><td><div style="font-weight:700">'+(r.name||'&mdash;')+'</div></td><td>'+r.catLabel+'</td><td>'+r.group+'</td><td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id='+r.id+'" target="_blank">#'+r.id+' &#x2197;</a></td><td>'+sb(r.status)+'</td><td>'+pp(r.perms)+'</td>';
+      tb.appendChild(tr);
+    });
+  }
+  document.getElementById('pgr').textContent='Showing '+show.length+' of '+list.length+' skins';
+  const lb=document.getElementById('lb');
+  if(list.length>vis){lb.style.display='block';lb.textContent='Load '+Math.min(PAGE,list.length-vis)+' more';}
+  else lb.style.display='none';
+}
+function more(){vis+=PAGE;render();}
+function setView(v){
+  view=v;vis=PAGE;
+  document.getElementById('gv').style.display=v==='grid'?'block':'none';
+  document.getElementById('tv').style.display=v==='table'?'block':'none';
+  document.getElementById('vg').className='vb'+(v==='grid'?' on':'');
+  document.getElementById('vt').className='vb'+(v==='table'?' on':'');
+  render();
+}
+<\/script>
+</body></html>`;
+
+  dl(viewHtml, filename, 'text/html');
+  toast('Exported ' + filename + ' (' + rows.length + ' skins)', 'success');
 }
 
-// ── TABS ──────────────────────────────────────────────────────────────────────
-
-// ── TABS ──────────────────────────────────────────────────────────────────────
-function showTab(t){
-  document.querySelectorAll('.tab').forEach(el=>el.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(el=>el.classList.remove('active'));
-  document.getElementById('tab-'+t).classList.add('active');
-  document.querySelector(`.nav-btn[onclick="showTab('${t}')"]`).classList.add('active');
+// ── TABS / TOAST ──────────────────────────────────────────────────────────────
+function showTab(t) {
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + t).classList.add('active');
+  document.querySelector('.nav-btn[onclick="showTab(\''+t+'\')"]').classList.add('active');
 }
 
-// ── TOAST ─────────────────────────────────────────────────────────────────────
 let toastTimer;
-function toast(msg,type='success'){
-  const el=document.getElementById('toast');
-  el.textContent=msg;el.className='toast show '+(type||'');
-  clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2800);
+function toast(msg, type) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.className = 'toast show ' + (type || '');
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove('show'), 2800);
 }
 </script>
 </body>
