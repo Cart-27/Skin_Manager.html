@@ -380,8 +380,8 @@ const STEAM_API   = 'https://api.steampowered.com/ISteamRemoteStorage/GetPublish
 
 function proxyImg(url) {
   if (!url) return null;
-  const s = url.replace(/^https?:\/\//, '');
-  return 'https://images.weserv.nl/?url=' + encodeURIComponent(s) + '&w=200&h=200&fit=cover&output=webp';
+  const clean = url.replace(/^https?:\/\//, '').replace(/\/\//g, '/');
+  return 'https://images.weserv.nl/?url=' + encodeURIComponent(clean) + '&w=200&h=200&fit=cover&output=webp&errorredirect=' + encodeURIComponent('via.placeholder.com/200x200/1c1b1b/444?text=No+Image');
 }
 
 // ── STATE ────────────────────────────────────────────────────────────────────
@@ -521,7 +521,9 @@ let WORKER_URL = localStorage.getItem('skinbox_worker_url') || '';
 
 function proxyImg(url) {
   if (!url) return null;
-  return 'https://images.weserv.nl/?url=' + encodeURIComponent(url.replace(/^https?:\/\//, '')) + '&w=200&h=200&fit=cover&output=webp';
+  // Strip scheme, remove any double slashes, encode cleanly
+  const clean = url.replace(/^https?:\/\//, '').replace(/\/\//g, '/');
+  return 'https://images.weserv.nl/?url=' + encodeURIComponent(clean) + '&w=200&h=200&fit=cover&output=webp&errorredirect=' + encodeURIComponent('via.placeholder.com/200x200/1c1b1b/444?text=No+Image');
 }
 
 async function fetchSteamChunk(ids) {
@@ -1040,7 +1042,8 @@ SKINS.forEach(s => {
 
 function proxyImg(url) {
   if (!url) return null;
-  return 'https://images.weserv.nl/?url=' + encodeURIComponent(url.replace(/^https?:\\/\\//, '')) + '&w=200&h=200&fit=cover&output=webp';
+  const clean = url.replace(/^https?:\\/\\//, '').replace(/\\/\\//g, '/');
+  return 'https://images.weserv.nl/?url=' + encodeURIComponent(clean) + '&w=200&h=200&fit=cover&output=webp&errorredirect=' + encodeURIComponent('via.placeholder.com/200x200/1c1b1b/444?text=No+Image');
 }
 
 // Refresh any still-loading skins via worker
