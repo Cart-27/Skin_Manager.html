@@ -108,6 +108,7 @@ nav{display:flex;align-items:stretch;margin-left:8px}
     <button class="nav-btn active" onclick="showTab('skins')">Skins</button>
     <button class="nav-btn" onclick="showTab('perms')">Permission Groups</button>
     <button class="nav-btn" onclick="showTab('export')">Export</button>
+    <button class="nav-btn" onclick="showTab('setup')" style="color:var(--amber)">⚙ Setup</button>
   </nav>
   <div class="hdr-right">
     <span id="load-status" style="font-size:12px;color:var(--text3)">Loading Steam data...</span>
@@ -266,6 +267,80 @@ nav{display:flex;align-items:stretch;margin-left:8px}
       <button class="btn amber" onclick="exportViewChart()">&#x1F441; Download View-Only Chart</button>
     </div>
     <div id="view-export-info" style="margin-top:10px;font-size:12px;color:var(--text3)"></div>
+  </div>
+</div>
+
+<!-- SETUP TAB -->
+<div class="tab" id="tab-setup">
+  <div class="panel" style="border-color:var(--amber);max-width:700px">
+    <h3 style="color:var(--amber)">⚙ One-Time Setup — Cloudflare Worker Proxy</h3>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.7">
+      Steam blocks direct browser requests (CORS). A free Cloudflare Worker acts as a middleman — it's a 5-minute setup, free forever (100k requests/day), no credit card needed.
+    </p>
+
+    <div style="counter-reset:steps">
+
+      <div style="display:flex;gap:14px;margin-bottom:18px">
+        <div style="width:28px;height:28px;background:var(--rust);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;flex-shrink:0">1</div>
+        <div>
+          <div style="font-weight:700;margin-bottom:4px">Create a free Cloudflare account</div>
+          <a href="https://dash.cloudflare.com/sign-up" target="_blank" style="color:var(--blue);font-size:13px">dash.cloudflare.com/sign-up</a>
+          <span style="font-size:12px;color:var(--text3)"> — no credit card required</span>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:14px;margin-bottom:18px">
+        <div style="width:28px;height:28px;background:var(--rust);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;flex-shrink:0">2</div>
+        <div style="flex:1">
+          <div style="font-weight:700;margin-bottom:6px">Create a Worker</div>
+          <p style="font-size:13px;color:var(--text2);margin-bottom:8px">In the Cloudflare dashboard: <strong>Workers &amp; Pages → Create → Create Worker</strong>. Name it anything (e.g. <code style="font-family:'Share Tech Mono',monospace;color:var(--amber)">steam-proxy</code>). Click <strong>Deploy</strong>.</p>
+          <p style="font-size:13px;color:var(--text2);margin-bottom:8px">Then click <strong>Edit Code</strong> and replace everything with this:</p>
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:12px;font-family:'Share Tech Mono',monospace;font-size:12px;color:#c8d0e0;line-height:1.6;position:relative">
+            <button onclick="copyWorkerCode()" class="btn" style="position:absolute;top:8px;right:8px;height:24px;padding:0 10px;font-size:11px">Copy</button>
+<pre id="worker-code" style="margin:0;white-space:pre-wrap">export default {
+  async fetch(request) {
+    if (request.method === 'OPTIONS') {
+      return new Response(null, { headers: corsHeaders() });
+    }
+    const body = await request.text();
+    const steam = await fetch(
+      'https://api.steampowered.com/ISteamRemoteStorage/GetPublishedFileDetails/v1/',
+      { method: 'POST', body }
+    );
+    const data = await steam.json();
+    return new Response(JSON.stringify(data), {
+      headers: { 'Content-Type': 'application/json', ...corsHeaders() }
+    });
+  }
+};
+function corsHeaders() {
+  return {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  };
+}</pre>
+          </div>
+          <p style="font-size:12px;color:var(--text3);margin-top:8px">Click <strong>Save and Deploy</strong>.</p>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:14px;margin-bottom:18px">
+        <div style="width:28px;height:28px;background:var(--rust);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;flex-shrink:0">3</div>
+        <div style="flex:1">
+          <div style="font-weight:700;margin-bottom:6px">Paste your Worker URL here</div>
+          <p style="font-size:13px;color:var(--text2);margin-bottom:8px">Your worker URL looks like: <code style="font-family:'Share Tech Mono',monospace;color:var(--amber)">https://steam-proxy.YOUR-NAME.workers.dev</code></p>
+          <div style="display:flex;gap:8px;align-items:center">
+            <input type="text" id="worker-url-input" placeholder="https://steam-proxy.your-name.workers.dev" style="flex:1;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:var(--radius);font-size:13px;font-family:'Share Tech Mono',monospace">
+            <button class="btn primary" onclick="saveWorkerUrl()">Save &amp; Test</button>
+          </div>
+          <div id="worker-test-result" style="margin-top:8px;font-size:12px"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="worker-status-box" style="margin-top:8px;padding:10px 14px;border-radius:var(--radius);font-size:13px;display:none"></div>
   </div>
 </div>
 
@@ -438,8 +513,47 @@ function loadJSON(input) {
 }
 
 
+// ── STEAM FETCH ───────────────────────────────────────────────────────────────
+// Steam blocks direct browser fetches (CORS). We use a tiny Cloudflare Worker
+// as a proxy. Set your worker URL below after deploying it (see setup panel).
+
+let WORKER_URL = localStorage.getItem('skinbox_worker_url') || '';
+
+function proxyImg(url) {
+  if (!url) return null;
+  return 'https://images.weserv.nl/?url=' + encodeURIComponent(url.replace(/^https?:\/\//, '')) + '&w=200&h=200&fit=cover&output=webp';
+}
+
+async function fetchSteamChunk(ids) {
+  if (!WORKER_URL) throw new Error('No proxy URL set — see Setup tab');
+  const p = new URLSearchParams();
+  p.append('itemcount', ids.length);
+  ids.forEach((id, j) => p.append('publishedfileids[' + j + ']', id));
+  const r = await fetch(WORKER_URL, { method: 'POST', body: p.toString() });
+  if (!r.ok) throw new Error('Worker HTTP ' + r.status);
+  const json = await r.json();
+  return json?.response?.publishedfiledetails || [];
+}
+
+function parseSteamResults(files) {
+  for (const f of files) {
+    const k = String(f.publishedfileid);
+    if (!skinData[k]) skinData[k] = {};
+    const tags = (f.tags || []).map(t => (t.tag || '').toLowerCase());
+    skinData[k].name   = f.title || 'Unnamed';
+    skinData[k].img    = proxyImg(f.preview_url || null);
+    skinData[k].status = f.result === 1 ? (tags.includes('featured') || tags.includes('approved') ? 'Approved' : 'Workshop') : 'Unavailable';
+  }
+}
+
 async function fetchSteamData() {
   if (steamRunning) return;
+  if (!WORKER_URL) {
+    document.getElementById('load-status').textContent = '⚠ No proxy set';
+    document.getElementById('cors-warning').style.display = 'block';
+    document.getElementById('cors-error-detail').textContent = 'Set your Cloudflare Worker URL in the Setup tab first.';
+    return;
+  }
   steamRunning = true;
   document.getElementById('load-status').textContent = 'Fetching Steam data...';
   document.getElementById('steam-retry-btn').style.display = 'none';
@@ -451,25 +565,13 @@ async function fetchSteamData() {
   for (let i = 0; i < ids.length; i += CHUNK) {
     const chunk = ids.slice(i, i + CHUNK);
     try {
-      const p = new URLSearchParams();
-      p.append('itemcount', chunk.length);
-      chunk.forEach((id, j) => p.append('publishedfileids[' + j + ']', id));
-      const r = await fetch(STEAM_API, { method: 'POST', body: p.toString() });
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      const json = await r.json();
-      for (const f of (json?.response?.publishedfiledetails || [])) {
-        const k = String(f.publishedfileid);
-        if (!skinData[k]) skinData[k] = {};
-        const tags = (f.tags || []).map(t => (t.tag || '').toLowerCase());
-        skinData[k].name   = f.title || 'Unnamed';
-        skinData[k].img    = proxyImg(f.preview_url || null);
-        skinData[k].status = f.result === 1 ? (tags.includes('featured') || tags.includes('approved') ? 'Approved' : 'Workshop') : 'Unavailable';
-      }
+      const files = await fetchSteamChunk(chunk);
+      parseSteamResults(files);
       anySuccess = true;
     } catch (e) {
       if (!anySuccess) {
         steamRunning = false;
-        document.getElementById('load-status').textContent = '⚠ Steam blocked';
+        document.getElementById('load-status').textContent = '⚠ Fetch failed';
         document.getElementById('steam-retry-btn').style.display = 'inline-block';
         document.getElementById('cors-warning').style.display = 'block';
         document.getElementById('cors-error-detail').textContent = 'Error: ' + (e.message || e);
@@ -480,7 +582,7 @@ async function fetchSteamData() {
     done += chunk.length;
     document.getElementById('prog').style.width = (done / ids.length * 100) + '%';
     renderTable();
-    await new Promise(r => setTimeout(r, 300));
+    await new Promise(r => setTimeout(r, 200));
   }
 
   document.getElementById('prog').style.width = '100%';
@@ -493,11 +595,7 @@ async function fetchSteamData() {
 
 async function fetchOneSkin(id) {
   try {
-    const p = new URLSearchParams();
-    p.append('itemcount', 1);
-    p.append('publishedfileids[0]', id);
-    const r = await fetch(STEAM_API, { method: 'POST', body: p.toString() });
-    const files = (await r.json())?.response?.publishedfiledetails || [];
+    const files = await fetchSteamChunk([id]);
     if (files.length) {
       const f = files[0];
       const tags = (f.tags || []).map(t => (t.tag || '').toLowerCase());
@@ -924,33 +1022,41 @@ function proxyImg(url) {
   return 'https://images.weserv.nl/?url=' + encodeURIComponent(url.replace(/^https?:\/\//, '')) + '&w=200&h=200&fit=cover&output=webp';
 }
 
+async function fetchChunk(ids) {
+  const prompt = 'Fetch Steam Workshop details for these skin IDs and return ONLY a JSON array, no other text:\\n' + ids.join(',') + '\\n\\nCall: POST https://api.steampowered.com/ISteamRemoteStorage/GetPublishedFileDetails/v1/ with body: itemcount=' + ids.length + '&' + ids.map((id,j) => 'publishedfileids['+j+']='+id).join('&') + '\\n\\nReturn JSON array: [{"id":"<publishedfileid>","name":"<title>","preview_url":"<preview_url>","result":<result>,"tags":[<tag strings>]}]. ONLY the JSON array.';
+  const r = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 4000, messages: [{ role: 'user', content: prompt }] })
+  });
+  if (!r.ok) throw new Error('API ' + r.status);
+  const data = await r.json();
+  const text = (data.content?.[0]?.text || '[]').replace(/\`\`\`json|\`\`\`/g, '').trim();
+  return JSON.parse(text);
+}
+
 async function fetchAll() {
   const ids = SKINS.map(s => s.id);
-  const CHUNK = 100; let done = 0;
+  const CHUNK = 50; let done = 0;
   for (let i = 0; i < ids.length; i += CHUNK) {
     const chunk = ids.slice(i, i + CHUNK);
     try {
-      const p = new URLSearchParams();
-      p.append('itemcount', chunk.length);
-      chunk.forEach((id, j) => p.append('publishedfileids[' + j + ']', id));
-      const r = await fetch(STEAM_API, { method: 'POST', body: p.toString() });
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      const json = await r.json();
-      for (const f of (json?.response?.publishedfiledetails || [])) {
-        const k = String(f.publishedfileid);
-        const tags = (f.tags || []).map(t => (t.tag || '').toLowerCase());
+      const results = await fetchChunk(chunk);
+      for (const f of results) {
+        const k = String(f.id || f.publishedfileid);
+        const tags = (f.tags || []).map(t => typeof t === 'string' ? t.toLowerCase() : (t.tag||'').toLowerCase());
         skinData[k] = {
-          name: f.title || 'Unnamed',
+          name: f.name || f.title || 'Unnamed',
           img: proxyImg(f.preview_url || null),
           status: f.result === 1 ? (tags.includes('featured') || tags.includes('approved') ? 'Approved' : 'Workshop') : 'Unavailable'
         };
       }
-    } catch(e) { console.warn('Steam fetch error:', e.message); }
+    } catch(e) { console.warn('Fetch error:', e.message); }
     done += chunk.length;
     document.getElementById('prog').style.width = (done / ids.length * 100) + '%';
     updateStats();
     render();
-    await new Promise(res => setTimeout(res, 300));
+    await new Promise(res => setTimeout(res, 200));
   }
   document.getElementById('prog').style.width = '100%';
   setTimeout(() => document.getElementById('prog').style.display = 'none', 600);
@@ -1045,6 +1151,55 @@ fetchAll();
   toast('Exported ' + filename + ' (' + skinList.length + ' skins)', 'success');
 }
 
+
+// ── SETUP ─────────────────────────────────────────────────────────────────────
+function copyWorkerCode() {
+  const code = document.getElementById('worker-code').textContent;
+  navigator.clipboard.writeText(code);
+  toast('Worker code copied!', 'success');
+}
+
+async function saveWorkerUrl() {
+  const url = document.getElementById('worker-url-input').value.trim();
+  if (!url || !url.startsWith('https://')) { toast('Enter a valid https:// URL', 'error'); return; }
+  const result = document.getElementById('worker-test-result');
+  result.style.color = 'var(--text3)';
+  result.textContent = 'Testing connection...';
+  try {
+    const p = new URLSearchParams();
+    p.append('itemcount', 1);
+    p.append('publishedfileids[0]', '2900739039');
+    const r = await fetch(url, { method: 'POST', body: p.toString() });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const json = await r.json();
+    const name = json?.response?.publishedfiledetails?.[0]?.title;
+    if (!name) throw new Error('No skin data returned');
+    WORKER_URL = url;
+    localStorage.setItem('skinbox_worker_url', url);
+    result.style.color = 'var(--green)';
+    result.textContent = '✓ Connected! Test skin: "' + name + '"';
+    document.getElementById('worker-status-box').style.display = 'none';
+    toast('Worker URL saved — loading skins!', 'success');
+    steamRunning = false;
+    document.getElementById('prog').style.display = 'block';
+    document.getElementById('prog').style.width = '0%';
+    document.getElementById('cors-warning').style.display = 'none';
+    document.getElementById('load-status').textContent = 'Fetching Steam data...';
+    fetchSteamData();
+  } catch(e) {
+    result.style.color = 'var(--red)';
+    result.textContent = '✗ Failed: ' + e.message + ' — double-check your Worker URL and that it deployed successfully';
+  }
+}
+
+// Pre-fill saved URL if exists
+(function() {
+  const saved = localStorage.getItem('skinbox_worker_url');
+  if (saved) {
+    const input = document.getElementById('worker-url-input');
+    if (input) input.value = saved;
+  }
+})();
 
 // ── TABS / TOAST ──────────────────────────────────────────────────────────────
 function showTab(t) {
