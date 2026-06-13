@@ -3,7 +3,7 @@
 // Set it by running: wrangler secret put DISCORD_CLIENT_SECRET
 // Never put the actual secret in this file.
 
-const DISCORD_CLIENT_ID = '1511570135188508692';
+const DISCORD_CLIENT_ID = '1515464797523546313';
 const REDIRECT_URI      = 'https://steam-proxy.rustinction.workers.dev/discord-callback';
 const VOTE_PAGE_URL     = 'https://cart-27.github.io/Skin_Manager/SkinBox_Vote.html';
 
