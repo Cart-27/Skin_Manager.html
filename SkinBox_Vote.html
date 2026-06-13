@@ -119,17 +119,18 @@ h1{font-size:17px;font-weight:900;letter-spacing:2px;text-transform:uppercase}
 .toolbar input,.toolbar select{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:7px 11px;border-radius:var(--radius);font-size:12px;height:34px;font-family:'Barlow',sans-serif}
 .toolbar input{flex:1;min-width:160px}
 .toolbar input:focus,.toolbar select:focus{outline:none;border-color:var(--rust)}
+.discord-btn{display:inline-flex;align-items:center;gap:8px;background:#5865F2;color:#fff;padding:8px 18px;border-radius:var(--radius);font-size:13px;font-weight:700;text-decoration:none;font-family:'Barlow',sans-serif;transition:background .12s}
+.discord-btn:hover{background:#4752C4}
 </style>
 </head>
 <body>
 
 <!-- CONFIG: Set your Supabase URL and anon key here -->
 <script>
-const SUPABASE_URL  = 'https://jysvwzwumkiyhshpcdab.supabase.co
-';   // e.g. https://xxxx.supabase.co
-const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp5c3Z3end1bWtpeWhzaHBjZGFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNzMzNDgsImV4cCI6MjA5Njk0OTM0OH0.GOiyTUe1sjPfngA4A_cUHLEWay7RwDoL70BxLmVYu5c'; // anon/public key
-const WORKER_URL    = 'https://steam-proxy.rustinction.workers.dev'; // e.g. https://steam-proxy.rustinction.workers.dev
-const ADMIN_PASS    = 'Riderdieistheway86!';  // set your own password
+const SUPABASE_URL  = 'YOUR_SUPABASE_URL';   // e.g. https://xxxx.supabase.co
+const SUPABASE_KEY  = 'YOUR_SUPABASE_ANON_KEY'; // anon/public key
+const WORKER_URL    = 'YOUR_CLOUDFLARE_WORKER_URL'; // e.g. https://steam-proxy.rustinction.workers.dev
+const ADMIN_PASS    = 'YOUR_ADMIN_PASSWORD';  // set your own password
 const SERVER_NAME   = 'Rustinction';          // your server name
 const MONTHLY_LIMIT = null;                   // null = you decide manually
 </script>
@@ -150,11 +151,21 @@ const MONTHLY_LIMIT = null;                   // null = you decide manually
 
 <!-- Identity bar -->
 <div class="identity-bar">
-  <span style="font-size:12px;color:var(--text2);font-weight:700">Your Info:</span>
-  <input type="text" class="id-field" id="discord-name" placeholder="Discord name e.g. Cart#1234" oninput="saveIdentity()">
-  <input type="text" class="id-field" id="steam-id" placeholder="Steam ID e.g. 76561198..." oninput="saveIdentity()">
-  <span id="id-status" class="id-saved" style="display:none">&#x2713; Saved</span>
-  <span style="font-size:11px;color:var(--text3);margin-left:auto">Both fields required to vote or nominate</span>
+  <div id="id-logged-out" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;width:100%">
+    <a href="https://steam-proxy.rustinction.workers.dev/discord-login" class="discord-btn">
+      <svg width="18" height="18" viewBox="0 0 71 55" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M60.1 4.9A58.6 58.6 0 0 0 45.5.4a.2.2 0 0 0-.2.1 40.8 40.8 0 0 0-1.8 3.7 54.1 54.1 0 0 0-16.2 0 37.3 37.3 0 0 0-1.8-3.7.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 10.9 4.9a.2.2 0 0 0-.1.1C1.6 18.1-.9 31 .3 43.7a.2.2 0 0 0 .1.1 58.9 58.9 0 0 0 17.7 9 .2.2 0 0 0 .2-.1 42 42 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.8 38.8 0 0 1-5.5-2.6.2.2 0 0 1 0-.4l1.1-.8a.2.2 0 0 1 .2 0c11.5 5.3 24 5.3 35.4 0a.2.2 0 0 1 .2 0l1.1.8a.2.2 0 0 1 0 .4 36.1 36.1 0 0 1-5.5 2.6.2.2 0 0 0-.1.3 47.1 47.1 0 0 0 3.6 5.9c.1.1.2.1.3.1a58.7 58.7 0 0 0 17.7-9 .2.2 0 0 0 .1-.1c1.5-15.2-2.5-28.4-10.5-40.2a.2.2 0 0 0-.1 0zM23.7 36.1c-3.5 0-6.4-3.2-6.4-7.1s2.8-7.1 6.4-7.1c3.6 0 6.5 3.2 6.4 7.1 0 3.9-2.8 7.1-6.4 7.1zm23.6 0c-3.5 0-6.4-3.2-6.4-7.1s2.8-7.1 6.4-7.1c3.6 0 6.5 3.2 6.4 7.1 0 3.9-2.8 7.1-6.4 7.1z" fill="currentColor"/></svg>
+      Login with Discord
+    </a>
+    <span style="font-size:12px;color:var(--text3)">Login to vote and nominate skins</span>
+  </div>
+  <div id="id-logged-in" style="display:none;align-items:center;gap:12px;flex-wrap:wrap;width:100%">
+    <img id="user-avatar" src="" width="32" height="32" style="border-radius:50%;background:var(--surface2)" alt="">
+    <div>
+      <span id="user-name" style="font-size:13px;font-weight:700;color:var(--text)"></span>
+      <span style="font-size:11px;color:var(--text3);margin-left:6px">logged in via Discord</span>
+    </div>
+    <button class="btn" style="margin-left:auto;height:28px;font-size:11px" onclick="logout()">Logout</button>
+  </div>
 </div>
 
 <div class="tabs">
@@ -201,7 +212,7 @@ const MONTHLY_LIMIT = null;                   // null = you decide manually
 <div class="tab" id="tab-nominate">
   <div class="panel">
     <h3>&#x2795; Nominate a Skin</h3>
-    <p style="font-size:12px;color:var(--text2);margin-bottom:14px">Paste a Steam Workshop URL or skin ID. Make sure you've entered your Discord name and Steam ID above.</p>
+    <p style="font-size:12px;color:var(--text2);margin-bottom:14px">Paste a Steam Workshop URL or skin ID. Make sure you're logged in with Discord first.</p>
     <div class="form-row">
       <div class="form-group" style="flex:2">
         <label>Steam Workshop URL or Skin ID</label>
@@ -282,7 +293,7 @@ const MONTHLY_LIMIT = null;                   // null = you decide manually
     <h3>&#x1F4CB; Rules</h3>
     <ul style="font-size:12px;color:var(--text2);line-height:2;padding-left:16px">
       <li>One nomination per skin ID</li>
-      <li>One vote per skin per player</li>
+      <li>One vote per skin per Discord account</li>
       <li>Admin reviews nominations and approves skins monthly</li>
       <li>Approved skins get added directly to the server</li>
       <li>Keep it relevant to Rust — no joke nominations</li>
@@ -384,27 +395,61 @@ let myVotes     = {};  // skin_id -> vote value
 let adminLoggedIn = false;
 let nomPreviewData = null;
 
-// ── IDENTITY ──────────────────────────────────────────────────────────────────
+// ── IDENTITY (Discord OAuth) ──────────────────────────────────────────────────
+let currentUser = null;
+
 function loadIdentity() {
-  document.getElementById('discord-name').value = localStorage.getItem('vote_discord') || '';
-  document.getElementById('steam-id').value     = localStorage.getItem('vote_steam') || '';
-}
-function saveIdentity() {
-  const d = document.getElementById('discord-name').value.trim();
-  const s = document.getElementById('steam-id').value.trim();
-  localStorage.setItem('vote_discord', d);
-  localStorage.setItem('vote_steam', s);
-  const status = document.getElementById('id-status');
-  if (d && s) { status.style.display = 'inline'; setTimeout(() => status.style.display = 'none', 1500); }
+  // Check URL params from Discord OAuth callback
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('discord_name')) {
+    const user = {
+      name:   params.get('discord_name'),
+      id:     params.get('discord_id'),
+      avatar: params.get('discord_avatar') || ''
+    };
+    localStorage.setItem('vote_user', JSON.stringify(user));
+    // Clean URL
+    window.history.replaceState({}, '', window.location.pathname);
+  }
+  if (params.get('discord_error')) {
+    toast('Discord login failed: ' + params.get('discord_error'), 'error');
+    window.history.replaceState({}, '', window.location.pathname);
+  }
+
+  // Load saved user
+  const saved = localStorage.getItem('vote_user');
+  if (saved) {
+    try { currentUser = JSON.parse(saved); showLoggedIn(); } catch(e) { currentUser = null; }
+  }
   updateNomBtn();
 }
-function getIdentity() {
-  return {
-    discord: document.getElementById('discord-name').value.trim(),
-    steam:   document.getElementById('steam-id').value.trim()
-  };
+
+function showLoggedIn() {
+  document.getElementById('id-logged-out').style.display = 'none';
+  document.getElementById('id-logged-in').style.display  = 'flex';
+  document.getElementById('user-name').textContent = currentUser.name;
+  if (currentUser.avatar) document.getElementById('user-avatar').src = currentUser.avatar;
 }
-function hasIdentity() { const i = getIdentity(); return i.discord && i.steam; }
+
+function logout() {
+  currentUser = null;
+  localStorage.removeItem('vote_user');
+  myVotes = {};
+  document.getElementById('id-logged-out').style.display = 'flex';
+  document.getElementById('id-logged-in').style.display  = 'none';
+  updateNomBtn();
+  renderLeaderboard();
+  renderAll();
+}
+
+function saveIdentity() {} // no-op, kept for compatibility
+
+function getIdentity() {
+  if (!currentUser) return { discord: '', steam: '' };
+  return { discord: currentUser.name, steam: currentUser.id };
+}
+
+function hasIdentity() { return !!currentUser; }
 
 // ── SUPABASE API ──────────────────────────────────────────────────────────────
 async function sbGet(table, params) {
@@ -473,9 +518,9 @@ async function loadData() {
     nominations = await sbGet('nominations_with_votes', 'order=vote_total.desc,created_at.asc');
 
     // Load my votes
-    const { steam } = getIdentity();
-    if (steam) {
-      const votes = await sbGet('votes', 'steam_id=eq.' + encodeURIComponent(steam) + '&select=skin_id,vote');
+    const { discord } = getIdentity();
+    if (discord && currentUser) {
+      const votes = await sbGet('votes', 'discord_name=eq.' + encodeURIComponent(currentUser.name) + '&select=skin_id,vote');
       myVotes = {};
       votes.forEach(v => myVotes[v.skin_id] = v.vote);
     }
@@ -594,13 +639,13 @@ async function castVote(skinId, value) {
   try {
     if (existing === value) {
       // Unvote — delete existing vote
-      await sbDelete('votes', 'skin_id=eq.' + skinId + '&steam_id=eq.' + encodeURIComponent(steam));
+      await sbDelete('votes', 'skin_id=eq.' + skinId + '&discord_name=eq.' + encodeURIComponent(discord));
       delete myVotes[skinId];
       toast('Vote removed', 'success');
     } else {
       // Delete existing vote if any, then insert new
-      if (existing) await sbDelete('votes', 'skin_id=eq.' + skinId + '&steam_id=eq.' + encodeURIComponent(steam));
-      await sbPost('votes', { skin_id: skinId, discord_name: discord, steam_id: steam, vote: value });
+      if (existing) await sbDelete('votes', 'skin_id=eq.' + skinId + '&discord_name=eq.' + encodeURIComponent(discord));
+      await sbPost('votes', { skin_id: skinId, discord_name: discord, steam_id: currentUser?.id || discord, vote: value });
       myVotes[skinId] = value;
       toast(value === 1 ? '&#x25B2; Upvoted!' : '&#x25BC; Downvoted', 'success');
     }
@@ -683,7 +728,7 @@ async function submitNomination() {
       item_cat:             cat || null,
       item_name:            cat ? CAT_LABELS[cat] : null,
       submitted_by_discord: discord,
-      submitted_by_steam:   steam,
+      submitted_by_steam:   currentUser?.id || discord,
       status:               'pending'
     });
     toast('&#x2713; Nomination submitted!', 'success');
