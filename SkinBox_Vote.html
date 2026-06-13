@@ -296,17 +296,6 @@ const MODERATORS = [];
     </div>
   </div>
 
-  <!-- SkinBox config import (hides already-added skins) -->
-  <div class="panel" style="border-color:var(--blue)">
-    <h3 style="color:var(--blue)">&#x1F4C2; Load Server Skin List (optional)</h3>
-    <p style="font-size:12px;color:var(--text2);margin-bottom:10px">Upload the server SkinBox.json to automatically block nominations for skins already on the server.</p>
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <input type="file" id="skinbox-json-upload" accept=".json" style="display:none" onchange="loadSkinBoxJSON(this)">
-      <button class="btn blue" onclick="document.getElementById('skinbox-json-upload').click()">&#x1F4C2; Upload SkinBox.json</button>
-      <span id="skinbox-json-status" style="font-size:11px;color:var(--text3)">Not loaded — skins already on server won't be flagged</span>
-    </div>
-  </div>
-
   <!-- Collection expander for players -->
   <div class="panel">
     <h3>&#x1F4E6; Expand a Workshop Collection</h3>
@@ -457,6 +446,17 @@ const MODERATORS = [];
       <div class="stat green"><div class="stat-label">Approved</div><div class="stat-val" id="adm-approved">0</div></div>
       <div class="stat"><div class="stat-label">Rejected</div><div class="stat-val" id="adm-rejected">0</div></div>
     </div>
+    <!-- SkinBox.json import — admin only -->
+    <div class="panel" style="border-color:var(--blue);margin-bottom:16px">
+      <h3 style="color:var(--blue)">&#x1F4C2; Load SkinBox.json</h3>
+      <p style="font-size:12px;color:var(--text2);margin-bottom:10px">Upload your server config to block nominations for skins already added. This is only visible to you.</p>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <input type="file" id="skinbox-json-upload" accept=".json" style="display:none" onchange="loadSkinBoxJSON(this)">
+        <button class="btn blue" onclick="document.getElementById('skinbox-json-upload').click()">&#x1F4C2; Upload SkinBox.json</button>
+        <span id="skinbox-json-status" style="font-size:11px;color:var(--text3)">Not loaded</span>
+      </div>
+    </div>
+
     <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
       <button class="btn" onclick="loadAdmin()">&#x21BA; Refresh</button>
       <button class="btn success" onclick="exportApproved()">&#x2B07; Export Approved IDs</button>
