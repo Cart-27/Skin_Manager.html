@@ -1367,7 +1367,7 @@ footer{text-align:center;padding:14px;color:var(--text3);font-size:10px;border-t
 <!-- TABLE VIEW -->
 <div id="view-tbl" style="display:none"><div class="tw"><table class="tbl"><thead><tr><th style="width:40px"></th><th>Skin Name</th><th>Item</th><th>Group</th><th>Skin ID</th><th>Status</th><th>Permission</th></tr></thead><tbody id="tb"></tbody></table></div><p class="pgr" id="tpgr"></p><button class="lbtn" id="tlb" onclick="tmore()">Load more</button></div>
 <footer>SkinBox — ${permLabel} &middot; ${skinList.length} skins &middot; ${ts} &middot; Read-only</footer>
-<script type="application/json" id="skin-data">${JSON.stringify({skins:skinList,pcols,cl:catLabels,wurl:workerUrl||''})}</script>
+<script type="application/json" id="skin-data">${JSON.stringify({skins:skinList,pcols,cl:catLabels,wurl:workerUrl||''})}<\/script>
 <script>
 const _d   = JSON.parse(document.getElementById('skin-data').textContent);
 const SKINS = _d.skins;
