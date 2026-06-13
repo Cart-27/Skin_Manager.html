@@ -1,10 +1,12 @@
-// ── CONFIG — fill these in before deploying ───────────────────────────────────
-const DISCORD_CLIENT_ID     = '1511570135188508692';
-const DISCORD_CLIENT_SECRET = 'YOUR_DISCORD_CLIENT_SECRET';
-const REDIRECT_URI          = 'https://steam-proxy.rustinction.workers.dev/discord-callback';
-const VOTE_PAGE_URL         = 'https://cart-27.github.io/Skin_Manager/SkinBox_Vote.html';
+// ── CONFIG ────────────────────────────────────────────────────────────────────
+// DISCORD_CLIENT_SECRET is stored as a Cloudflare environment variable
+// Set it by running: wrangler secret put DISCORD_CLIENT_SECRET
+// Never put the actual secret in this file.
 
-// ── CORS HEADERS ──────────────────────────────────────────────────────────────
+const DISCORD_CLIENT_ID = '1511570135188508692';
+const REDIRECT_URI      = 'https://steam-proxy.rustinction.workers.dev/discord-callback';
+const VOTE_PAGE_URL     = 'https://cart-27.github.io/Skin_Manager/SkinBox_Vote.html';
+
 const CORS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': '*',
@@ -22,7 +24,7 @@ async function handle(req) {
 
   const url = new URL(req.url);
 
-  // ── DISCORD OAUTH: redirect to Discord login ──────────────────────────────
+  // ── DISCORD LOGIN: redirect player to Discord ─────────────────────────────
   if (url.pathname === '/discord-login') {
     const params = new URLSearchParams({
       client_id:     DISCORD_CLIENT_ID,
@@ -33,15 +35,14 @@ async function handle(req) {
     return Response.redirect('https://discord.com/oauth2/authorize?' + params.toString(), 302);
   }
 
-  // ── DISCORD OAUTH: handle callback from Discord ───────────────────────────
+  // ── DISCORD CALLBACK: exchange code for user info ─────────────────────────
   if (url.pathname === '/discord-callback') {
     const code = url.searchParams.get('code');
     if (!code) {
       return Response.redirect(VOTE_PAGE_URL + '?discord_error=no_code', 302);
     }
-
     try {
-      // Exchange code for access token
+      // DISCORD_CLIENT_SECRET comes from Cloudflare environment variable
       const tokenRes = await fetch('https://discord.com/api/oauth2/token', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -53,40 +54,34 @@ async function handle(req) {
           redirect_uri:  REDIRECT_URI,
         }).toString(),
       });
-
       const tokenData = await tokenRes.json();
       if (!tokenData.access_token) throw new Error('No access token');
 
-      // Get user info from Discord
       const userRes = await fetch('https://discord.com/api/users/@me', {
         headers: { 'Authorization': 'Bearer ' + tokenData.access_token },
       });
       const user = await userRes.json();
 
-      // Build display name: username + discriminator if not zero
       const discordName = user.discriminator && user.discriminator !== '0'
         ? user.username + '#' + user.discriminator
         : user.username;
 
-      const discordId = user.id;
-      const avatar    = user.avatar
+      const avatar = user.avatar
         ? 'https://cdn.discordapp.com/avatars/' + user.id + '/' + user.avatar + '.png'
-        : null;
+        : '';
 
-      // Redirect back to vote page with user info in URL params
       const params = new URLSearchParams({
         discord_name:   discordName,
-        discord_id:     discordId,
-        discord_avatar: avatar || '',
+        discord_id:     user.id,
+        discord_avatar: avatar,
       });
       return Response.redirect(VOTE_PAGE_URL + '?' + params.toString(), 302);
-
     } catch (e) {
       return Response.redirect(VOTE_PAGE_URL + '?discord_error=' + encodeURIComponent(e.message), 302);
     }
   }
 
-  // ── IMAGE PROXY: GET /img?url=... ─────────────────────────────────────────
+  // ── IMAGE PROXY: GET ?url=... ─────────────────────────────────────────────
   if (req.method === 'GET' && url.searchParams.has('url')) {
     const imgUrl = url.searchParams.get('url');
     try {
@@ -106,7 +101,6 @@ async function handle(req) {
         }
       });
     } catch (e) {
-      // 1x1 transparent gif fallback
       const pixel = 'R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
       const buf   = Uint8Array.from(atob(pixel), c => c.charCodeAt(0));
       return new Response(buf, {
@@ -115,7 +109,7 @@ async function handle(req) {
     }
   }
 
-  // ── STEAM API PROXY: POST with skin IDs ───────────────────────────────────
+  // ── STEAM API PROXY: POST ─────────────────────────────────────────────────
   if (req.method !== 'POST') {
     return new Response('Steam proxy is running OK', { status: 200, headers: CORS });
   }
@@ -137,8 +131,7 @@ async function handle(req) {
     );
     const text = await r.text();
     try {
-      const data = JSON.parse(text);
-      return new Response(JSON.stringify(data), {
+      return new Response(JSON.parse(text) && text, {
         headers: { 'Content-Type': 'application/json', ...CORS }
       });
     } catch (e) {
