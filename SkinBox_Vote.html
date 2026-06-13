@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SkinBox Skin Voting</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--rust:#E8461A;--rust-dark:#b33614;--bg:#111010;--surface:#1c1b1b;--surface2:#242323;--surface3:#2e2d2d;--border:#333;--border2:#444;--text:#f0ebe5;--text2:#a09890;--text3:#6a6260;--green:#4caf7d;--green-bg:#1a2e22;--blue:#4a9eda;--blue-bg:#192232;--amber:#e8a21a;--amber-bg:#2e2510;--red:#e85a4a;--red-bg:#2e1a18;--radius:6px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+header{background:var(--surface);border-bottom:2px solid var(--rust);padding:14px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;position:sticky;top:0;z-index:50}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:34px;height:34px;background:var(--rust);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:17px}
+h1{font-size:17px;font-weight:900;letter-spacing:2px;text-transform:uppercase}
+.subtitle{font-size:11px;color:var(--text3);font-family:'Share Tech Mono',monospace}
+.hdr-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.btn{background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:7px 14px;border-radius:var(--radius);font-size:12px;font-weight:700;cursor:pointer;font-family:'Barlow',sans-serif;transition:all .12s;height:34px;white-space:nowrap}
+.btn:hover{background:var(--surface3)}
+.btn.primary{background:var(--rust);border-color:var(--rust);color:#fff}.btn.primary:hover{background:var(--rust-dark)}
+.btn.success{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.btn.danger{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+.btn.amber{background:var(--amber-bg);border-color:var(--amber);color:var(--amber)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+/* TABS */
+.tabs{display:flex;background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px}
+.tab-btn{background:none;border:none;border-bottom:3px solid transparent;color:var(--text2);padding:12px 18px;font-size:12px;font-weight:700;font-family:'Barlow',sans-serif;cursor:pointer;letter-spacing:1px;text-transform:uppercase;transition:all .15s}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--rust);border-bottom-color:var(--rust)}
+.tab{display:none;padding:20px 24px}.tab.active{display:block}
+/* IDENTITY PANEL */
+.identity-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.id-field{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:var(--radius);font-size:12px;font-family:'Barlow',sans-serif;height:32px;width:180px}
+.id-field:focus{outline:none;border-color:var(--rust)}
+.id-saved{font-size:11px;color:var(--green)}
+/* PANELS */
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px;margin-bottom:16px}
+.panel h3{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.form-row{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end}
+.form-group{display:flex;flex-direction:column;gap:4px;flex:1;min-width:130px}
+.form-group label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;font-weight:700}
+.form-group input,.form-group select{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:7px 11px;border-radius:var(--radius);font-size:12px;font-family:'Barlow',sans-serif}
+.form-group input:focus,.form-group select:focus{outline:none;border-color:var(--rust)}
+/* PREVIEW */
+.preview-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:12px;display:flex;gap:12px;align-items:center;margin-top:10px}
+.preview-img{width:60px;height:60px;object-fit:cover;border-radius:4px;background:var(--surface3);flex-shrink:0}
+.preview-name{font-size:14px;font-weight:700}
+.preview-sub{font-size:11px;color:var(--text3);margin-top:2px}
+/* NOMINATION CARDS */
+.nom-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.nom-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:border-color .12s}
+.nom-card:hover{border-color:var(--border2)}
+.nom-card.approved{border-color:var(--green)}
+.nom-card.rejected{opacity:.5}
+.nom-img{width:100%;aspect-ratio:2/1;object-fit:cover;background:var(--surface2);display:block}
+.nom-img-ph{width:100%;aspect-ratio:2/1;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--text3)}
+.nom-body{padding:12px}
+.nom-name{font-size:14px;font-weight:700;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nom-item{font-size:11px;color:var(--text2);margin-bottom:4px}
+.nom-by{font-size:10px;color:var(--text3);font-family:'Share Tech Mono',monospace;margin-bottom:10px}
+.nom-footer{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.vote-btns{display:flex;gap:4px}
+.vote-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text2);padding:5px 12px;border-radius:var(--radius);font-size:13px;cursor:pointer;font-weight:700;transition:all .12s;font-family:'Barlow',sans-serif}
+.vote-btn:hover:not(:disabled){background:var(--surface3)}
+.vote-btn.up.voted{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.vote-btn.down.voted{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+.vote-btn:disabled{opacity:.4;cursor:not-allowed}
+.vote-score{font-size:16px;font-weight:900;font-family:'Share Tech Mono',monospace;min-width:30px;text-align:center}
+.vote-score.pos{color:var(--green)}.vote-score.neg{color:var(--red)}.vote-score.zero{color:var(--text3)}
+.nom-rank{font-size:11px;color:var(--text3);margin-left:auto}
+.badge{font-size:10px;padding:2px 7px;border-radius:99px;font-weight:700}
+.b-pending{background:#2a2710;color:var(--amber)}
+.b-approved{background:var(--green-bg);color:var(--green)}
+.b-rejected{background:var(--red-bg);color:var(--red)}
+/* LEADERBOARD */
+.lb-row{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
+.lb-row:last-child{border-bottom:none}
+.lb-rank{font-size:20px;font-weight:900;font-family:'Share Tech Mono',monospace;width:32px;color:var(--text3);flex-shrink:0}
+.lb-rank.gold{color:#FFD700}.lb-rank.silver{color:#C0C0C0}.lb-rank.bronze{color:#CD7F32}
+.lb-img{width:48px;height:48px;object-fit:cover;border-radius:6px;background:var(--surface2);flex-shrink:0}
+.lb-img-ph{width:48px;height:48px;background:var(--surface2);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--text3);flex-shrink:0}
+.lb-info{flex:1;min-width:0}
+.lb-name{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lb-sub{font-size:11px;color:var(--text2)}
+.lb-by{font-size:10px;color:var(--text3);font-family:'Share Tech Mono',monospace}
+.lb-score{font-size:22px;font-weight:900;font-family:'Share Tech Mono',monospace;color:var(--green);flex-shrink:0}
+/* ADMIN */
+.admin-nom-row{display:flex;gap:10px;align-items:center;padding:10px;background:var(--surface);border:1px solid var(--border);border-radius:6px;margin-bottom:8px}
+.admin-nom-img{width:48px;height:48px;object-fit:cover;border-radius:4px;background:var(--surface2);flex-shrink:0}
+.admin-nom-info{flex:1;min-width:0}
+.admin-nom-name{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.admin-nom-sub{font-size:11px;color:var(--text2)}
+.admin-nom-by{font-size:10px;color:var(--text3);font-family:'Share Tech Mono',monospace}
+.admin-nom-score{font-size:20px;font-weight:900;font-family:'Share Tech Mono',monospace;color:var(--green);width:48px;text-align:center;flex-shrink:0}
+.admin-nom-actions{display:flex;gap:6px;flex-shrink:0}
+/* TOAST */
+.toast{position:fixed;bottom:20px;right:20px;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);padding:10px 18px;font-size:12px;font-weight:700;z-index:9999;transform:translateY(80px);opacity:0;transition:all .25s;max-width:280px}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{border-color:var(--green);color:var(--green)}
+.toast.error{border-color:var(--red);color:var(--red)}
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:#000000aa;z-index:500;display:none;align-items:center;justify-content:center}
+.modal-overlay.show{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:22px;width:380px;max-width:95vw}
+.modal h3{font-size:15px;font-weight:700;margin-bottom:14px}
+.modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
+/* EMPTY */
+.empty{text-align:center;padding:48px 20px;color:var(--text3)}
+.empty-icon{font-size:48px;margin-bottom:12px}
+.empty-text{font-size:14px}
+/* STATS STRIP */
+.stat-strip{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px 16px;min-width:100px}
+.stat-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px}
+.stat-val{font-size:20px;font-weight:900;color:var(--rust);font-family:'Share Tech Mono',monospace}
+.stat.green .stat-val{color:var(--green)}.stat.blue .stat-val{color:var(--blue)}.stat.amber .stat-val{color:var(--amber)}
+/* FILTER TOOLBAR */
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+.toolbar input,.toolbar select{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:7px 11px;border-radius:var(--radius);font-size:12px;height:34px;font-family:'Barlow',sans-serif}
+.toolbar input{flex:1;min-width:160px}
+.toolbar input:focus,.toolbar select:focus{outline:none;border-color:var(--rust)}
+</style>
+</head>
+<body>
+
+<!-- CONFIG: Set your Supabase URL and anon key here -->
+<script>
+const SUPABASE_URL  = 'https://jysvwzwumkiyhshpcdab.supabase.co
+';   // e.g. https://xxxx.supabase.co
+const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp5c3Z3end1bWtpeWhzaHBjZGFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNzMzNDgsImV4cCI6MjA5Njk0OTM0OH0.GOiyTUe1sjPfngA4A_cUHLEWay7RwDoL70BxLmVYu5c'; // anon/public key
+const WORKER_URL    = 'https://steam-proxy.rustinction.workers.dev'; // e.g. https://steam-proxy.rustinction.workers.dev
+const ADMIN_PASS    = 'Riderdieistheway86!';  // set your own password
+const SERVER_NAME   = 'Rustinction';          // your server name
+const MONTHLY_LIMIT = null;                   // null = you decide manually
+</script>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">&#x1F980;</div>
+    <div>
+      <h1 id="server-title">SkinBox Voting</h1>
+      <div class="subtitle">Vote for skins to add to the server</div>
+    </div>
+  </div>
+  <div class="hdr-right">
+    <span id="hdr-count" style="font-size:11px;color:var(--text3)"></span>
+    <button class="btn amber" onclick="showAdminLogin()">&#x1F511; Admin</button>
+  </div>
+</header>
+
+<!-- Identity bar -->
+<div class="identity-bar">
+  <span style="font-size:12px;color:var(--text2);font-weight:700">Your Info:</span>
+  <input type="text" class="id-field" id="discord-name" placeholder="Discord name e.g. Cart#1234" oninput="saveIdentity()">
+  <input type="text" class="id-field" id="steam-id" placeholder="Steam ID e.g. 76561198..." oninput="saveIdentity()">
+  <span id="id-status" class="id-saved" style="display:none">&#x2713; Saved</span>
+  <span style="font-size:11px;color:var(--text3);margin-left:auto">Both fields required to vote or nominate</span>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('leaderboard')">&#x1F3C6; Leaderboard</button>
+  <button class="tab-btn" onclick="showTab('all')">&#x1F4CB; All Nominations</button>
+  <button class="tab-btn" onclick="showTab('nominate')">&#x2795; Nominate a Skin</button>
+</div>
+
+<!-- LEADERBOARD TAB -->
+<div class="tab active" id="tab-leaderboard">
+  <div class="stat-strip">
+    <div class="stat"><div class="stat-label">Total Nominations</div><div class="stat-val" id="st-total">0</div></div>
+    <div class="stat green"><div class="stat-label">Approved</div><div class="stat-val" id="st-approved">0</div></div>
+    <div class="stat amber"><div class="stat-label">Pending</div><div class="stat-val" id="st-pending">0</div></div>
+    <div class="stat blue"><div class="stat-label">Total Votes</div><div class="stat-val" id="st-votes">0</div></div>
+  </div>
+  <div id="leaderboard-list"></div>
+</div>
+
+<!-- ALL NOMINATIONS TAB -->
+<div class="tab" id="tab-all">
+  <div class="toolbar">
+    <input type="text" id="f-search" placeholder="Search skin name..." oninput="renderAll()">
+    <select id="f-status" onchange="renderAll()">
+      <option value="">All statuses</option>
+      <option value="pending">Pending</option>
+      <option value="approved">Approved</option>
+      <option value="rejected">Rejected</option>
+    </select>
+    <select id="f-sort" onchange="renderAll()">
+      <option value="votes">Most votes</option>
+      <option value="newest">Newest first</option>
+      <option value="oldest">Oldest first</option>
+    </select>
+  </div>
+  <div class="nom-grid" id="all-grid"></div>
+  <div class="empty" id="all-empty" style="display:none">
+    <div class="empty-icon">&#x1F4AD;</div>
+    <div class="empty-text">No nominations yet — be the first!</div>
+  </div>
+</div>
+
+<!-- NOMINATE TAB -->
+<div class="tab" id="tab-nominate">
+  <div class="panel">
+    <h3>&#x2795; Nominate a Skin</h3>
+    <p style="font-size:12px;color:var(--text2);margin-bottom:14px">Paste a Steam Workshop URL or skin ID. Make sure you've entered your Discord name and Steam ID above.</p>
+    <div class="form-row">
+      <div class="form-group" style="flex:2">
+        <label>Steam Workshop URL or Skin ID</label>
+        <input type="text" id="nom-id" placeholder="https://steamcommunity.com/sharedfiles/filedetails/?id=... or just the ID" oninput="onNomInput()">
+      </div>
+      <div class="form-group" style="flex:1">
+        <label>Item (optional — auto-detected if known)</label>
+        <select id="nom-cat">
+          <option value="">— select item —</option>
+          <option value="rifle.ak">AK-47</option>
+          <option value="rifle.bolt">Bolt Action</option>
+          <option value="rifle.lr300">LR-300</option>
+          <option value="rifle.l96">L96 Rifle</option>
+          <option value="rifle.semiauto">Semi-Auto Rifle</option>
+          <option value="lmg.m249">M249</option>
+          <option value="smg.thompson">Thompson SMG</option>
+          <option value="smg.mp5">MP5</option>
+          <option value="smg.2">Custom SMG</option>
+          <option value="pistol.semiauto">Semi-Auto Pistol</option>
+          <option value="pistol.python">Python Revolver</option>
+          <option value="pistol.revolver">Revolver</option>
+          <option value="shotgun.pump">Pump Shotgun</option>
+          <option value="shotgun.double">Double Barrel</option>
+          <option value="crossbow">Crossbow</option>
+          <option value="bow.hunting">Hunting Bow</option>
+          <option value="rocket.launcher">Rocket Launcher</option>
+          <option value="knife.bone">Bone Knife</option>
+          <option value="grenade.f1">F1 Grenade</option>
+          <option value="metal.facemask">Metal Facemask</option>
+          <option value="metal.plate.torso">Metal Chest Plate</option>
+          <option value="coffeecan.helmet">Coffee Can Helmet</option>
+          <option value="bucket.helmet">Bucket Helmet</option>
+          <option value="hoodie">Hoodie</option>
+          <option value="jacket">Jacket</option>
+          <option value="jacket.snow">Snow Jacket</option>
+          <option value="pants">Pants</option>
+          <option value="shoes.boots">Boots</option>
+          <option value="largebackpack">Large Backpack</option>
+          <option value="roadsign.jacket">Road Sign Jacket</option>
+          <option value="roadsign.kilt">Road Sign Kilt</option>
+          <option value="roadsign.gloves">Road Sign Gloves</option>
+          <option value="door.hinged.wood">Wooden Door</option>
+          <option value="door.hinged.metal">Metal Door</option>
+          <option value="door.hinged.toptier">Armored Door</option>
+          <option value="door.double.hinged.wood">Wooden Double Door</option>
+          <option value="door.double.hinged.metal">Metal Double Door</option>
+          <option value="door.double.hinged.toptier">Armored Double Door</option>
+          <option value="wall.frame.garagedoor">Garage Door</option>
+          <option value="box.wooden">Wooden Box</option>
+          <option value="box.wooden.large">Large Wood Box</option>
+          <option value="fridge">Fridge</option>
+          <option value="locker">Locker</option>
+          <option value="sleepingbag">Sleeping Bag</option>
+          <option value="rug">Rug</option>
+          <option value="rug.bear">Bear Rug</option>
+          <option value="furnace">Furnace</option>
+        </select>
+      </div>
+    </div>
+    <div id="nom-preview" style="display:none">
+      <div class="preview-card">
+        <img id="nom-prev-img" class="preview-img" src="" alt="">
+        <div style="flex:1;min-width:0">
+          <div class="preview-name" id="nom-prev-name"></div>
+          <div class="preview-sub" id="nom-prev-sub"></div>
+          <div class="preview-sub" id="nom-prev-exists" style="color:var(--amber);margin-top:4px"></div>
+        </div>
+        <span id="nom-prev-badge" class="badge"></span>
+      </div>
+    </div>
+    <div style="margin-top:14px;display:flex;gap:8px">
+      <button class="btn primary" id="nom-submit-btn" onclick="submitNomination()" disabled>Submit Nomination</button>
+      <span id="nom-msg" style="font-size:12px;color:var(--text3);align-self:center"></span>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>&#x1F4CB; Rules</h3>
+    <ul style="font-size:12px;color:var(--text2);line-height:2;padding-left:16px">
+      <li>One nomination per skin ID</li>
+      <li>One vote per skin per player</li>
+      <li>Admin reviews nominations and approves skins monthly</li>
+      <li>Approved skins get added directly to the server</li>
+      <li>Keep it relevant to Rust — no joke nominations</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Admin login modal -->
+<div class="modal-overlay" id="admin-modal">
+  <div class="modal">
+    <h3>&#x1F511; Admin Login</h3>
+    <div class="form-group" style="margin-bottom:14px">
+      <label>Password</label>
+      <input type="password" id="admin-pass-input" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')checkAdminPass()">
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeAdminModal()">Cancel</button>
+      <button class="btn primary" onclick="checkAdminPass()">Login</button>
+    </div>
+  </div>
+</div>
+
+<!-- Admin panel (hidden until login) -->
+<div id="admin-panel" style="display:none;position:fixed;inset:0;background:var(--bg);z-index:200;overflow-y:auto">
+  <div style="background:var(--surface);border-bottom:2px solid var(--rust);padding:14px 24px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:10">
+    <div class="logo-icon">&#x1F6E1;</div>
+    <h2 style="font-size:16px;font-weight:900">Admin Panel</h2>
+    <span style="font-size:12px;color:var(--text3)">Manage nominations &amp; approvals</span>
+    <button class="btn" style="margin-left:auto" onclick="closeAdmin()">&#x2715; Close</button>
+  </div>
+  <div style="padding:20px 24px">
+    <div class="stat-strip">
+      <div class="stat"><div class="stat-label">Total</div><div class="stat-val" id="adm-total">0</div></div>
+      <div class="stat amber"><div class="stat-label">Pending</div><div class="stat-val" id="adm-pending">0</div></div>
+      <div class="stat green"><div class="stat-label">Approved</div><div class="stat-val" id="adm-approved">0</div></div>
+      <div class="stat"><div class="stat-label">Rejected</div><div class="stat-val" id="adm-rejected">0</div></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+      <button class="btn" onclick="loadAdmin()">&#x21BA; Refresh</button>
+      <button class="btn success" onclick="exportApproved()">&#x2B07; Export Approved IDs</button>
+      <button class="btn amber" onclick="confirmNewMonth()">&#x1F5D3; New Month Rollover</button>
+      <button class="btn" onclick="exportFullCSV()">&#x2B07; Export Full CSV</button>
+      <select id="adm-filter" onchange="renderAdmin()" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:0 10px;border-radius:var(--radius);font-size:12px;height:34px;font-family:'Barlow',sans-serif">
+        <option value="">All nominations</option>
+        <option value="pending">Pending only</option>
+        <option value="approved">Approved only</option>
+        <option value="rejected">Rejected only</option>
+      </select>
+    </div>
+    <div id="admin-list"></div>
+
+    <!-- Month History -->
+    <div style="margin-top:24px;border-top:1px solid var(--border);padding-top:20px">
+      <h3 style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:12px">&#x1F4C5; Month History</h3>
+      <div id="month-history" style="font-size:12px;color:var(--text3)">Loading...</div>
+    </div>
+  </div>
+</div>
+
+<!-- New Month Rollover Modal -->
+<div class="modal-overlay" id="month-modal">
+  <div class="modal" style="width:460px">
+    <h3>&#x1F5D3; New Month Rollover</h3>
+    <p style="font-size:12px;color:var(--text2);margin-bottom:14px;line-height:1.7">
+      This will archive the current month's results and start fresh for a new voting period.
+    </p>
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:12px;margin-bottom:14px">
+      <div style="font-size:12px;font-weight:700;margin-bottom:8px;color:var(--text)">What happens:</div>
+      <ul style="font-size:12px;color:var(--text2);line-height:2;padding-left:16px">
+        <li>&#x2713; Approved skins stay approved (your record)</li>
+        <li>&#x2713; Unapproved nominations roll forward with their votes</li>
+        <li>&#x2713; Votes on rolled-forward skins are <strong>reset to 0</strong> so the new month starts fresh</li>
+        <li>&#x2713; A history snapshot is saved for your records</li>
+        <li>&#x2715; Rejected nominations are removed</li>
+      </ul>
+    </div>
+    <div class="form-group" style="margin-bottom:14px">
+      <label>Month label (for your records)</label>
+      <input type="text" id="month-label-input" placeholder="e.g. June 2026">
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeMonthModal()">Cancel</button>
+      <button class="btn primary" onclick="doRollover()">&#x1F5D3; Start New Month</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── CONFIG CHECK ──────────────────────────────────────────────────────────────
+document.getElementById('server-title').textContent = SERVER_NAME + ' SkinBox Voting';
+
+const CAT_LABELS = {"rifle.ak":"AK-47","rifle.bolt":"Bolt Action","rifle.lr300":"LR-300","rifle.l96":"L96 Rifle","rifle.semiauto":"Semi-Auto Rifle","lmg.m249":"M249","smg.thompson":"Thompson SMG","smg.mp5":"MP5","smg.2":"Custom SMG","pistol.semiauto":"Semi-Auto Pistol","pistol.python":"Python Revolver","pistol.revolver":"Revolver","shotgun.pump":"Pump Shotgun","shotgun.double":"Double Barrel","crossbow":"Crossbow","bow.hunting":"Hunting Bow","rocket.launcher":"Rocket Launcher","knife.bone":"Bone Knife","grenade.f1":"F1 Grenade","metal.facemask":"Metal Facemask","metal.plate.torso":"Metal Chest Plate","coffeecan.helmet":"Coffee Can Helmet","bucket.helmet":"Bucket Helmet","hoodie":"Hoodie","jacket":"Jacket","jacket.snow":"Snow Jacket","pants":"Pants","shoes.boots":"Boots","largebackpack":"Large Backpack","roadsign.jacket":"Road Sign Jacket","roadsign.kilt":"Road Sign Kilt","roadsign.gloves":"Road Sign Gloves","door.hinged.wood":"Wooden Door","door.hinged.metal":"Metal Door","door.hinged.toptier":"Armored Door","door.double.hinged.wood":"Wooden Double Door","door.double.hinged.metal":"Metal Double Door","door.double.hinged.toptier":"Armored Double Door","wall.frame.garagedoor":"Garage Door","box.wooden":"Wooden Box","box.wooden.large":"Large Wood Box","fridge":"Fridge","locker":"Locker","sleepingbag":"Sleeping Bag","rug":"Rug","rug.bear":"Bear Rug","furnace":"Furnace"};
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let nominations = [];
+let myVotes     = {};  // skin_id -> vote value
+let adminLoggedIn = false;
+let nomPreviewData = null;
+
+// ── IDENTITY ──────────────────────────────────────────────────────────────────
+function loadIdentity() {
+  document.getElementById('discord-name').value = localStorage.getItem('vote_discord') || '';
+  document.getElementById('steam-id').value     = localStorage.getItem('vote_steam') || '';
+}
+function saveIdentity() {
+  const d = document.getElementById('discord-name').value.trim();
+  const s = document.getElementById('steam-id').value.trim();
+  localStorage.setItem('vote_discord', d);
+  localStorage.setItem('vote_steam', s);
+  const status = document.getElementById('id-status');
+  if (d && s) { status.style.display = 'inline'; setTimeout(() => status.style.display = 'none', 1500); }
+  updateNomBtn();
+}
+function getIdentity() {
+  return {
+    discord: document.getElementById('discord-name').value.trim(),
+    steam:   document.getElementById('steam-id').value.trim()
+  };
+}
+function hasIdentity() { const i = getIdentity(); return i.discord && i.steam; }
+
+// ── SUPABASE API ──────────────────────────────────────────────────────────────
+async function sbGet(table, params) {
+  let url = SUPABASE_URL + '/rest/v1/' + table + '?';
+  if (params) url += params;
+  const r = await fetch(url, {
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_KEY,
+      'Content-Type': 'application/json'
+    }
+  });
+  if (!r.ok) throw new Error('Supabase error: ' + r.status);
+  return r.json();
+}
+
+async function sbPost(table, data) {
+  const r = await fetch(SUPABASE_URL + '/rest/v1/' + table, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_KEY,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=representation'
+    },
+    body: JSON.stringify(data)
+  });
+  if (!r.ok) {
+    const err = await r.json();
+    throw new Error(err.message || 'Supabase error: ' + r.status);
+  }
+  return r.json();
+}
+
+async function sbPatch(table, filter, data) {
+  const r = await fetch(SUPABASE_URL + '/rest/v1/' + table + '?' + filter, {
+    method: 'PATCH',
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_KEY,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=representation'
+    },
+    body: JSON.stringify(data)
+  });
+  if (!r.ok) throw new Error('Supabase error: ' + r.status);
+  return r.json();
+}
+
+async function sbDelete(table, filter) {
+  const r = await fetch(SUPABASE_URL + '/rest/v1/' + table + '?' + filter, {
+    method: 'DELETE',
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_KEY,
+      'Content-Type': 'application/json'
+    }
+  });
+  if (!r.ok) throw new Error('Supabase error: ' + r.status);
+}
+
+// ── LOAD DATA ─────────────────────────────────────────────────────────────────
+async function loadData() {
+  try {
+    // Load nominations with vote totals
+    nominations = await sbGet('nominations_with_votes', 'order=vote_total.desc,created_at.asc');
+
+    // Load my votes
+    const { steam } = getIdentity();
+    if (steam) {
+      const votes = await sbGet('votes', 'steam_id=eq.' + encodeURIComponent(steam) + '&select=skin_id,vote');
+      myVotes = {};
+      votes.forEach(v => myVotes[v.skin_id] = v.vote);
+    }
+
+    updateStats();
+    renderLeaderboard();
+    renderAll();
+    document.getElementById('hdr-count').textContent = nominations.filter(n => n.status === 'pending').length + ' pending';
+  } catch(e) {
+    console.error('Load error:', e);
+    toast('Failed to load nominations: ' + e.message, 'error');
+  }
+}
+
+function updateStats() {
+  const total    = nominations.length;
+  const approved = nominations.filter(n => n.status === 'approved').length;
+  const pending  = nominations.filter(n => n.status === 'pending').length;
+  const totalVotes = nominations.reduce((s, n) => s + Math.abs(parseInt(n.upvotes||0) + parseInt(n.downvotes||0)), 0);
+  document.getElementById('st-total').textContent    = total;
+  document.getElementById('st-approved').textContent = approved;
+  document.getElementById('st-pending').textContent  = pending;
+  document.getElementById('st-votes').textContent    = totalVotes;
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function renderLeaderboard() {
+  const list = document.getElementById('leaderboard-list');
+  const pending = nominations.filter(n => n.status === 'pending').sort((a,b) => b.vote_total - a.vote_total);
+  if (!pending.length) {
+    list.innerHTML = '<div class="empty"><div class="empty-icon">&#x1F3C6;</div><div class="empty-text">No pending nominations yet</div></div>';
+    return;
+  }
+  list.innerHTML = '';
+  pending.forEach((n, i) => {
+    const rank = i + 1;
+    const rankClass = rank === 1 ? 'gold' : rank === 2 ? 'silver' : rank === 3 ? 'bronze' : '';
+    const score = parseInt(n.vote_total || 0);
+    const imgHtml = n.skin_img
+      ? '<img class="lb-img" src="' + n.skin_img + '" alt="" loading="lazy" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'">' +
+        '<div class="lb-img-ph" style="display:none">&#x1F5BC;</div>'
+      : '<div class="lb-img-ph">&#x1F5BC;</div>';
+    const row = document.createElement('div'); row.className = 'lb-row';
+    row.innerHTML =
+      '<div class="lb-rank ' + rankClass + '">' + (rank <= 3 ? ['&#x1F947;','&#x1F948;','&#x1F949;'][rank-1] : '#'+rank) + '</div>' +
+      imgHtml +
+      '<div class="lb-info"><div class="lb-name">' + (n.skin_name||'#'+n.skin_id) + '</div>' +
+      '<div class="lb-sub">' + (n.item_name||n.item_cat||'Unknown item') + '</div>' +
+      '<div class="lb-by">Nominated by ' + n.submitted_by_discord + '</div></div>' +
+      '<div style="text-align:center;flex-shrink:0">' +
+      voteHtml(n) +
+      '</div>' +
+      '<a href="https://steamcommunity.com/sharedfiles/filedetails/?id=' + n.skin_id + '" target="_blank" class="btn" style="font-size:11px;height:28px;padding:0 8px">&#x2197;</a>';
+    list.appendChild(row);
+  });
+}
+
+function renderAll() {
+  const q      = (document.getElementById('f-search')?.value || '').trim().toLowerCase();
+  const status = document.getElementById('f-status')?.value || '';
+  const sort   = document.getElementById('f-sort')?.value || 'votes';
+  let list = [...nominations];
+  if (status) list = list.filter(n => n.status === status);
+  if (q) list = list.filter(n => (n.skin_name||'').toLowerCase().includes(q) || n.skin_id.includes(q));
+  if (sort === 'votes') list.sort((a,b) => b.vote_total - a.vote_total);
+  else if (sort === 'newest') list.sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
+  else list.sort((a,b) => new Date(a.created_at) - new Date(b.created_at));
+
+  const grid  = document.getElementById('all-grid');
+  const empty = document.getElementById('all-empty');
+  if (!list.length) { grid.innerHTML = ''; empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+  grid.innerHTML = '';
+  list.forEach(n => grid.appendChild(makeNomCard(n)));
+}
+
+function makeNomCard(n) {
+  const card = document.createElement('div');
+  card.className = 'nom-card ' + (n.status !== 'pending' ? n.status : '');
+  const imgHtml = n.skin_img
+    ? '<img class="nom-img" src="' + n.skin_img + '" alt="" loading="lazy" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'">' +
+      '<div class="nom-img-ph" style="display:none">&#x1F5BC;</div>'
+    : '<div class="nom-img-ph">&#x1F5BC;</div>';
+  const statusBadge = n.status === 'approved' ? '<span class="badge b-approved">&#x2713; Approved</span>'
+    : n.status === 'rejected' ? '<span class="badge b-rejected">Rejected</span>'
+    : '<span class="badge b-pending">Pending</span>';
+  card.innerHTML = imgHtml +
+    '<div class="nom-body">' +
+    '<div class="nom-name" title="' + (n.skin_name||'') + '">' + (n.skin_name||'#'+n.skin_id) + '</div>' +
+    '<div class="nom-item">' + (n.item_name||n.item_cat||'Unknown item') + '</div>' +
+    '<div class="nom-by">by ' + n.submitted_by_discord + ' &#x2022; ' + n.submitted_by_steam + '</div>' +
+    '<div class="nom-footer">' + voteHtml(n) + statusBadge +
+    '<a href="https://steamcommunity.com/sharedfiles/filedetails/?id=' + n.skin_id + '" target="_blank" class="btn" style="font-size:10px;height:26px;padding:0 8px;margin-left:auto">&#x2197; Workshop</a>' +
+    '</div></div>';
+  return card;
+}
+
+function voteHtml(n) {
+  const score = parseInt(n.vote_total || 0);
+  const myVote = myVotes[n.skin_id] || 0;
+  const scoreClass = score > 0 ? 'pos' : score < 0 ? 'neg' : 'zero';
+  const canVote = hasIdentity() && n.status === 'pending';
+  return '<div style="display:flex;align-items:center;gap:6px">' +
+    '<button class="vote-btn up ' + (myVote===1?'voted':'') + '" ' + (!canVote?'disabled':'') + ' onclick="castVote(\'' + n.skin_id + '\',1)">&#x25B2;</button>' +
+    '<span class="vote-score ' + scoreClass + '">' + (score > 0 ? '+' : '') + score + '</span>' +
+    '<button class="vote-btn down ' + (myVote===-1?'voted':'') + '" ' + (!canVote?'disabled':'') + ' onclick="castVote(\'' + n.skin_id + '\',-1)">&#x25BC;</button>' +
+    '</div>';
+}
+
+// ── VOTING ────────────────────────────────────────────────────────────────────
+async function castVote(skinId, value) {
+  if (!hasIdentity()) { toast('Enter your Discord name and Steam ID first', 'error'); return; }
+  const { discord, steam } = getIdentity();
+  const existing = myVotes[skinId];
+
+  try {
+    if (existing === value) {
+      // Unvote — delete existing vote
+      await sbDelete('votes', 'skin_id=eq.' + skinId + '&steam_id=eq.' + encodeURIComponent(steam));
+      delete myVotes[skinId];
+      toast('Vote removed', 'success');
+    } else {
+      // Delete existing vote if any, then insert new
+      if (existing) await sbDelete('votes', 'skin_id=eq.' + skinId + '&steam_id=eq.' + encodeURIComponent(steam));
+      await sbPost('votes', { skin_id: skinId, discord_name: discord, steam_id: steam, vote: value });
+      myVotes[skinId] = value;
+      toast(value === 1 ? '&#x25B2; Upvoted!' : '&#x25BC; Downvoted', 'success');
+    }
+    await loadData();
+  } catch(e) {
+    toast('Vote failed: ' + e.message, 'error');
+  }
+}
+
+// ── NOMINATE ──────────────────────────────────────────────────────────────────
+let nomTimer = null;
+function onNomInput() {
+  clearTimeout(nomTimer);
+  const val = document.getElementById('nom-id').value.trim();
+  document.getElementById('nom-preview').style.display = 'none';
+  nomPreviewData = null;
+  updateNomBtn();
+  if (!val) return;
+  nomTimer = setTimeout(() => fetchNomPreview(val), 500);
+}
+
+async function fetchNomPreview(val) {
+  // Extract skin ID from URL or use directly
+  const match = val.match(/[?&]id=(\d+)/) || val.match(/^(\d{6,12})$/);
+  if (!match) { document.getElementById('nom-msg').textContent = 'Enter a valid Workshop URL or skin ID'; return; }
+  const skinId = match[1];
+  document.getElementById('nom-msg').textContent = 'Looking up skin...';
+
+  try {
+    const p = new URLSearchParams();
+    p.append('itemcount', 1); p.append('publishedfileids[0]', skinId);
+    const r = await fetch(WORKER_URL, { method: 'POST', body: p.toString() });
+    const json = await r.json();
+    const f = json?.response?.publishedfiledetails?.[0];
+    if (!f || f.result !== 1) { document.getElementById('nom-msg').textContent = 'Skin not found on Steam Workshop'; return; }
+
+    const tags = (f.tags || []).map(t => (t.tag||'').toLowerCase());
+    nomPreviewData = {
+      skin_id:   skinId,
+      skin_name: f.title || 'Unnamed',
+      skin_img:  WORKER_URL + '?url=' + encodeURIComponent(f.preview_url || ''),
+      skin_url:  'https://steamcommunity.com/sharedfiles/filedetails/?id=' + skinId,
+      status:    f.result === 1 ? (tags.includes('featured') || tags.includes('approved') ? 'Approved' : 'Workshop') : 'Unavailable'
+    };
+
+    // Check if already nominated
+    const existing = nominations.find(n => n.skin_id === skinId);
+    document.getElementById('nom-prev-img').src    = nomPreviewData.skin_img;
+    document.getElementById('nom-prev-name').textContent = nomPreviewData.skin_name;
+    document.getElementById('nom-prev-sub').textContent  = '#' + skinId;
+    document.getElementById('nom-prev-badge').textContent = nomPreviewData.status;
+    document.getElementById('nom-prev-badge').className   = 'badge ' + (nomPreviewData.status === 'Approved' ? 'b-approved' : 'b-pending');
+    document.getElementById('nom-prev-exists').textContent = existing ? '⚠ Already nominated — you can still vote on it' : '';
+    document.getElementById('nom-preview').style.display = 'block';
+    document.getElementById('nom-msg').textContent = existing ? 'This skin is already nominated' : '';
+    nomPreviewData.alreadyExists = !!existing;
+    updateNomBtn();
+  } catch(e) {
+    document.getElementById('nom-msg').textContent = 'Error: ' + e.message;
+  }
+}
+
+function updateNomBtn() {
+  const btn = document.getElementById('nom-submit-btn');
+  btn.disabled = !hasIdentity() || !nomPreviewData || nomPreviewData.alreadyExists;
+}
+
+async function submitNomination() {
+  if (!nomPreviewData || !hasIdentity()) return;
+  const { discord, steam } = getIdentity();
+  const cat = document.getElementById('nom-cat').value;
+
+  try {
+    document.getElementById('nom-submit-btn').disabled = true;
+    await sbPost('nominations', {
+      skin_id:              nomPreviewData.skin_id,
+      skin_name:            nomPreviewData.skin_name,
+      skin_img:             nomPreviewData.skin_img,
+      skin_url:             nomPreviewData.skin_url,
+      item_cat:             cat || null,
+      item_name:            cat ? CAT_LABELS[cat] : null,
+      submitted_by_discord: discord,
+      submitted_by_steam:   steam,
+      status:               'pending'
+    });
+    toast('&#x2713; Nomination submitted!', 'success');
+    document.getElementById('nom-id').value = '';
+    document.getElementById('nom-preview').style.display = 'none';
+    nomPreviewData = null;
+    await loadData();
+    showTab('leaderboard');
+  } catch(e) {
+    toast('Failed: ' + e.message, 'error');
+    document.getElementById('nom-submit-btn').disabled = false;
+  }
+}
+
+// ── ADMIN ─────────────────────────────────────────────────────────────────────
+function showAdminLogin() { document.getElementById('admin-modal').classList.add('show'); setTimeout(() => document.getElementById('admin-pass-input').focus(), 100); }
+function closeAdminModal() { document.getElementById('admin-modal').classList.remove('show'); document.getElementById('admin-pass-input').value = ''; }
+function checkAdminPass() {
+  if (document.getElementById('admin-pass-input').value === ADMIN_PASS) {
+    closeAdminModal(); adminLoggedIn = true;
+    document.getElementById('admin-panel').style.display = 'block';
+    loadAdmin();
+  } else { toast('Wrong password', 'error'); }
+}
+function closeAdmin() { document.getElementById('admin-panel').style.display = 'none'; }
+
+function renderAdmin() {
+  const filter = document.getElementById('adm-filter')?.value || '';
+  let list = [...nominations].sort((a,b) => b.vote_total - a.vote_total);
+  if (filter) list = list.filter(n => n.status === filter);
+
+  document.getElementById('adm-total').textContent    = nominations.length;
+  document.getElementById('adm-pending').textContent  = nominations.filter(n => n.status==='pending').length;
+  document.getElementById('adm-approved').textContent = nominations.filter(n => n.status==='approved').length;
+  document.getElementById('adm-rejected').textContent = nominations.filter(n => n.status==='rejected').length;
+
+  const container = document.getElementById('admin-list');
+  container.innerHTML = '';
+  if (!list.length) { container.innerHTML = '<div class="empty"><div class="empty-text">No nominations</div></div>'; return; }
+
+  list.forEach(n => {
+    const score = parseInt(n.vote_total || 0);
+    const row = document.createElement('div'); row.className = 'admin-nom-row';
+    const imgHtml = n.skin_img
+      ? '<img class="admin-nom-img" src="' + n.skin_img + '" alt="" loading="lazy">'
+      : '<div class="admin-nom-img" style="display:flex;align-items:center;justify-content:center;color:var(--text3)">&#x1F5BC;</div>';
+    const statusBadge = n.status === 'approved' ? '<span class="badge b-approved">&#x2713; Approved</span>'
+      : n.status === 'rejected' ? '<span class="badge b-rejected">Rejected</span>'
+      : '<span class="badge b-pending">Pending</span>';
+    row.innerHTML =
+      imgHtml +
+      '<div class="admin-nom-info">' +
+      '<div class="admin-nom-name">' + (n.skin_name||'#'+n.skin_id) + '</div>' +
+      '<div class="admin-nom-sub">' + (n.item_name||n.item_cat||'No item') + ' &nbsp;&#x2022;&nbsp; #' + n.skin_id + '</div>' +
+      '<div class="admin-nom-by">by ' + n.submitted_by_discord + ' / ' + n.submitted_by_steam + '</div>' +
+      '</div>' +
+      '<div>' + statusBadge + '</div>' +
+      '<div class="admin-nom-score" style="color:' + (score>0?'var(--green)':score<0?'var(--red)':'var(--text3)') + '">' + (score>0?'+':'') + score + '</div>' +
+      '<div class="admin-nom-actions">' +
+      (n.status !== 'approved' ? '<button class="btn success" style="height:28px;padding:0 8px;font-size:11px" onclick="setStatus(\'' + n.skin_id + '\',\'approved\')">&#x2713; Approve</button>' : '') +
+      (n.status !== 'rejected' ? '<button class="btn danger" style="height:28px;padding:0 8px;font-size:11px" onclick="setStatus(\'' + n.skin_id + '\',\'rejected\')">&#x2715; Reject</button>' : '') +
+      (n.status !== 'pending'  ? '<button class="btn" style="height:28px;padding:0 8px;font-size:11px" onclick="setStatus(\'' + n.skin_id + '\',\'pending\')">Reset</button>' : '') +
+      '<a href="' + n.skin_url + '" target="_blank" class="btn" style="height:28px;padding:0 8px;font-size:11px">&#x2197;</a>' +
+      '<button class="btn danger" style="height:28px;padding:0 8px;font-size:11px" onclick="deleteNom(\'' + n.skin_id + '\')">&#x1F5D1;</button>' +
+      '</div>';
+    container.appendChild(row);
+  });
+}
+
+async function setStatus(skinId, status) {
+  try {
+    await sbPatch('nominations', 'skin_id=eq.' + skinId, { status });
+    toast('Status updated to ' + status, 'success');
+    await loadAdmin();
+  } catch(e) { toast('Error: ' + e.message, 'error'); }
+}
+
+async function deleteNom(skinId) {
+  if (!confirm('Delete this nomination and all its votes?')) return;
+  try {
+    await sbDelete('nominations', 'skin_id=eq.' + skinId);
+    toast('Nomination deleted', 'success');
+    await loadAdmin();
+  } catch(e) { toast('Error: ' + e.message, 'error'); }
+}
+
+function exportApproved() {
+  const approved = nominations.filter(n => n.status === 'approved');
+  if (!approved.length) { toast('No approved skins yet', 'error'); return; }
+  const ids = approved.map(n => n.skin_id).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([ids], {type:'text/plain'}));
+  a.download = 'approved_skin_ids.txt'; a.click();
+  toast('Exported ' + approved.length + ' approved skin IDs', 'success');
+}
+
+function exportFullCSV() {
+  const rows = ['Skin ID,Skin Name,Item,Status,Votes,Upvotes,Downvotes,Nominated By (Discord),Nominated By (Steam),Nominated On,Workshop URL'];
+  nominations.forEach(n => {
+    const esc = v => '"' + String(v||'').replace(/"/g,'""') + '"';
+    rows.push([
+      n.skin_id, esc(n.skin_name||''), esc(n.item_name||n.item_cat||''),
+      n.status, n.vote_total||0, n.upvotes||0, n.downvotes||0,
+      esc(n.submitted_by_discord), esc(n.submitted_by_steam),
+      new Date(n.created_at).toLocaleDateString(),
+      'https://steamcommunity.com/sharedfiles/filedetails/?id=' + n.skin_id
+    ].join(','));
+  });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([rows.join('\n')], {type:'text/csv'}));
+  a.download = 'SkinBox_Nominations.csv'; a.click();
+  toast('Exported ' + nominations.length + ' nominations', 'success');
+}
+
+// ── MONTH ROLLOVER ────────────────────────────────────────────────────────────
+function confirmNewMonth() {
+  const now = new Date();
+  const monthName = now.toLocaleDateString('en-US', {month:'long', year:'numeric'});
+  document.getElementById('month-label-input').value = monthName;
+  document.getElementById('month-modal').classList.add('show');
+}
+function closeMonthModal() { document.getElementById('month-modal').classList.remove('show'); }
+
+async function doRollover() {
+  const label = document.getElementById('month-label-input').value.trim() || new Date().toLocaleDateString('en-US', {month:'long', year:'numeric'});
+
+  try {
+    // 1. Save history snapshot to localStorage
+    const snapshot = {
+      label,
+      date: new Date().toISOString(),
+      approved: nominations.filter(n => n.status === 'approved').map(n => ({ id: n.skin_id, name: n.skin_name, item: n.item_name, votes: n.vote_total })),
+      rolled: nominations.filter(n => n.status === 'pending').length,
+      rejected: nominations.filter(n => n.status === 'rejected').length
+    };
+    const history = JSON.parse(localStorage.getItem('vote_history') || '[]');
+    history.unshift(snapshot);
+    localStorage.setItem('vote_history', JSON.stringify(history.slice(0, 24))); // keep 24 months
+
+    // 2. Delete all votes on pending nominations (reset vote counts)
+    const pendingIds = nominations.filter(n => n.status === 'pending').map(n => n.skin_id);
+    for (const id of pendingIds) {
+      await sbDelete('votes', 'skin_id=eq.' + id);
+    }
+
+    // 3. Delete rejected nominations entirely
+    const rejectedIds = nominations.filter(n => n.status === 'rejected').map(n => n.skin_id);
+    for (const id of rejectedIds) {
+      await sbDelete('nominations', 'skin_id=eq.' + id);
+    }
+
+    // 4. Reset approved nominations back to pending for next month
+    // (they stay visible but votes are cleared so they compete again)
+    // Optional: keep approved as-is so history is clear — we do this
+    // Approved stay approved, just votes on pending were cleared
+
+    closeMonthModal();
+    toast('&#x1F5D3; New month started! ' + pendingIds.length + ' skins rolled forward, ' + rejectedIds.length + ' rejected removed.', 'success');
+    await loadAdmin();
+    renderMonthHistory();
+  } catch(e) {
+    toast('Rollover failed: ' + e.message, 'error');
+  }
+}
+
+function renderMonthHistory() {
+  const el = document.getElementById('month-history');
+  if (!el) return;
+  const history = JSON.parse(localStorage.getItem('vote_history') || '[]');
+  if (!history.length) { el.textContent = 'No previous months recorded yet.'; return; }
+  el.innerHTML = history.map(h => {
+    const date = new Date(h.date).toLocaleDateString();
+    return '<div style="padding:10px 0;border-bottom:1px solid var(--border)">' +
+      '<div style="font-weight:700;color:var(--text);margin-bottom:4px">&#x1F4C5; ' + h.label + ' <span style="font-weight:400;color:var(--text3);font-size:10px">(' + date + ')</span></div>' +
+      '<div style="color:var(--text2);font-size:11px">' +
+      '<span style="color:var(--green)">&#x2713; ' + (h.approved?.length||0) + ' approved</span> &nbsp;&#x2022;&nbsp; ' +
+      '<span style="color:var(--amber)">' + (h.rolled||0) + ' rolled forward</span> &nbsp;&#x2022;&nbsp; ' +
+      '<span style="color:var(--red)">&#x2715; ' + (h.rejected||0) + ' rejected</span>' +
+      '</div>' +
+      (h.approved?.length ? '<div style="margin-top:6px;font-size:11px;color:var(--text3)">' + h.approved.slice(0,5).map(s => s.name + ' (' + (s.votes>0?'+':'') + s.votes + ')').join(', ') + (h.approved.length > 5 ? ' +' + (h.approved.length-5) + ' more' : '') + '</div>' : '') +
+      '</div>';
+  }).join('');
+}
+
+async function loadAdmin() {
+  await loadData();
+  renderAdmin();
+  renderMonthHistory();
+}
+function showTab(t) {
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + t).classList.add('active');
+  document.querySelector('.tab-btn[onclick="showTab(\'' + t + '\')"]').classList.add('active');
+  if (t === 'all') renderAll();
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────────────────
+let toastTimer;
+function toast(msg, type) {
+  const el = document.getElementById('toast');
+  el.innerHTML = msg; el.className = 'toast show ' + (type||'');
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+loadIdentity();
+if (SUPABASE_URL === 'YOUR_SUPABASE_URL') {
+  document.getElementById('leaderboard-list').innerHTML = '<div class="empty"><div class="empty-icon">&#x2699;</div><div class="empty-text">Configure your Supabase URL and key in the HTML file to get started.</div></div>';
+} else {
+  loadData();
+  setInterval(loadData, 30000); // auto-refresh every 30 seconds
+}
+</script>
+</body>
+</html>
