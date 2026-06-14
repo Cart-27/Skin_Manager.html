@@ -117,7 +117,7 @@ const WURL  = _d.wurl;
 const skinData = {};
 SKINS.forEach(s => { skinData[s.id] = {name:s.name, img:s.img, status:s.status||'loading'}; });
 
-function proxyImg(u){if(!u)return null;if(WURL){return WURL+'?url='+encodeURIComponent(u);}const c=u.replace(/^https?:///,'').replace(////g,'/');return 'https://images.weserv.nl/?url='+encodeURIComponent(c)+'&w=200&h=200&fit=cover&output=webp';}
+function proxyImg(u){if(!u)return null;if(WURL){return WURL+'?url='+encodeURIComponent(u);}const c=u.replace('https://','').replace('http://','');return 'https://images.weserv.nl/?url='+encodeURIComponent(c)+'&w=200&h=200&fit=cover&output=webp';}
 
 let view='cat', drillCat=null, PAGE=80, vis=PAGE, tvis=PAGE;
 
